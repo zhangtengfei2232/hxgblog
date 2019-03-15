@@ -22,8 +22,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::namespace('FrontControllers')->group(function () {
-    Route::get('mainPage', 'MainpageController@showMainPage');
-    Route::get('byTypeSelectArtical', 'ArticalController@byTypeSelectArtical');
+    Route::get('mainPage', 'MainpageController@showMainPage');                   //显示主页面
+    Route::get('showArticalPage', 'ArticalController@showArticalPage');          //显示文章页面
+    Route::get('byTypeSelectArtical', 'ArticalController@byTypeSelectArtical');  //根据文章类型搜索文章
+    Route::get('showArticalDetail', 'ArticalController@showArticalDetail');      //查一篇文章的所有内容
+    Route::post('byNameSelectArtical', 'ArticalController@byNameSelectArtical');  //根据文章名字模糊查询文章
+
 });
 //Route::any('test','Test@showArtical');
 /**

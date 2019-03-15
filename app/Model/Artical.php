@@ -5,11 +5,11 @@ namespace App\Model;
 class Artical extends BaseModel
 {
     protected $table = 'artical';
-//    protected $timeField = 'arti_create_time';
+
     //查询最新的前5篇文章
     public static function selectNewArticalData()
     {
-        return self::convertTime(Artical::orderBy('arti_create_time','desc')->limit(5)->get(),"arti_create_time");
+        return Artical::orderBy('created_at','desc')->limit(5)->get();
     }
     //查询点击率最高的前5篇文章
     public static function selectBrowseTopData()
@@ -19,14 +19,21 @@ class Artical extends BaseModel
     //搜索某一篇文章的所有内容
     public static function selectAloneArticalData($art_id)
     {
-        return self::convertTime(Artical::where('arti_id',$art_id)->get(),"arti_create_time");
+        return Artical::where('arti_id',$art_id)->get();
     }
 
     //根据文章ID查找文章
     public static function byIdSelectArticalData($art_id_datas)
     {
-        return self::convertTime(Artical::whereIn('arti_id', $art_id_datas)->get(),'arti_create_time', true);
+        return self::timeResolution(Artical::whereIn('arti_id', $art_id_datas)->get());
 
+    }
+    //文章浏览量加 '1'
+    public static function addArticalBrowseData($art_id)
+    {
+        $art_browse = Artical::select('arti_browse')->where('arti_id', $art_id)->get();
+        return Artical::where('arti_id', $art_id)->update(
+               ['arti_browse' => ($art_browse[0]->arti_browse + 1)]);
     }
 
 

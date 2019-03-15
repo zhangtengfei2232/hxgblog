@@ -8,8 +8,9 @@ class ArticalType extends BaseModel
     //根据文章类型ID去查文章ID
     public static function byTypeSelectArticalId($art_type_id, $page)
     {
+        $page = $page * 3;
         return ArticalType::select('arti_id')->where('type_id', $art_type_id)
-               ->offset($page * 6)->limit(6)->get();
+               ->offset($page)->limit(3)->get();
     }
 
 

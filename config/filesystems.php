@@ -54,7 +54,14 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
-
+        'image' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/image'),
+        ],
+        'artical' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/artical'),
+        ],
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

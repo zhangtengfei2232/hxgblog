@@ -8,7 +8,6 @@ use App\Model\ArticalType;
 use App\Model\Comment;
 use App\Model\Type;
 use Illuminate\Http\Request;
-use Illuminate\Cache\RedisLock;
 
 class ArticalController extends Controller
 {
@@ -31,15 +30,16 @@ class ArticalController extends Controller
     //显示文章详情页面
     public function showArticalDetail(Request $request)
     {
-        $art_id = $request->art_id;
+        $art_id[0] = $request->art_id;
         $time   = time();
-        if(isAddArticalBrowse($art_id, $time)) {   //满足条件，浏览量加 '1'
-            Artical::addArticalBrowseData($art_id);
-            session([$art_id => $time]);           //再次存储文章当前访问时间
+        if(isAddArticalBrowse($art_id[0], $time)) {   //满足条件，浏览量加 '1'
+            Artical::addArticalBrowseData($art_id[0]);
+            session([$art_id[0] => $time]);           //再次存储文章当前访问时间
         }
         $datas['new_articals'] = Artical::selectNewArticalData();
         $datas['browse_top']   = Artical::selectBrowseTopData();
-        $datas['comment']      = Comment::selectTopLevelComment($art_id);
+        $datas['comments']     = Comment::selectTopLevelComment($art_id[0]);
+        $datas['artical_data'] = Artical::byIdSelectArticalData($art_id);
         return responseToJson(0,'success', $datas);
     }
     //根据文章名字模糊查询文章

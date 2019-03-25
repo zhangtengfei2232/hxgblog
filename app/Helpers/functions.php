@@ -5,9 +5,11 @@
  * @param $data
  * @return \Illuminate\Http\JsonResponse
  */
-function responseToJson($code, $msg, $data)
+function responseToJson($code, $msg, $data = [])
 {
-    $result = array("code" => $code, "msg" => $msg, "data" => $data);
+    $result['code'] = $code;
+    $result['msg']  = $msg;
+    if(!empty($data)) $result['data'] = $data;
     return response()->json($result);
 }
 
@@ -29,4 +31,12 @@ function isAddArticalBrowse($art_id, $time)
     if(!session()->has($art_id))  return true;      //当前文章，没有被访问过
     if(($time - session($art_id)) > 10) return true;//判断用户上次访问时间和当前时间的差值是否满足访问条件
     else return false;
+}
+
+/**获得毫秒级的时间戳
+ * @return float
+ */
+function millisecond()
+{
+    return ceil(microtime(true) * 1000);
 }

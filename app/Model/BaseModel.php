@@ -4,6 +4,7 @@ namespace App\Model;
 
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class BaseModel extends Model
 {
@@ -11,6 +12,7 @@ class BaseModel extends Model
         'created_at'   => 'date:Y-m-d',
         'updated_at'   => 'datetime:Y-m-d',
     ];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -19,6 +21,7 @@ class BaseModel extends Model
     protected $hidden = [
         'password', 'updated_token_at',
     ];
+
     /**
      * @param mixed $value
      * @return false|int|null|string
@@ -40,17 +43,20 @@ class BaseModel extends Model
         }
         return $data;
     }
-
-    /**
-     * 更新token
-     * @return mixed|string
-     */
-    public  function generateToken()
+    //开启事务
+    public static function beginTransaction()
     {
-        $this->api_token = str_random(128);
-        $this->updated_token_at = millisecond();
-        $this->save();
-        return $this->api_token;
+        return DB::beginTransaction();
+    }
+    //没有异常，提交事务
+    public static function commit()
+    {
+        return DB::commit();
+    }
+    //回滚
+    public static function rollBack()
+    {
+        return DB::rollBack();
     }
 
 }

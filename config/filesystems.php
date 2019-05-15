@@ -62,6 +62,10 @@ return [
             'driver' => 'local',
             'root' => storage_path('app/public/artical'),
         ],
+        'head_portrait' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/head_portrait'),
+        ],
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

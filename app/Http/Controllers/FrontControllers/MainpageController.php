@@ -12,6 +12,7 @@ class MainpageController extends Controller
     {
         $data['new_artical'] = Artical::selectNewArticalData();
         $data['browse_top']  = Artical::selectBrowseTopData();
+        $data['weather']     = getUserPosition("218.29.60.105")['data']['city'];
         return responseToJson(0,"success",$data);
     }
 

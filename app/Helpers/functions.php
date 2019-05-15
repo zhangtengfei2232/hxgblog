@@ -1,5 +1,7 @@
 <?php
-/**后台返回给前台JSON数据
+use Illuminate\Support\Facades\Storage;
+/**
+ * 后台返回给前台JSON数据
  * @param $code
  * @param $msg
  * @param $data
@@ -13,7 +15,21 @@ function responseToJson($code, $msg, $data = [])
     return response()->json($result);
 }
 
-/**处理根据文章类型搜索出来的文章ID
+/**
+ * 后台验证数据，返回状态消息
+ * @param $code
+ * @param $msg
+ * @param array $data
+ * @return mixed
+ */
+function responseState($code, $msg, $data = []){
+    $result['code'] = $code;
+    $result['msg']  = $msg;
+    if(!empty($data)) $result['data'] = $data;
+    return $result;
+}
+/**
+ * 处理根据文章类型搜索出来的文章ID
  * @param $art_id_datas
  * @return array
  */
@@ -33,10 +49,87 @@ function isAddArticalBrowse($art_id, $time)
     else return false;
 }
 
-/**获得毫秒级的时间戳
+/**
+ * 获得毫秒级的时间戳
  * @return float
  */
 function millisecond()
 {
     return ceil(microtime(true) * 1000);
 }
+
+/**
+ * 给定时间与时间间隔，计算当前时间与给定时间的时间间隔差是否大于给定的时间间隔
+ * @param $time :给定的时间 毫秒级
+ * @param int $interval  :给定的时间间隔（分钟） 默认十分钟
+ * @return bool  大于：true; 小于：false
+ */
+function isTimeGreater($time, $interval = 10)
+{
+    $int = millisecond() - $time;
+    $interval = $interval * 60 * 1000;
+    return $int > $interval ? true : false;
+}
+
+/**
+ * 上传文件
+ * @param $files
+ * @param $disk
+ * @return mixed
+ */
+function uploadFile($files, $disk)
+{
+    $file_name = time() . '-' . $files->getClientOriginalName();
+    $files->storeAs('./',$file_name, $disk);
+    $exist_file = file_exists(storage_path().'\\app\public\\'.$disk.'\\'.$file_name);
+    if($exist_file) return responseState(0,'上传成功',$file_name);
+    return responseState(1,'上传失败');
+}
+
+/**
+ * 删除文件
+ * @param $fileRoad
+ * @param $disk
+ * @return bool
+ */
+function deleteFile($fileRoad, $disk)
+{
+    Storage::disk($disk)->delete($fileRoad);
+    return !file_exists(storage_path().'\\app\public\\'.$disk.'\\'.$fileRoad);
+}
+
+/**
+ *
+ * @return array|false|string
+ */
+function getUserIp()
+{
+    if (getenv("HTTP_CLIENT_IP") && strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown")){
+        $ip = getenv("HTTP_CLIENT_IP");
+    }else if (getenv("HTTP_X_FORWARDED_FOR") && strcasecmp(getenv("HTTP_X_FORWARDED_FOR"), "unknown")){
+        $ip = getenv("HTTP_X_FORWARDED_FOR");
+    }else if (getenv("REMOTE_ADDR") && strcasecmp(getenv("REMOTE_ADDR"), "unknown")){
+        $ip = getenv("REMOTE_ADDR");
+    } else if (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], "unknown")){
+        $ip = $_SERVER['REMOTE_ADDR'];
+    } else
+    $ip = "unknown";
+    return $ip;
+}
+
+/**
+ * 获取用户地理位置
+ * @param $ip
+ * @return bool|mixed|string
+ */
+function getUserPosition($ip)
+{
+    if(empty($ip)){
+        return  '缺少用户ip';
+    }
+    $url = 'http://ip.taobao.com/service/getIpInfo.php?ip='.$ip;
+    $ipContent = file_get_contents($url);
+    $ipContent = json_decode($ipContent,true);
+    return $ipContent;
+}
+

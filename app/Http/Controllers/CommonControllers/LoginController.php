@@ -62,6 +62,7 @@ class LoginController extends Controller
             $user->api_token = null;
             $user->save();
         }
+        session()->forget('user');
         return responseToJson(0,'退出成功');
     }
 

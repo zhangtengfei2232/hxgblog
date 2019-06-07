@@ -48,6 +48,18 @@ class ArticalController extends Controller
 
 
     }
+    //添加回复评论
+    public function sendReplayComment(Request $request){
+        return responseToJson(0,$request->all());
+
+    }
+    //根据文章顶级ID，去查询所有子评论
+    public function byTopIdselectAllComment(Request $request)
+    {
+        $comment_data = Comment::selectALLChildCommentData($request->top_level_id);
+//        dd($comment_data);
+        return responseToJson(0,'查询成功', $comment_data);
+    }
 
 
 }

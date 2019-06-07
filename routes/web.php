@@ -26,16 +26,17 @@ Route::get('/', function () {
 });
 Route::namespace('FrontControllers')->group(function () {
 
-
     Route::get('mainPage', 'MainpageController@showMainPage');                   //显示主页面
+    Route::post('registerUser', 'UserController@registerUser');                  //注册新用户
     Route::get('showArticalPage', 'ArticalController@showArticalPage');          //显示文章页面
     Route::get('byTypeSelectArtical', 'ArticalController@byTypeSelectArtical');  //根据文章类型搜索文章
     Route::get('showArticalDetail', 'ArticalController@showArticalDetail');      //查一篇文章的所有内容
     Route::post('byNameSelectArtical', 'ArticalController@byNameSelectArtical'); //根据文章名字模糊查询文章
-    Route::post('registerUser', 'UserController@registerUser');                  //注册新用户
+    Route::get('byTopIdselectAllComment','ArticalController@byTopIdselectAllComment');//查某一个评论的所有评论
 
     //前台需要验证的路由
     Route::middleware('auth:api', 'updateToken:api', 'loginCheck')->group(function () {
+        Route::post('sendReplayComment','ArticalController@sendReplayComment');       //添加回复评论
 
     });
 });

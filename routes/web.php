@@ -14,7 +14,7 @@
  * 用户认证失败的路由
  */
 Route::any('unAuth', function () {
-    return responseToJson(1,'未认证或认证失败');
+    return responseToJson(3,'未认证或认证失败');
 })->name('unAuth');
 
 
@@ -36,8 +36,9 @@ Route::namespace('FrontControllers')->group(function () {
 
     //前台需要验证的路由
     Route::middleware('auth:api', 'updateToken:api', 'loginCheck')->group(function () {
-        Route::post('sendReplayComment','ArticalController@sendReplayComment');       //添加回复评论
-
+        Route::post('sendReplayComment','ArticalController@sendReplayComment');  //添加回复评论
+        Route::post('addPublishComment', 'ArticalController@addPublishComment'); //添加评论
+        Route::post('deleteArticalComment', 'ArticalController@deleteArticalComment');//删除文章评论
     });
 });
 //获取资源需要验证

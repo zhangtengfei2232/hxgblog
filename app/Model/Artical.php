@@ -26,7 +26,6 @@ class Artical extends BaseModel
     public static function byIdSelectArticalData($art_id_datas)
     {
         return self::timeResolution(Artical::whereIn('arti_id', $art_id_datas)->get());
-
     }
     //文章浏览量加 '1'
     public static function addArticalBrowseData($art_id)

@@ -2,13 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2553bbbf-fc56-47cd-9cf4-4120e55eaadc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Model/PraiseTrample.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CommonControllers/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CommonControllers/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Exceptions/Handler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exceptions/Handler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Helpers/validate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/validate.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FrontControllers/ArticalController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FrontControllers/ArticalController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FrontControllers/showArticalController.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Middleware/Authenticate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/Authenticate.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/EnableCrossRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/EnableCrossRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/LoginCheck.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/LoginCheck.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Model/Artical.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/Artical.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Model/Comment.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/Comment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,167 +23,41 @@
   </component>
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
-  </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="-1332254605">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="3" />
-          <entry key="project.open.time.3" value="1" />
-          <entry key="project.open.time.30" value="2" />
-          <entry key="project.open.time.36" value="1" />
-          <entry key="project.open.time.39" value="1" />
-          <entry key="project.opened" value="6" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="env" value="2" />
-          <entry key="js" value="2" />
-          <entry key="json" value="1" />
-          <entry key="php" value="46" />
-          <entry key="vue" value="2" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="Blade" value="1" />
-          <entry key="JSON" value="1" />
-          <entry key="JavaScript" value="2" />
-          <entry key="PHP" value="45" />
-          <entry key="PLAIN_TEXT" value="2" />
-          <entry key="Vue.js" value="2" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="env" value="21" />
-          <entry key="json" value="100" />
-          <entry key="php" value="858" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="Blade" value="26" />
-          <entry key="JSON" value="100" />
-          <entry key="PHP" value="832" />
-          <entry key="PLAIN_TEXT" value="21" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.php.new.class">
-        <counts>
-          <entry key="PHP Class.type" value="3" />
-        </counts>
-      </usages-collector>
-    </session>
-    <session id="242268869">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="13" />
-          <entry key="project.open.time.14" value="2" />
-          <entry key="project.open.time.19" value="2" />
-          <entry key="project.open.time.2" value="4" />
-          <entry key="project.open.time.20" value="2" />
-          <entry key="project.open.time.24" value="1" />
-          <entry key="project.open.time.3" value="3" />
-          <entry key="project.open.time.31" value="1" />
-          <entry key="project.open.time.32" value="1" />
-          <entry key="project.open.time.36" value="1" />
-          <entry key="project.open.time.37" value="2" />
-          <entry key="project.open.time.38" value="1" />
-          <entry key="project.open.time.39" value="1" />
-          <entry key="project.open.time.41" value="1" />
-          <entry key="project.open.time.5" value="1" />
-          <entry key="project.open.time.51" value="1" />
-          <entry key="project.open.time.53" value="2" />
-          <entry key="project.opened" value="26" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="jpg" value="5" />
-          <entry key="json" value="2" />
-          <entry key="log" value="12" />
-          <entry key="php" value="312" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="Image" value="5" />
-          <entry key="JSON" value="2" />
-          <entry key="PHP" value="312" />
-          <entry key="PLAIN_TEXT" value="12" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.php.new.class">
-        <counts>
-          <entry key="PHP Class.type" value="17" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="dummy" value="11" />
-          <entry key="log" value="4" />
-          <entry key="php" value="18058" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="PHP" value="18058" />
-          <entry key="PLAIN_TEXT" value="15" />
-        </counts>
-      </usages-collector>
-    </session>
+    <execution>
+      <executable />
+    </execution>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/web.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="47" column="12" lean-forward="true" selection-start-line="47" selection-start-column="12" selection-end-line="47" selection-end-column="12" />
+            <state relative-caret-position="1320">
+              <caret line="64" column="40" selection-start-line="64" selection-start-column="40" selection-end-line="64" selection-end-column="40" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Kernel.php">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/FrontControllers/ArticalController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="63" column="51" lean-forward="true" selection-start-line="63" selection-start-column="51" selection-end-line="63" selection-end-column="51" />
+            <state relative-caret-position="609">
+              <caret line="39" column="15" selection-start-line="39" selection-start-column="15" selection-end-line="39" selection-end-column="15" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Middleware/UpdateToken.php">
+        <entry file="file://$PROJECT_DIR$/app/Model/Comment.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="456">
-              <caret line="20" column="44" lean-forward="true" selection-start-line="20" selection-start-column="44" selection-end-line="20" selection-end-column="44" />
+            <state relative-caret-position="1536">
+              <caret line="64" column="10" selection-start-line="64" selection-start-column="10" selection-end-line="64" selection-end-column="10" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Middleware/LoginCheck.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="16" column="5" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Middleware/Authenticate.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="20" column="5" lean-forward="true" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Model/Artical.php">
+        <entry file="file://$PROJECT_DIR$/app/Model/PraiseTrample.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="168">
               <caret line="7" selection-start-line="7" selection-end-line="7" />
@@ -188,33 +66,8 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Model/Users.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1704">
-              <caret line="73" column="5" selection-start-line="73" selection-start-column="5" selection-end-line="73" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Model/Comment.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="27" column="29" lean-forward="true" selection-start-line="27" selection-start-column="29" selection-end-line="27" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/FrontControllers/ArticalController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="329">
-              <caret line="52" column="49" selection-start-line="52" selection-start-column="49" selection-end-line="52" selection-end-column="49" />
-              <folding>
-                <element signature="e#57#93#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/app/Model/ArticalType.php">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -229,6 +82,8 @@
       <find>password</find>
       <find>update</find>
       <find>dateFormat</find>
+      <find>unauthenticated</find>
+      <find>updateToken</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -237,18 +92,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/Model/Artical.php" />
-        <option value="$PROJECT_DIR$/app/Model/ArticalType.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/CommonControllers/AccessResourcesController.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/CommonControllers/ObtainResourcesController.php" />
-        <option value="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" />
-        <option value="$PROJECT_DIR$/app/Http/Kernel.php" />
-        <option value="$PROJECT_DIR$/config/auth.php" />
-        <option value="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/Auth/AuthenticatesUsers.php" />
-        <option value="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithInput.php" />
-        <option value="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Auth/DatabaseUserProvider.php" />
-        <option value="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Auth/SessionGuard.php" />
-        <option value="$PROJECT_DIR$/storage/logs/laravel-2019-04-16.log" />
         <option value="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Hashing/Argon2IdHasher.php" />
         <option value="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Hashing/ArgonHasher.php" />
         <option value="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Support/Manager.php" />
@@ -265,47 +108,46 @@
         <option value="$PROJECT_DIR$/storage/logs/laravel-2019-05-06.log" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/FrontControllers/LoginController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/CommonControllers/ObtainFileController.php" />
-        <option value="$PROJECT_DIR$/app/Helpers/functions.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/CommonControllers/updateController.php" />
         <option value="$PROJECT_DIR$/storage/logs/laravel-2019-05-07.log" />
         <option value="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php" />
-        <option value="$PROJECT_DIR$/app/Http/Middleware/UpdateToken.php" />
         <option value="$PROJECT_DIR$/storage/logs/laravel-2019-05-11.log" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/FrontControllers/RegisterController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/CommonControllers/GetInformationController.php" />
         <option value="$PROJECT_DIR$/storage/logs/laravel-2019-05-12.log" />
-        <option value="$PROJECT_DIR$/app/Helpers/validate.php" />
-        <option value="$PROJECT_DIR$/app/Model/Users.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/CommonControllers/UserController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/FrontControllers/MainpageController.php" />
-        <option value="$PROJECT_DIR$/app/Http/Middleware/EnableCrossRequest.php" />
         <option value="$PROJECT_DIR$/config/app.php" />
         <option value="$PROJECT_DIR$/storage/logs/laravel-2019-06-03.log" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/FrontControllers/showArticalController.php" />
-        <option value="$PROJECT_DIR$/app/Model/Comment.php" />
+        <option value="$PROJECT_DIR$/app/Helpers/validate.php" />
+        <option value="$PROJECT_DIR$/app/Model/Artical.php" />
+        <option value="$PROJECT_DIR$/storage/logs/laravel-2019-06-08.log" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/CommonControllers/LoginController.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/FrontControllers/ArticalController.php" />
-        <option value="$PROJECT_DIR$/app/Http/Middleware/Authenticate.php" />
+        <option value="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Auth/AuthManager.php" />
         <option value="$PROJECT_DIR$/app/Http/Middleware/LoginCheck.php" />
+        <option value="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" />
+        <option value="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Auth/AuthenticationException.php" />
+        <option value="$PROJECT_DIR$/app/Http/Middleware/EnableCrossRequest.php" />
         <option value="$PROJECT_DIR$/routes/web.php" />
+        <option value="$PROJECT_DIR$/app/Helpers/functions.php" />
+        <option value="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authenticate.php" />
+        <option value="$PROJECT_DIR$/app/Http/Middleware/UpdateToken.php" />
+        <option value="$PROJECT_DIR$/app/Http/Middleware/Authenticate.php" />
+        <option value="$PROJECT_DIR$/app/Exceptions/Handler.php" />
+        <option value="$PROJECT_DIR$/storage/logs/laravel-2019-06-09.log" />
+        <option value="$PROJECT_DIR$/app/Model/Users.php" />
+        <option value="$PROJECT_DIR$/storage/logs/laravel-2019-06-10.log" />
+        <option value="$PROJECT_DIR$/app/Model/Comment.php" />
+        <option value="$PROJECT_DIR$/app/Model/AdmireNegative.php" />
+        <option value="$PROJECT_DIR$/app/Model/PraiseTrample.php" />
+        <option value="$PROJECT_DIR$/.env" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/FrontControllers/ArticalController.php" />
       </list>
     </option>
   </component>
-  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER">
-    <package-json value="$PROJECT_DIR$/package.json" />
-  </component>
-  <component name="JsGulpfileManager">
-    <detection-done>true</detection-done>
-    <sorting>DEFINITION_ORDER</sorting>
-  </component>
-  <component name="NodeModulesDirectoryManager">
-    <handled-path value="$PROJECT_DIR$/node_modules" />
-  </component>
-  <component name="NodePackageJsonFileManager">
-    <packageJsonPaths>
-      <path value="$PROJECT_DIR$/package.json" />
-    </packageJsonPaths>
+  <component name="PhpServers">
+    <servers />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -429,6 +271,12 @@
               <item name="hxgblog-backend" type="b2602c69:ProjectViewProjectNode" />
               <item name="hxgblog-backend" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="Exceptions" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="hxgblog-backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="hxgblog-backend" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="Helpers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -459,13 +307,6 @@
               <item name="Http" type="462c0819:PsiDirectoryNode" />
               <item name="Controllers" type="462c0819:PsiDirectoryNode" />
               <item name="FrontControllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="hxgblog-backend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hxgblog-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-              <item name="Middleware" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="hxgblog-backend" type="b2602c69:ProjectViewProjectNode" />
@@ -504,6 +345,12 @@
               <item name="public" type="462c0819:PsiDirectoryNode" />
               <item name="head_portrait" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="hxgblog-backend" type="b2602c69:ProjectViewProjectNode" />
+              <item name="hxgblog-backend" type="462c0819:PsiDirectoryNode" />
+              <item name="storage" type="462c0819:PsiDirectoryNode" />
+              <item name="logs" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -511,12 +358,17 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SearchEverywhereHistoryKey" value="backg&#9;ACTION&#9;Images.SetBackgroundImage&#10;backgr&#9;ACTION&#9;Images.SetBackgroundImage&#10;background&#9;ACTION&#9;Images.SetBackgroundImage" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../mjz_back" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -576,12 +428,17 @@
       <workItem from="1557926675243" duration="185000" />
       <workItem from="1559544592290" duration="3266000" />
       <workItem from="1559565212159" duration="20964000" />
-      <workItem from="1559641310416" duration="26274000" />
+      <workItem from="1559641310416" duration="26276000" />
+      <workItem from="1559956439766" duration="57950000" />
+      <workItem from="1560128273086" duration="14534000" />
+      <workItem from="1560211367458" duration="620000" />
+      <workItem from="1560757554454" duration="2291000" />
+      <workItem from="1560834882951" duration="54000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="322377000" />
+    <option name="totallyTimeSpent" value="397828000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -593,10 +450,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4990476" visible="true" weight="0.21715818" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4990476" visible="true" weight="0.19168901" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" sideWeight="0.50095236" side_tool="true" weight="0.1883378" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -621,151 +478,17 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
-  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Concerns/HasAttributes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="61" column="17" lean-forward="true" selection-start-line="61" selection-start-column="17" selection-end-line="61" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="43" column="14" selection-start-line="43" selection-start-column="14" selection-end-line="43" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/auth.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="343">
-          <caret line="42" column="12" selection-start-line="42" selection-start-column="9" selection-end-line="42" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/filter/filter.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="85" column="9" selection-start-line="85" selection-start-column="9" selection-end-line="85" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Model/BaseModel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="727">
-          <caret line="58" column="30" selection-start-line="58" selection-start-column="30" selection-end-line="58" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/logging.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-41" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/mail.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2448" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/view.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/standard/standard_7.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="568" column="9" selection-start-line="568" selection-start-column="9" selection-end-line="568" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/storage/app/public/head_portrait/1557063378-psb11.jpg" />
-    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Http/UploadedFile.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="35" column="5" lean-forward="true" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/filesystems.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1255">
-          <caret line="60" column="22" lean-forward="true" selection-start-line="60" selection-start-column="22" selection-end-line="60" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/upload.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="5" column="2" lean-forward="true" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/storage/logs/laravel-2019-05-05.log">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/standard/standard_5.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="978" column="22" selection-start-line="978" selection-start-column="13" selection-end-line="978" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/storage/logs/laravel-2019-05-06.log">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CommonControllers/ObtainFileController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="15" column="39" lean-forward="true" selection-start-line="15" selection-start-column="39" selection-end-line="15" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/storage/logs/laravel-2019-05-07.log">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/storage/logs/laravel-2019-05-11.log">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CommonControllers/updateController.php" />
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CommonControllers/GetInformationController.php" />
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/FrontControllers/RegisterController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="8" column="1" lean-forward="true" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/storage/logs/laravel-2019-05-12.log">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/storage/logs/laravel-2019-05-12.log" />
     <entry file="file://$PROJECT_DIR$/storage/app/public/head_portrait/1557913856-psb11.jpg" />
     <entry file="file://$PROJECT_DIR$/storage/app/public/head_portrait/1557915291-psb10.jpg" />
     <entry file="file://$PROJECT_DIR$/storage/app/public/head_portrait/1557916722-psb11.jpg" />
     <entry file="file://$PROJECT_DIR$/storage/app/public/head_portrait/1557916779-psb10.jpg" />
-    <entry file="file://$PROJECT_DIR$/app/Helpers/validate.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="55">
-          <caret line="42" column="16" lean-forward="true" selection-start-line="42" selection-start-column="16" selection-end-line="42" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Middleware/CheckForMaintenanceMode.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/EnableCrossRequest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="28" column="9" lean-forward="true" selection-start-line="28" selection-start-column="9" selection-end-line="28" selection-end-column="9" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config/app.php">
       <provider selected="true" editor-type-id="text-editor">
@@ -774,9 +497,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/storage/logs/laravel-2019-06-03.log">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/storage/logs/laravel-2019-06-03.log" />
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CommonControllers/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="399">
@@ -784,60 +505,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Helpers/functions.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1759">
-          <caret line="41" column="29" lean-forward="true" selection-start-line="41" selection-start-column="29" selection-end-line="41" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/FrontControllers/showArticalController.php" />
-    <entry file="file://$PROJECT_DIR$/app/Model/Artical.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Model/Users.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1704">
-          <caret line="73" column="5" selection-start-line="73" selection-start-column="5" selection-end-line="73" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/FrontControllers/MainpageController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
           <caret line="12" column="50" selection-start-line="12" selection-start-column="50" selection-end-line="12" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Support/Facades/Auth.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="5" column="3" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CommonControllers/LoginController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="43" column="5" lean-forward="true" selection-start-line="43" selection-start-column="5" selection-end-line="43" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Model/Comment.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="27" column="29" lean-forward="true" selection-start-line="27" selection-start-column="29" selection-end-line="27" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="42" column="20" selection-start-line="42" selection-start-column="20" selection-end-line="42" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -848,48 +520,245 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/FrontControllers/ArticalController.php">
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/standard/standard_0.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="329">
-          <caret line="52" column="49" selection-start-line="52" selection-start-column="49" selection-end-line="52" selection-end-column="49" />
-          <folding>
-            <element signature="e#57#93#0#PHP" expanded="true" />
-          </folding>
+        <state relative-caret-position="226">
+          <caret line="421" column="9" selection-start-line="421" selection-start-column="9" selection-end-line="421" selection-end-column="9" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/Authenticate.php">
+    <entry file="file://$PROJECT_DIR$/app/Helpers/validate.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="20" column="5" lean-forward="true" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+        <state relative-caret-position="314">
+          <caret line="48" column="35" selection-start-line="48" selection-start-column="35" selection-end-line="48" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Model/Artical.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="27" column="87" selection-start-line="27" selection-start-column="87" selection-end-line="27" selection-end-column="87" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/SPL/SPL.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="936">
+          <caret line="39" column="6" selection-start-line="39" selection-start-column="6" selection-end-line="39" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Support/Facades/Auth.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="5" column="28" lean-forward="true" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/Auth/AuthenticatesUsers.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="401">
+          <caret line="179" column="23" selection-start-line="179" selection-start-column="23" selection-end-line="179" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/Core/Core.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="305">
+          <caret line="385" column="9" selection-start-line="385" selection-start-column="9" selection-end-line="385" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Kernel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="63" column="51" lean-forward="true" selection-start-line="63" selection-start-column="51" selection-end-line="63" selection-end-column="51" />
+        <state relative-caret-position="343">
+          <caret line="54" column="44" selection-start-line="54" selection-start-column="44" selection-end-line="54" selection-end-column="44" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/UpdateToken.php">
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Http/Concerns/InteractsWithContentTypes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="20" column="44" lean-forward="true" selection-start-line="20" selection-start-column="44" selection-end-line="20" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/stubs/Core/Core_c.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="279" column="29" selection-start-line="279" selection-start-column="29" selection-end-line="279" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/storage/logs/laravel-2019-06-08.log" />
+    <entry file="file://$PROJECT_DIR$/storage/logs/laravel-2019-05-15.log" />
+    <entry file="file://$PROJECT_DIR$/config/auth.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-857">
+          <caret line="43" column="30" selection-start-line="43" selection-start-column="25" selection-end-line="43" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Helpers/functions.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="67" column="1" lean-forward="true" selection-start-line="67" selection-start-column="1" selection-end-line="67" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Auth/AuthenticationException.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="473">
+          <caret line="30" column="20" selection-start-line="30" selection-start-column="20" selection-end-line="30" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Exceptions/Handler.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="463">
+          <caret line="61" column="46" lean-forward="true" selection-start-line="61" selection-start-column="46" selection-end-line="61" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="215" column="7" lean-forward="true" selection-start-line="215" selection-start-column="7" selection-end-line="215" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Auth/AuthManager.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="631">
+          <caret line="63" column="20" selection-start-line="63" selection-start-column="20" selection-end-line="63" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Contracts/Auth/Factory.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="4" column="10" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Support/Facades/DB.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="19" column="3" selection-start-line="19" selection-start-column="3" selection-end-line="19" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/storage/logs/laravel-2019-06-09.log">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Model/BaseModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-744">
+          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/EnableCrossRequest.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="456">
-          <caret line="20" column="44" lean-forward="true" selection-start-line="20" selection-start-column="44" selection-end-line="20" selection-end-column="44" />
+          <caret line="27" column="56" lean-forward="true" selection-start-line="27" selection-start-column="56" selection-end-line="27" selection-end-column="56" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Middleware/LoginCheck.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="16" column="5" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
+        <state relative-caret-position="408">
+          <caret line="17" column="37" lean-forward="true" selection-start-line="17" selection-start-column="37" selection-end-line="17" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authenticate.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="60" column="37" lean-forward="true" selection-start-line="60" selection-start-column="37" selection-end-line="60" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/Authenticate.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="17" column="62" lean-forward="true" selection-start-line="17" selection-start-column="62" selection-end-line="17" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="466">
+          <caret line="665" column="22" lean-forward="true" selection-start-line="665" selection-start-column="22" selection-end-line="665" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Model/Users.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="62" column="43" selection-start-line="62" selection-start-column="43" selection-end-line="62" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/UpdateToken.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="22" column="67" lean-forward="true" selection-start-line="22" selection-start-column="67" selection-end-line="22" selection-end-column="67" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CommonControllers/LoginController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="63" column="9" lean-forward="true" selection-start-line="63" selection-start-column="9" selection-end-line="63" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/storage/logs/laravel-2019-06-10.log">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="13" column="22" lean-forward="true" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/web.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="47" column="12" lean-forward="true" selection-start-line="47" selection-start-column="12" selection-end-line="47" selection-end-column="12" />
+        <state relative-caret-position="1320">
+          <caret line="64" column="40" selection-start-line="64" selection-start-column="40" selection-end-line="64" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Model/Comment.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1536">
+          <caret line="64" column="10" selection-start-line="64" selection-start-column="10" selection-end-line="64" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Model/PraiseTrample.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Model/ArticalType.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/FrontControllers/ArticalController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="609">
+          <caret line="39" column="15" selection-start-line="39" selection-start-column="15" selection-end-line="39" selection-end-column="15" />
         </state>
       </provider>
     </entry>

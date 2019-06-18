@@ -37,6 +37,18 @@ function validateUserInformation($data)
     return responseState(0,'验证通过');
 }
 
+/**
+ * 验证用户输入的评论内容
+ * @param $comment_content
+ * @return mixed
+ */
+function validateCommentContent($comment_content)
+{
+    if(strlen($comment_content) > 100) return responseState(1,'你输入的内容过长');
+    if($comment_content != strip_tags($comment_content)) return responseState(1,'你输入的内容不合法！');
+    return responseState(0,'验证通过');
+}
+
 /**判断文件上传是否合法
  * @param $file
  * @param $status

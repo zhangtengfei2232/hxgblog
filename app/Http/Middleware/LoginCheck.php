@@ -16,7 +16,7 @@ class LoginCheck
     public function handle($request, Closure $next)
     {
         if (empty(session('user'))) {
-            return responseToJson(1,'你未登录');
+            return responseToJson(2,'你未登录');
         }
         return $next($request);
     }

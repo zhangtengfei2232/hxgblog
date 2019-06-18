@@ -2,12 +2,26 @@
 
 namespace App\Model;
 
-
 class Comment extends BaseModel
 {
     protected $table = 'comment';
     protected static $select_field = ['come_id', 'come_content', 'come_father_id', 'comment.created_at', 'nick_name', 'head_portrait','comment.phone'];
     static $comment_data = [];
+
+    /**
+     * 添加文章评论
+     * @param $comment_data
+     * @return bool
+     */
+    public static function addCommentData($comment_data)
+    {
+        try{
+            Comment::insert($comment_data);
+        }catch (\Exception $e){
+            return responseState(1,'评论失败');
+        }
+        return responseState(0,'评论成功');
+    }
     /**
      * 查某一篇文章的所有顶级评论
      * @param $art_id
@@ -24,6 +38,7 @@ class Comment extends BaseModel
             $comment_data[$key]['come_count'] = count($child_comment);
             $comment_data[$key]['child_comment'] = $child_comment;
             ($comment_data[$key]['phone'] == $user_phone) ? $comment_data[$key]['is_mine'] = true : $comment_data[$key]['is_mine'] = false;
+            self::$comment_data = [];    //因为是static，所以每次查询都要清空子评论内容
         }
         return $comment_data;
     }
@@ -65,6 +80,30 @@ class Comment extends BaseModel
             self::selectALLChildCommentData($value['come_id'], $user_phone); //递归子查询
         }
         return self::$comment_data;
+    }
+
+    /**
+     * 判断此评论是否为顶级评论
+     * @return bool
+     */
+    public  static function isTopLevelComment($come_id):bool
+    {
+        return (Comment::where([['come_id', $come_id],['top_level_id', 0]])->count() > 0) ;
+    }
+
+    /**
+     * 删除文章评论
+     * @param $come_id
+     * @return mixed
+     */
+    public static function deleteCommentData($come_id)
+    {
+        $children_come_id_data = Comment::select('come_id')->where('come_father_id',$come_id)->get();
+        //当前评论没有子评论
+        if($children_come_id_data->isEmpty())  return Comment::where('come_id',$come_id)->delete();
+        foreach ($children_come_id_data as $come_id_data) $is_delete = self::deleteCommentData($come_id_data->come_id);
+        if(! $is_delete) return $is_delete;     //如果其中有一个删除失败，直接返回false
+        return Comment::where('come_id',$come_id)->delete();
     }
 
 }

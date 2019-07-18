@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Model\Artical;
 use App\Model\ArticalType;
 use App\Model\Comment;
+use App\Model\PraiseTrample;
 use App\Model\Type;
 use Illuminate\Http\Request;
 
@@ -49,19 +50,13 @@ class ArticalController extends Controller
             Artical::addArticalBrowseData($art_id[0]);
             session([$art_id[0] => $time]);           //再次存储文章当前访问时间
         }
-        $datas['new_articals'] = Artical::selectNewArticalData();
-        $datas['browse_top']   = Artical::selectBrowseTopData();
-        $datas['comments']     = Comment::selectTopLevelComment($art_id[0]);
-        $datas['artical_data'] = Artical::byIdSelectArticalData($art_id);
+        $datas['new_articals']          = Artical::selectNewArticalData();            //最新文章
+        $datas['browse_top']            = Artical::selectBrowseTopData();             //浏览最多的文章
+        $datas['comments']              = Comment::selectTopLevelMessage(config('selectfield.comment'),'', $art_id[0]); //文章评论
+        $datas['artical_data']          = Artical::byIdSelectArticalData($art_id);    //文章数据
+        $datas['praise_trample_status'] = PraiseTrample::selectArticalPraiseTrample($art_id[0]);
+        $datas['artical_types']         = ArticalType::selectArticalTypeName($art_id[0]);
         return responseToJson(0,'success', $datas);
-    }
-
-    //根据文章名字模糊查询文章
-    public function byNameSelectArtical(Request $request)
-    {
-
-
-
     }
 
     /**
@@ -81,7 +76,7 @@ class ArticalController extends Controller
         $data['created_at']     = time();
         $add_comment            = Comment::addCommentData($data);
         if($add_comment['code'] == 1) responseToJson(1,$add_comment['msg']);
-        $art_comment = Comment::selectTopLevelComment($data['arti_id']);//重新查一下文章的评论返回给前台
+        $art_comment = Comment::selectTopLevelMessage(config('selectfield.comment'),'', $data['arti_id']);//重新查一下文章的评论返回给前台
         return responseToJson(0,$add_comment['msg'], $art_comment);
     }
 
@@ -103,7 +98,7 @@ class ArticalController extends Controller
         $data['created_at']     = time();
         $add_comment            = Comment::addCommentData($data);
         if($add_comment['code'] == 1) responseToJson(1, $add_comment['msg']);
-        $art_comment            = Comment::selectTopLevelComment($data['arti_id']);
+        $art_comment            = Comment::selectTopLevelMessage(config('selectfield.comment'),'', $data['arti_id']);
         return responseToJson(0,$add_comment['msg'], $art_comment);
     }
 
@@ -117,12 +112,12 @@ class ArticalController extends Controller
         Comment::beginTransaction();                          //开启事务
         try{
             $come_id = $request->comment_id;
-            if(! Comment::deleteCommentData($come_id)){       //中间出现删除失败的也要回滚。
+            if(! Comment::deleteData(config('selectfield.comment'), $come_id)){       //中间出现删除失败的也要回滚。
                 Comment::rollBack();
                 return responseToJson(1,"删除失败");
             }
             $art_id = $request->art_id;
-            $art_comment  = Comment::selectTopLevelComment($art_id);
+            $art_comment  = Comment::selectTopLevelMessage(config('selectfield.comment'),'', $art_id);
             Comment::commit();                                //提交事务
             return responseToJson(0,"删除成功",$art_comment);
         }catch (\Exception $e){                               //出现异常也要回滚
@@ -136,19 +131,23 @@ class ArticalController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function byTopIdselectAllComment(Request $request)
+    public function byTopIdSelectAllComment(Request $request)
     {
-        $comment_data = Comment::selectALLChildCommentData($request->top_level_id, session('user')->phone);
+        $comment_data = Comment::selectALLChildMessageData(config('selectfield.comment'), $request->top_level_id, session('user')->phone);
         return responseToJson(0,'查询成功', $comment_data);
     }
 
-    //根据文章ID和用户手机号，给文章点评
+    //根据文章ID和用户手机号，给文章赞/踩
     public function praiseOrTrampleArtical(Request $request)
     {
-
-
+        $praise_trample_num = PraiseTrample::addPraiseTrampleData($request->praise_trample_status, $request->art_id);
+        return ($praise_trample_num['code'] == 0) ? responseToJson(0,$praise_trample_num['msg'],$praise_trample_num['data'])
+               : responseToJson(1,$praise_trample_num['msg']);
     }
 
-
+    public function getArticalAllType()
+    {
+        return responseToJson(0,'查询成功', Type::selectAllTypeData());
+    }
 
 }

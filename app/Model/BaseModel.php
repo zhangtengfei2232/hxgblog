@@ -12,6 +12,7 @@ class BaseModel extends Model
         'created_at'   => 'date:Y-m-d',
         'updated_at'   => 'datetime:Y-m-d',
     ];
+    protected static $information_data = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -33,7 +34,7 @@ class BaseModel extends Model
     //文章时间拆分函数
     public static function timeResolution($data)
     {
-        $data = json_decode(json_encode($data));
+        if(! is_array($data)) $data = json_decode(json_encode($data));
         for($i = 0; $i < count($data); $i++){
             $data[$i] = (array)$data[$i];
             $time = explode('-',$data[$i]['created_at']);
@@ -43,6 +44,96 @@ class BaseModel extends Model
         }
         return $data;
     }
+    /**
+     * 查 '某一篇文章的所有顶级评论' / '留言'
+     * @param $art_id
+     * @return mixed
+     */
+    public static function selectTopLevelMessage($config_param,$page, $art_id = '')
+    {
+        ($config_param['table_name'] == "leave_message") ? $is_msg = true : $is_msg = false;
+        $data = $config_param['model_name']::select($config_param['select_field'])
+            ->leftJoin('users', $config_param['table_name'].'.phone', '=', 'users.phone')
+            ->where($config_param['father_id_field'], 0);
+        //文章评论查询
+        ($config_param['table_name'] == 'comment') ? $data = $data->where('arti_id', $art_id)->get()->toArray()
+        :$data = $data->offset($page * 2)->orderBy('created_at', 'desc')->limit(2)->get()->toArray();
+        (!empty(session()->has('user'))) ? $is_login = true : $is_login = false;
+        ($is_login) ? $user_phone = session('user')->phone : $user_phone = " ";
+        ($is_login && session('user')->role == 1) ? $is_admin = true : $is_admin = false;
+        foreach ($data as $key => $value) {
+            ($data[$key]['phone'] == $user_phone || $is_admin) ? $data[$key]['is_mine'] = true : $data[$key]['is_mine'] = false;
+            $child_comment = self::selectALLChildMessageData($config_param,$data[$key][$config_param['id_field']], $user_phone, $data[$key]['is_mine'], $is_msg);
+            $data[$key][$config_param['count']] = count($child_comment);
+            $data[$key][$config_param['child_field']] = $child_comment;
+            if($is_msg) $data[$key]['is_admin'] = $is_admin;
+            self::$information_data = [];    //因为是static，所以每次查询都要清空子评论内容
+        }
+        return $data;
+    }
+
+    /**
+     * 根据 '文章评论/留言' ===>顶级ID，查询所有子评论
+     * @param $father_id
+     * @return array|void
+     */
+    public static function selectALLChildMessageData($config_param ,$father_id, $user_phone, $is_mine, $is_msg)
+    {
+        $comment = $config_param['model_name']::select($config_param['select_field'])->orderBy('created_at', 'asc')
+            ->leftJoin('users', $config_param['table_name'].'.phone', '=', 'users.phone')
+            ->where($config_param['father_id_field'], $father_id)->get()->toArray();
+        if(empty($comment)) return ;
+        foreach ($comment as $key => $data){
+            $father_infor = $config_param['model_name']::select('nick_name','users.phone')
+                ->leftJoin('users', $config_param['table_name'].'.phone', '=', 'users.phone')
+                ->where($config_param['id_field'],$comment[$key][$config_param['father_id_field']])
+                ->first();
+            if(empty($father_infor)) continue;
+            $comment[$key]['father_nick_name'] = $father_infor->nick_name;
+            $comment[$key]['father_phone'] = $father_infor->phone;
+            if($is_msg){    //是留言板
+                ($is_mine) ? $comment[$key]['is_mine'] = true : $comment[$key]['is_mine'] = false;
+            } else {
+                ($comment[$key]['phone'] == $user_phone) ? $comment[$key]['is_mine'] = true : $comment[$key]['is_mine'] = false;
+            }
+        }
+        foreach ($comment as $value) {
+            array_push(self::$information_data, $value);                  //把查询的数据放到数组中
+            self::selectALLChildMessageData($config_param, $value[$config_param['id_field']], $user_phone, $is_mine, $is_msg); //递归子查询
+        }
+        return self::$information_data;
+    }
+
+    /**
+     * 删除文章评论
+     * @param $come_id
+     * @return mixed
+     */
+    public static function deleteData($config_param, $del_id)
+    {
+        $id_field = $config_param['id_field'];
+        $model_name = $config_param['model_name'];
+        $children_come_id_data = $model_name::select($id_field)
+            ->where($config_param['father_id_field'],$del_id)->get();
+        //当前评论没有子评论
+        if($children_come_id_data->isEmpty()) return $model_name::where($id_field,$del_id)->delete();
+        foreach ($children_come_id_data as $id_data) $is_delete = self::deleteData($config_param, $id_data->$id_field);
+        if(! $is_delete) return $is_delete;     //如果其中有一个删除失败，直接返回false
+        return $model_name::where($id_field, $del_id)->delete();
+    }
+
+    /**
+     * 删除关于文章的所有数据
+     * @param $del_config
+     * @param $art_id_data
+     * @return bool
+     */
+    public static function deleteArticalRelevantData($del_config, $art_id_data)
+    {
+        foreach ($del_config as $config) $config::whereIn('arti_id', $art_id_data)->delete();
+        return true;
+    }
+
     //开启事务
     public static function beginTransaction()
     {

@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 class ObtainFileController extends Controller
 {
     //请求用户头像资源
-    public function getHeadPortrait(Request $request)
+    public function getPhoto(Request $request)
     {
         $disk     = $request->disk;
         $filename = $request->filename;

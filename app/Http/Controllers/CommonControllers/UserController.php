@@ -32,6 +32,7 @@ class UserController extends Controller
             $upload_img_road = uploadFile($head_portrait, $disk);
             if($upload_img_road['code'] == 1) return responseToJson(1,'添加用户信息失败');
             $data['head_portrait'] = $upload_img_road['data'];
+            $data['role'] = 3;                                //默认为普通用户
             Users::addUserData($data);
             return responseToJson(0,'注册成功');
         }catch (\Exception $e){

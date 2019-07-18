@@ -99,6 +99,18 @@ function deleteFile($fileRoad, $disk)
 }
 
 /**
+ * 删除多个文件
+ * @param $file_road_data
+ * @param $disk
+ */
+function deleteMultipleFile($file_road_data, $disk)
+{
+    foreach ($file_road_data as $file_road){
+        deleteFile($file_road, $disk);
+    }
+}
+
+/**
  *
  * @return array|false|string
  */

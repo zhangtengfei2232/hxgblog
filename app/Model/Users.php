@@ -12,7 +12,7 @@ class Users extends Authenticatable
     protected $primaryKey = 'user_id';          //重写表的主键ID
     protected $dateFormat = 'U';                //重写表的时间存储格式为时间戳
     protected $fillable = ['nick_name', 'email', 'password',
-        'head_portrait', 'introduce', 'phone', 'distinguish', 'sex'];
+        'head_portrait', 'introduce', 'phone', 'role', 'sex'];
     /**
      * 添加用户信息
      * @param $data
@@ -73,7 +73,7 @@ class Users extends Authenticatable
     public static function getUserInformationData($user_phone)
     {
         return Users::where('phone', $user_phone)->select(
-            'nick_name','email','head_portrait','introduce','phone','sex','distinguish'
+            'nick_name','email','head_portrait','introduce','phone','sex','role'
         )->first();
     }
 
@@ -114,6 +114,10 @@ class Users extends Authenticatable
 
     }
 
+    public static function selectUserRoles($phone)
+    {
+        return Users::select('role')->where('phone', $phone)->first()->role;
+    }
 
 
 

@@ -71,3 +71,42 @@ function judgeReceiveFiles($file, $status = true)
     return responseState(0,'验证通过');
 }
 
+/**
+ * 验证文章信息
+ * @param $data
+ * @return mixed
+ */
+function validateArticalData($data)
+{
+    if(emptyArray($data)) return responseState(1,'文章信息填写不完整');
+    if(strlen($data['arti_title']) > 30) responseState(1,'文章题目过长');
+    if($data['arti_title'] != strip_tags($data['arti_title'])) return responseState(1,'你输入的文章题目不合法');
+    if($data['arti_content'] != strip_tags($data['arti_content']))return responseState(1,'你输入的文章题目不合法');
+    return responseState(0,'验证通过');
+}
+
+/**
+ * 验证相册信息
+ * @param $data
+ * @return \Illuminate\Http\JsonResponse
+ */
+function validateAlbumData($data)
+{
+    if(emptyArray($data)) return responseState(1,'相册信息填写不完整');
+    if(strlen($data['albu_name']) > 30) return responseState(1,'你填写的相册名字过长');
+    if(strlen($data['albu_introduce']) > 200) return responseState(1,'你填写的相册介绍过长');
+    return responseState(0,'验证通过');
+}
+
+/**
+ * 验证相册密保信息
+ * @param $data
+ * @return mixed
+ */
+function validateAlbumSecSty($data)
+{
+    if(strlen($data['albu_question']) > 30) return responseState(1,'你填写的相册密保问题过长');
+    if(strlen($data['albu_answer']) > 30) return responseState(1,'你填写的相册密保答案过长');
+    return responseState(0,'验证通过');
+}
+

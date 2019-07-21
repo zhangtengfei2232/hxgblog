@@ -1,12 +1,37 @@
 <?php
 
-
 namespace App\Model;
-
 
 class Photo extends BaseModel
 {
     protected $table = 'photo';
+
+    /**
+     * 添加相册
+     * @param $album_photo
+     * @param $album_id
+     * @return bool
+     */
+    public static function addAlbumPhotoData($album_photo, $album_id)
+    {
+        foreach ($album_photo as $photo){
+            if(! Photo::insert(['phot_path' => $photo,'albu_id' => $album_id,'created_at' => time()])){
+                return false;
+            }
+        }
+        return true;
+
+    }
+
+    /**
+     * 删除相册照片
+     * @param $del_photo_id_data
+     * @return bool
+     */
+    public static function deleteMultiplePhotoData($del_photo_id_data)
+    {
+         return (Photo::whereIn('phot_id',$del_photo_id_data)->delete() == count($del_photo_id_data));
+    }
 
     /**
      * 查询相册的第一张照片
@@ -61,9 +86,25 @@ class Photo extends BaseModel
         return $album_img_road;
     }
 
+    /**
+     * 删除相册照片
+     * @param $album_id
+     * @return bool
+     */
     public static function deleteAlbumImgData($album_id)
     {
-        return (Photo::where('albu_id', $album_id)->delete() > 0);
+        Photo::where('albu_id', $album_id)->delete();
+        return true;
+    }
+
+    /**
+     * 查询相册照片
+     * @param $album_id
+     * @return mixed
+     */
+    public static function selectAlbumImageData($album_id)
+    {
+        return Photo::where('albu_id', $album_id)->get();
     }
 
 }

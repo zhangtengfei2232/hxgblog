@@ -75,14 +75,18 @@ function isTimeGreater($time, $interval = 10)
  * 上传文件
  * @param $files
  * @param $disk
+ * @param bool $is_music_file
  * @return mixed
  */
-function uploadFile($files, $disk)
+function uploadFile($files, $disk, $is_music_file = false)
 {
-    $file_name = time() . '-' . $files->getClientOriginalName();
-    $files->storeAs('./',$file_name, $disk);
-    $exist_file = file_exists(storage_path().'\\app\public\\'.$disk.'\\'.$file_name);
-    if($exist_file) return responseState(0,'上传成功',$file_name);
+    $file_name = $files->getClientOriginalName();
+    $file_path = uniqid().time() . '-' . $file_name;
+    $files->storeAs('./',$file_path, $disk);
+    $exist_file = file_exists(storage_path().'\\app\public\\'.$disk.'\\'.$file_path);
+    if($exist_file){
+        return ($is_music_file) ? responseState(0,'上传成功',[$file_name,$file_path]) : responseState(0,'上传成功',$file_path);
+    }
     return responseState(1,'上传失败');
 }
 

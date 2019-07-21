@@ -98,9 +98,17 @@ Route::namespace('BackControllers')->group(function (){
         Route::post('addAlbumSecretSecurity', 'MaAlbumController@addAlbumSecretSecurity');      //添加相册密保
         Route::post('deleteAlbumSecretSecurity', 'MaAlbumController@deleteAlbumSecretSecurity');//删除相册密保
         Route::post('updateAlbumSecretSecurity', 'MaAlbumController@updateAlbumSecretSecurity');//修改相册密保
+        Route::get('selectAlbumPhoto', 'MaAlbumController@selectAlbumPhoto');                   //查询相册照片
+        Route::post('addAlbumImage', 'MaAlbumController@addAlbumImage');                        //上传图片
+        Route::post('deleteAlbumPhoto', 'MaAlbumController@deleteAlbumPhoto');                  //删除相册图片
 
-
-
+        Route::get('selectExhibit', 'MaExhibitController@selectExhibit');                       //查询展览内容
+        Route::post('addExhibit', 'MaExhibitController@addExhibit');                            //添加展览内容
+        Route::post('deleteMotto', 'MaExhibitController@deleteMotto');                          //删除展览内容
+        Route::post('updateExhibit', 'MaExhibitController@updateExhibit');                      //修改展览内容
+        Route::get('byTimeSelectExhibit', 'MaExhibitController@byTimeSelectExhibit');           //根据时间查询展览内容
+        Route::post('replaceExhibit', 'MaExhibitController@replaceExhibit');                     //替换展览内容
+        Route::get('selectAloneExhitbit', 'MaExhibitController@selectAloneExhitbit');           //查单个展览内容
     });
 
 });

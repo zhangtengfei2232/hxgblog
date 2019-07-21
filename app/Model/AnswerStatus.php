@@ -50,8 +50,9 @@ class AnswerStatus extends BaseModel
      */
     public static function deleteAnswerStatus($album_id)
     {
-        return (AnswerStatus::where('albu_id', $album_id)->delete() > 0);
-
+        AnswerStatus::where('albu_id', $album_id)->delete();
+        return true;
     }
+
 
 }

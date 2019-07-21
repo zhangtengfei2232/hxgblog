@@ -54,21 +54,38 @@ function validateCommentContent($comment_content)
  * @param $status
  * @return mixed
  */
-function judgeReceiveFiles($file, $status = true)
+function judgeReceiveFiles($file, $status = 1)
 {
     if(!$file->isValid()){
         return responseState(1,'上传失败,请重新上传');
     }
-    if($status){
+    if($status == 1){
         $file_ypes = array('jpg', 'JPG', 'png', 'PNG', 'jpeg', 'JPEG');
-        $isInFileType = in_array($file->getClientOriginalExtension(), $file_ypes);
-        if(!$isInFileType) return responseState(1,'你上传的图片不合法');
-        return responseState(0,'验证通过');
+        if(!in_array($file->getClientOriginalExtension(), $file_ypes))
+            return responseState(1,'你上传的图片不合法');
+    }elseif ($status == 2){
+        $file_types = array('mp3','MP3');
+        if(!in_array($file->getClientOriginalExtension(), $file_types))
+            return responseState(1,'你上传的文件不合法');
+    }elseif ($status == 3){
+        $file_types = array('PDF','pdf', 'WORD', 'word');
+        if(!in_array($file->getClientOriginalExtension(), $file_types))
+            return responseState(1,'你上传的文件不合法');
     }
-    $file_types = array('PDF','pdf', 'WORD', 'word');
-    if(!in_array($file->getClientOriginalExtension(), $file_types))
-        return responseState(1,'你上传的文件不合法');
     return responseState(0,'验证通过');
+}
+
+/**
+ * 验证多个文件
+ * @param $file_data
+ * @return bool
+ */
+function judgeMultipleFile($file_data)
+{
+    foreach ($file_data as $file){
+        if(judgeReceiveFiles($file)['code'] == 1) return false;
+    }
+    return true;
 }
 
 /**
@@ -108,5 +125,19 @@ function validateAlbumSecSty($data)
     if(strlen($data['albu_question']) > 30) return responseState(1,'你填写的相册密保问题过长');
     if(strlen($data['albu_answer']) > 30) return responseState(1,'你填写的相册密保答案过长');
     return responseState(0,'验证通过');
+}
+
+/**
+ * 验证展览内容是否合法
+ * @param $data
+ * @return mixed
+ */
+function validateExhibit($data)
+{
+    if(emptyArray($data)) return responseState(1,'你填写的不完整');
+    if(strlen($data['exht_name']) > 100) return responseState(1,'你填写的名言名字过长');
+    if(strlen($data['exht_content']) > 220) return responseState(1,'你填写的名言内容过长');
+    return responseState(0,'验证通过');
+
 }
 

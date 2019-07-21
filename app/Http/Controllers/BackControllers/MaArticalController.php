@@ -4,6 +4,7 @@ namespace App\Http\Controllers\BackControllers;
 use App\Http\Controllers\Controller;
 use App\Model\Artical;
 use App\Model\ArticalType;
+use App\Model\Comment;
 use App\Model\Type;
 use Illuminate\Http\Request;
 
@@ -62,15 +63,24 @@ class MaArticalController extends Controller
         try{
             $del_art_all_infor = Artical::deleteArticalRelevantData(config('deleteartical'), $art_id_data);
             $updat_type_num    = Type::reduceArticalTypeNum($type_id_num);
-            if($del_art_all_infor && $updat_type_num) Artical::commit();
+            if($del_art_all_infor && $updat_type_num){
+                Artical::commit();
+                deleteMultipleFile($art_cover_road, config('upload.artical'));  //删除文章的封面
+                return responseToJson(0,'删除文章成功');
+            }
         }catch (\Exception $e){
             Artical::rollBack();
-            return responseToJson(1,"删除失败");
+            return responseToJson(1,"删除文章失败");
         }
-        deleteMultipleFile($art_cover_road, config('upload.artical'));  //删除文章的封面
-        return responseToJson(0,"删除成功");
+
+        return responseToJson(0,"删除文章失败");
     }
 
+    /**
+     * 修改文章
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateArtical(Request $request)
     {
         if(!$request->isMethod('POST')) return responseToJson(1,'请求方式不对');

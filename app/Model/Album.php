@@ -39,9 +39,19 @@ class Album extends BaseModel
         return (Album::where('albu_id', $data['albu_id'])->update($data) > 0);
     }
 
-    public static function updateAlbumSecStyData($data)
+    /**
+     * 修改相册的数量
+     * @param $album_id
+     * @param $num
+     * @param $is_del
+     * @return bool
+     */
+    public static function updateAlbumPhotoNum($album_id, $num, $is_del = false)
     {
-        return (Album::where('albu_id', $data['albu_id'])->update($data) > 0);
+        $ori_num = Album::select('photo_num')->where('albu_id',$album_id)->first()->photo_num;
+        ($is_del) ? $new_num = $ori_num - $num : $new_num = $ori_num + $num;
+        return (Album::where('albu_id', $album_id)
+            ->update(['photo_num' => $new_num]) > 0);
     }
     /**
      * 查找所有相册信息

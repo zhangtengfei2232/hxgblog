@@ -12,6 +12,7 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
+        "mews/captcha": "^2.2",
         "predis/predis": "^1.1"
     },
     "require-dev": {
@@ -38,7 +39,8 @@
         },
         "classmap": [
             "database/seeds",
-            "database/factories"
+            "database/factories",
+            "app/Libs/qcloudsms_php-master"
         ],
         "files":[
             "app/Helpers/functions.php",

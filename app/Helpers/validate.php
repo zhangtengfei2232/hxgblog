@@ -59,17 +59,23 @@ function judgeReceiveFiles($file, $status = 1)
     if(!$file->isValid()){
         return responseState(1,'上传失败,请重新上传');
     }
+    if(strpos($file->getClientOriginalName()," ")) return responseState(1,'你上传的图片文件名有空格!');
+    $type = $file->getClientOriginalExtension();
     if($status == 1){
         $file_ypes = array('jpg', 'JPG', 'png', 'PNG', 'jpeg', 'JPEG');
-        if(!in_array($file->getClientOriginalExtension(), $file_ypes))
+        if(!in_array($type, $file_ypes))
             return responseState(1,'你上传的图片不合法');
     }elseif ($status == 2){
         $file_types = array('mp3','MP3');
-        if(!in_array($file->getClientOriginalExtension(), $file_types))
-            return responseState(1,'你上传的文件不合法');
+        if(!in_array($type, $file_types))
+            return responseState(1,'你上传的音乐文件不合法');
     }elseif ($status == 3){
+        $file_types = array('lrc');
+        if(!in_array($type, $file_types))
+            return responseState(1,'你上传的歌词文件不合法');
+    }elseif ($status == 4){
         $file_types = array('PDF','pdf', 'WORD', 'word');
-        if(!in_array($file->getClientOriginalExtension(), $file_types))
+        if(!in_array($type, $file_types))
             return responseState(1,'你上传的文件不合法');
     }
     return responseState(0,'验证通过');
@@ -83,9 +89,10 @@ function judgeReceiveFiles($file, $status = 1)
 function judgeMultipleFile($file_data)
 {
     foreach ($file_data as $file){
-        if(judgeReceiveFiles($file)['code'] == 1) return false;
+        $judge_file = judgeReceiveFiles($file);
+        if($judge_file['code'] == 1) return responseState(1,$judge_file['msg']);
     }
-    return true;
+    return responseState(0,'验证通过');
 }
 
 /**
@@ -137,6 +144,19 @@ function validateExhibit($data)
     if(emptyArray($data)) return responseState(1,'你填写的不完整');
     if(strlen($data['exht_name']) > 100) return responseState(1,'你填写的名言名字过长');
     if(strlen($data['exht_content']) > 220) return responseState(1,'你填写的名言内容过长');
+    return responseState(0,'验证通过');
+}
+
+function validateSmsLogin($code, $phone)
+{
+    if(! session()->has('code_info')) return responseState(1,'请你重新获取验证码');
+    $login_info     = explode(',',session('code_info'));
+    $send_code      = $login_info[0];                          //发送的验证码
+    if($send_code != $code) return responseState(1,'你输入的验证码不正确');
+    $send_code_time = $login_info[1];                          //发送验证码的时间
+    if(time() - $send_code_time > 60) return responseState(1,'你需要重新获取验证码');
+    $send_phone          = $login_info[2];                     //发送验证码的电话
+    if($send_phone != $phone) return responseState(1,'你填写的手机号不正确');
     return responseState(0,'验证通过');
 
 }

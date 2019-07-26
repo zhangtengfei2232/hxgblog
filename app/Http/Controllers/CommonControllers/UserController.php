@@ -70,7 +70,7 @@ class UserController extends Controller
             //用户没有更改了头像
             if(!$request->hasFile('headPortrait')){
                 Users::updateUserInformationData($data);
-                return responseToJson(0,'修改成功666',$data);
+                return responseToJson(0,'修改成功',$data);
             }
             //用户修改头像
             $head_portrait_file = $request->headPortrait;
@@ -88,5 +88,41 @@ class UserController extends Controller
             if(!empty($upload_img_road)) deleteFile($upload_img_road, $disk);
             return responseToJson(1,'修改信息失败');
         }
+    }
+
+    /**登录后修改用户密码
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updatePassword(Request $request)
+    {
+
+        if($request->role == "admin") {
+            if (! session()->has('admin')) {
+                return responseToJson(2, '请重新登录');
+            }
+            $user = session('admin');
+        }else{
+            if (! session()->has('user')) {
+                return responseToJson(2, '请重新登录');
+            }
+            $user = session('user');
+        }
+        return Users::updatePassword($user->phone, $request->new_password) ? responseToJson(0,'修改密码成功')
+                : responseToJson(1,'修改密码失败');
+    }
+
+    /**
+     * 用户忘记密码，根据短信验证码修改密码
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function byCodeUpdatePassword(Request $request)
+    {
+        $sms_code = $request->sms_code;
+        $phone    = $request->phone;
+        $validateSms = validateSmsLogin($sms_code, $phone);
+        if($validateSms['code'] == 1) return responseToJson(1,$validateSms['msg']);
+        return Users::updatePassword($phone, $request->new_password) ? responseToJson(0,'修改密码成功') : responseToJson(1,'修改密码失败');
     }
 }

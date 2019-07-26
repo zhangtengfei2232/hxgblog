@@ -4,15 +4,18 @@ namespace App\Http\Controllers\FrontControllers;
 
 use App\Http\Controllers\Controller;
 use App\Model\Artical;
+use App\Model\Exhibit;
+use App\Model\Photo;
 
 class MainpageController extends Controller
 {
     //首页
     public function showMainPage()
     {
-        $data['new_artical'] = Artical::selectNewArticalData();
+        $data['new_artical'] = Artical::timeResolution(Artical::selectNewArticalData());
         $data['browse_top']  = Artical::selectBrowseTopData();
-        $data['weather']     = getUserPosition("218.29.60.105")['data']['city'];
+        $data['new_photo']   = Photo::selectNewPhotoData();
+        $data['exhibit_data'] = explode('+',Exhibit::selectPresentExhibitData(1));
         return responseToJson(0,"success",$data);
     }
 

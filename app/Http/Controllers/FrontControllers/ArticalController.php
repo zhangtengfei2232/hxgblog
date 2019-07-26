@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Model\Artical;
 use App\Model\ArticalType;
 use App\Model\Comment;
+use App\Model\Exhibit;
 use App\Model\PraiseTrample;
 use App\Model\Type;
 use Illuminate\Http\Request;
@@ -29,10 +30,11 @@ class ArticalController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function byTypeSelectArtical(Request $request)
+    public function typeSelectArtical(Request $request)
     {
         ($request->has('page')) ? $page = $request->page : $page = 0;
         $art_id_datas = ArticalType::byTypeSelectArticalId($request->type_id, $page);
+//        return responseToJson(0,'asdas',$art_id_datas);
         $datas['articals'] = Artical::byIdSelectArticalData($art_id_datas);
         return responseToJson(0,'success', $datas);
     }
@@ -56,6 +58,9 @@ class ArticalController extends Controller
         $datas['artical_data']          = Artical::byIdSelectArticalData($art_id);    //文章数据
         $datas['praise_trample_status'] = PraiseTrample::selectArticalPraiseTrample($art_id[0]);
         $datas['artical_types']         = ArticalType::selectArticalTypeName($art_id[0]);
+        $datas['music_path']            = Exhibit::selectPresentMusicFile(4);
+        $datas['art_say']               = Exhibit::selectPresentExhibitData(2);
+        $datas['music_lyric']           = file_get_contents(storage_path().'\\app\public\music_lyric\\'.Exhibit::selectPresentExhibitData(4));
         return responseToJson(0,'success', $datas);
     }
 

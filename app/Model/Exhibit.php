@@ -42,6 +42,15 @@ class Exhibit extends BaseModel
     }
 
     /**
+     * 批量删除展览内容
+     * @param $exht_id_data
+     * @return bool
+     */
+    public static function deleteExhibitData($exht_id_data)
+    {
+        return Exhibit::whereIn('exht_id',$exht_id_data)->delete() == count($exht_id_data);
+    }
+    /**
      * 查询单个展览内容
      * @param $exht_id
      * @return mixed
@@ -72,5 +81,44 @@ class Exhibit extends BaseModel
     {
       return Exhibit::where('exht_id', $orig_select_id)->update(['exht_status' => 0]) > 0 && Exhibit::where('exht_id', $new_select_id)->update(['exht_status' => 1]) > 0;
     }
+
+    /**
+     * 查询当前展示的名言/音乐
+     * @param $dist
+     * @return mixed
+     */
+    public static function selectPresentExhibitData($dist)
+    {
+        return Exhibit::select('exht_content')->where([['exht_distinguish',$dist], ['exht_status', 1]])->first()->exht_content;
+    }
+
+    /**
+     * 查询当前的音乐文件名
+     * @param $dist
+     * @return mixed
+     */
+    public static function selectPresentMusicFile($dist)
+    {
+        return Exhibit::select('exht_name')->where([['exht_distinguish',$dist], ['exht_status', 1]])->first()->exht_name;
+    }
+
+    /**
+     * 批量查询音乐文件
+     * @param $music_id
+     * @return array
+     */
+    public static function selectMusicRoad($music_id)
+    {
+        $music_road = [];
+        $music_lyric = [];
+        $road_data = Exhibit::select('exht_name', 'exht_content')->whereIn('exht_id', $music_id)->get()->toArray();
+        foreach ($road_data as $key => $road){
+            array_push($music_road, $road_data[$key]['exht_name']);
+            array_push($music_lyric, $road_data[$key]['exht_content']);
+        }
+        return [$music_road, $music_lyric];
+    }
+
+
 
 }

@@ -32,12 +32,15 @@ class BaseModel extends Model
         return strtotime(parent::fromDateTime($value));
     }
     //文章时间拆分函数
-    public static function timeResolution($data)
+    public static function timeResolution($data, $is_art = true)
     {
         if(! is_array($data)) $data = json_decode(json_encode($data));
         for($i = 0; $i < count($data); $i++){
             $data[$i] = (array)$data[$i];
             $time = explode('-',$data[$i]['created_at']);
+            if($is_art){
+                if(strlen($data[$i]['arti_content']) > 150 && $is_art) $data[$i]['arti_content'] = mb_substr($data[$i]['arti_content'],0,1).".......";
+            }
             $data[$i]['years']     = $time[0];
             $data[$i]['monthDay'] = $time[1] . '-' . $time[2];
             unset($data[$i]['created_at']);
@@ -61,6 +64,7 @@ class BaseModel extends Model
         (!empty(session()->has('user'))) ? $is_login = true : $is_login = false;
         ($is_login) ? $user_phone = session('user')->phone : $user_phone = " ";
         ($is_login && session('user')->role == 1) ? $is_admin = true : $is_admin = false;
+//        dd
         foreach ($data as $key => $value) {
             ($data[$key]['phone'] == $user_phone || $is_admin) ? $data[$key]['is_mine'] = true : $data[$key]['is_mine'] = false;
             $child_comment = self::selectALLChildMessageData($config_param,$data[$key][$config_param['id_field']], $user_phone, $data[$key]['is_mine'], $is_msg);

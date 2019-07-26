@@ -6,6 +6,7 @@ namespace App\Http\Controllers\FrontControllers;
 
 use App\Http\Controllers\Controller;
 use App\Model\BaseModel;
+use App\Model\Exhibit;
 use App\Model\LeaveMessage;
 use Illuminate\Http\Request;
 
@@ -18,10 +19,16 @@ class LeaveMessageController extends Controller
      */
     public function selectLeaveMessage(Request $request)
     {
-        $data = BaseModel::timeResolution(LeaveMessage::selectTopLevelMessage(config('selectfield.leave_message'),$request->page));
+        $data['leave_msg_data'] = BaseModel::timeResolution(LeaveMessage::selectTopLevelMessage(config('selectfield.leave_message'),$request->page), false);
+        $data['leave_say_data']  = Exhibit::selectPresentExhibitData(3);
         return responseToJson(0,'查询成功',$data);
     }
 
+    /**
+     * 添加留言
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function addLeaveMessage(Request $request)
     {
         $user_infor = session('user');

@@ -24,27 +24,37 @@ Route::any('unAuth', function () {
 Route::get('/', function () {
     return view('welcome');
 });
+
+/**
+ * 错误路由
+ */
+Route::namespace('ErrorControllers')->group(function () {
+   Route::get('showFourView', 'EmptyController@showFourView');
+   Route::get('showEmptyView', 'EmptyController@showEmptyView');
+});
+
 Route::namespace('FrontControllers')->group(function () {
 
-    Route::get('mainPage', 'MainpageController@showMainPage');                   //显示主页面
-    Route::post('registerUser', 'UserController@registerUser');                  //注册新用户
-    Route::get('showArticalPage', 'ArticalController@showArticalPage');          //显示文章页面
-    Route::get('byTypeSelectArtical', 'ArticalController@byTypeSelectArtical');  //根据文章类型搜索文章
-    Route::get('showArticalDetail', 'ArticalController@showArticalDetail');      //查一篇文章的所有内容
-    Route::post('byNameSelectArtical', 'ArticalController@byNameSelectArtical'); //根据文章名字模糊查询文章
-    Route::get('byTopIdSelectAllComment','ArticalController@byTopIdSelectAllComment');//查某一个评论的所有评论
-    Route::get('getArticalAllType', 'ArticalController@getArticalAllType');         //获取文章类型
+
+    Route::get('mainPage', 'MainpageController@showMainPage');                            //显示主页面
+    Route::post('registerUser', 'UserController@registerUser');                           //注册新用户
+    Route::get('showArticalPage', 'ArticalController@showArticalPage');                   //显示文章页面
+    Route::get('typeSelectArtical', 'ArticalController@typeSelectArtical');               //根据文章类型搜索文章
+    Route::get('showArticalDetail', 'ArticalController@showArticalDetail');               //查一篇文章的所有内容
+    Route::post('byNameSelectArtical', 'ArticalController@byNameSelectArtical');          //根据文章名字模糊查询文章
+    Route::get('byTopIdSelectAllComment','ArticalController@byTopIdSelectAllComment');    //查某一个评论的所有评论
+    Route::get('getArticalAllType', 'ArticalController@getArticalAllType');               //获取文章类型
 
     Route::get('selectAllAlbumInformation', 'AlbumController@selectAllAlbumInformation'); //查询所有相册信息
-    Route::post('judgeQuestionAnswer', 'AlbumController@judgeQuestionAnswer');   //判断相册问题答案是否正确
-    Route::get('byAlbumIdSelectPhoto', 'AlbumController@byAlbumIdSelectPhoto');  //根据相册的ID查询照片
+    Route::post('judgeQuestionAnswer', 'AlbumController@judgeQuestionAnswer');            //判断相册问题答案是否正确
+    Route::get('byAlbumIdSelectPhoto', 'AlbumController@byAlbumIdSelectPhoto');           //根据相册的ID查询照片
 
-    Route::get('selectLeaveMessage', 'leaveMessageController@selectLeaveMessage');  //查询留言信息
+    Route::get('selectLeaveMessage', 'leaveMessageController@selectLeaveMessage');        //查询留言信息
     //前台需要验证的路由
     Route::middleware('loginCheck', 'auth:api', 'updateToken:api')->group(function () {
-        Route::post('sendReplayComment','ArticalController@sendReplayComment');  //添加回复评论
-        Route::post('addPublishComment', 'ArticalController@addPublishComment'); //添加评论
-        Route::post('deleteArticalComment', 'ArticalController@deleteArticalComment');//删除文章评论
+        Route::post('sendReplayComment','ArticalController@sendReplayComment');            //添加回复评论
+        Route::post('addPublishComment', 'ArticalController@addPublishComment');           //添加评论
+        Route::post('deleteArticalComment', 'ArticalController@deleteArticalComment');     //删除文章评论
         Route::post('praiseOrTrampleArtical', 'ArticalController@praiseOrTrampleArtical'); //文章赞/踩
 
         Route::post('replayMessage', 'LeaveMessageController@replayMessage');           //回复留言
@@ -60,14 +70,27 @@ Route::namespace('CommonControllers')->group(function () {
      */
     // '前台/后台' 用户退出
     Route::middleware('auth:api')->group(function () {
+
         Route::get('frontLogout', 'LoginController@frontLogout');
         Route::get('backLogout', 'LoginController@backLogout');
     });
+
+    Route::get('downloadFile', 'ObtainFileController@downloadFile');                  //下载后台资源
+
+    Route::get('getCityName', 'ObtainFileController@getCityName');                    //获取天气城市名
+
+    Route::get('getSmsCode', 'TencentSmsController@getSmsCode');
+    Route::post('byCodeUpdatePassword', 'UserController@byCodeUpdatePassword');      //用户根据短信验证码修改密码
     //前台用户登录
     Route::post('frontLogin', 'LoginController@frontLogin');
 
+    //前台短信登录
+    Route::post('frontSmsLogin', 'LoginController@frontSmsLogin');                    //前台短信登录
+    Route::post('backSmsLogin', 'LoginController@backSmsLogin');                      //后台短信登录
     //后台用户登录
     Route::post('backLogin', 'LoginController@backLogin');
+
+    Route::get('getCaptcha', 'CaptchaController@getCaptcha');                         //生成验证码
 
     //验证前台用户是否登录
     Route::get('checkLogin', 'LoginController@checkLogin');
@@ -79,10 +102,12 @@ Route::namespace('CommonControllers')->group(function () {
     Route::middleware('loginCheck', 'auth:api', 'updateToken:api')->group(function () {
         Route::get('getUserInformation', 'UserController@getUserInformation');        //获取用户信息
         Route::post('updateUserInformation', 'UserController@updateUserInformation'); //修改用户信息
+        Route::post('updatePassword', 'UserController@updatePassword');               //修改用户密码
     });
 });
 Route::namespace('BackControllers')->group(function (){
     Route::middleware('loginCheck', 'auth:api', 'updateToken:api')->group(function () {
+
         Route::get('getArtical', 'MaArticalController@getArtical');                        //获取文章
         Route::get('combinateSelectArtical', 'MaArticalController@combinateSelectArtical');//组合查询文章
         Route::get('byTypeSelectArtical', 'MaArticalController@byTypeSelectArtical');      //根据文章类型搜索
@@ -104,11 +129,18 @@ Route::namespace('BackControllers')->group(function (){
 
         Route::get('selectExhibit', 'MaExhibitController@selectExhibit');                       //查询展览内容
         Route::post('addExhibit', 'MaExhibitController@addExhibit');                            //添加展览内容
-        Route::post('deleteMotto', 'MaExhibitController@deleteMotto');                          //删除展览内容
+        Route::post('deleteExhibit', 'MaExhibitController@deleteExhibit');                      //删除展览内容
         Route::post('updateExhibit', 'MaExhibitController@updateExhibit');                      //修改展览内容
         Route::get('byTimeSelectExhibit', 'MaExhibitController@byTimeSelectExhibit');           //根据时间查询展览内容
-        Route::post('replaceExhibit', 'MaExhibitController@replaceExhibit');                     //替换展览内容
+        Route::post('replaceExhibit', 'MaExhibitController@replaceExhibit');                    //替换展览内容
         Route::get('selectAloneExhitbit', 'MaExhibitController@selectAloneExhitbit');           //查单个展览内容
+
+        Route::get('getArtType', 'MaArtTypeController@getArtType');                             //获取文章类型
+        Route::get('byTimeSelectArtType', 'MaArtTypeController@byTimeSelectArtType');           //根据时间查询文章类型
+        Route::post('addArtType', 'MaArtTypeController@addArtType');                            //添加文章类型
+        Route::post('deleteArtType', 'MaArtTypeController@deleteArtType');                      //删除文章类型
+        Route::post('updateArtType', 'MaArtTypeController@updateArtType');                      //修改文章类型
+
     });
 
 });

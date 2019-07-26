@@ -4,7 +4,6 @@ namespace App\Http\Controllers\BackControllers;
 use App\Http\Controllers\Controller;
 use App\Model\Artical;
 use App\Model\ArticalType;
-use App\Model\Comment;
 use App\Model\Type;
 use Illuminate\Http\Request;
 
@@ -65,15 +64,13 @@ class MaArticalController extends Controller
             $updat_type_num    = Type::reduceArticalTypeNum($type_id_num);
             if($del_art_all_infor && $updat_type_num){
                 Artical::commit();
-                deleteMultipleFile($art_cover_road, config('upload.artical'));  //删除文章的封面
-                return responseToJson(0,'删除文章成功');
             }
         }catch (\Exception $e){
             Artical::rollBack();
             return responseToJson(1,"删除文章失败");
         }
-
-        return responseToJson(0,"删除文章失败");
+        deleteMultipleFile($art_cover_road, config('upload.artical'));  //删除文章的封面
+        return responseToJson(0,'删除文章成功');
     }
 
     /**

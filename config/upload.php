@@ -4,4 +4,5 @@ return [
     'image'         => 'image',
     'artical'       => 'artical',
     'music'         => 'music',
+    'music_lyric'   => 'music_lyric',
 ];

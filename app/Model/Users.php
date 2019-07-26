@@ -114,9 +114,45 @@ class Users extends Authenticatable
 
     }
 
+    /**
+     * 查询用户的角色
+     * @param $phone
+     * @return mixed
+     */
     public static function selectUserRoles($phone)
     {
         return Users::select('role')->where('phone', $phone)->first()->role;
+    }
+
+    /**
+     * 判断是否有这个用户
+     * @param $phone
+     * @return mixed
+     */
+    public static function validateUser($phone)
+    {
+        return Users::where('phone',$phone)->exists();
+    }
+
+    /**
+     * 获取用户实例
+     * @param $phone
+     * @return mixed
+     */
+    public static function getUserData($phone)
+    {
+        return Users::where('phone', $phone)->first();
+    }
+
+    /**
+     * 修改用户密码
+     * @param $phone
+     * @param $new_password
+     * @return bool
+     */
+    public static function updatePassword($phone, $new_password)
+    {
+        return Users::where('phone',$phone)->update(['password' => bcrypt($new_password)]) > 0;
     }
 
 

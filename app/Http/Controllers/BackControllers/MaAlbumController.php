@@ -160,7 +160,7 @@ class MaAlbumController extends Controller
     {
         $album_photo    = $request->file();
         $validate_photo = judgeMultipleFile($album_photo);
-        if(!$validate_photo) return responseToJson(1,'你上传图片不合法');
+        if($validate_photo['code'] == 1) return responseToJson(1,$validate_photo['msg']);
         $disk = config('upload.image');
         Album::beginTransaction();
         try{

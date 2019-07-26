@@ -8,12 +8,49 @@ class Type extends BaseModel
     protected $table = 'type';
     const UPDATED_AT = null;
 
+    /**
+     * 添加文章类型
+     * @param $data
+     * @return mixed
+     */
+    public static function addArtTypeData($data)
+    {
+        return Type::insert($data);
+    }
+
+    /**
+     * 删除文章类型
+     * @param $type_id_data
+     * @return bool
+     */
+    public static function deleteArtTypeData($type_id_data)
+    {
+        return Type::whereIn('type_id', $type_id_data)->delete() == count($type_id_data);
+
+    }
+    public static function updateArtTypeData($type_id, $type_name)
+    {
+        return Type::where('type_id', $type_id)->update(['type_name' => $type_name]) > 0;
+    }
     //查文章的所有标签
     public static function selectAllTypeData()
     {
         return Type::all();
     }
 
+    /**
+     * 查询文章类型
+     * @param $total
+     * @param array $time
+     * @return Type
+     */
+    public static function selectArtTypeData($total, $time = [])
+    {
+        $typeQuery = new Type();
+        if(!empty($time)) $typeQuery = $typeQuery->whereBetween('created_at',$time);
+        $typeQuery = $typeQuery->paginate($total);
+        return $typeQuery;
+    }
     /**
      * 增加文章类型对应的类型总数
      * @param $type_id_data

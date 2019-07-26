@@ -24,6 +24,16 @@ class Photo extends BaseModel
     }
 
     /**
+     * 查询最新的6张照片
+     * @return mixed
+     */
+    public static function selectNewPhotoData()
+    {
+        return Photo::select('phot_path')->orderBy('created_at','desc')->limit(6)->get();
+//        ->where('albu_question',"")->leftJoin('album','photo.albu_id','=','album.albu_id')
+    }
+
+    /**
      * 删除相册照片
      * @param $del_photo_id_data
      * @return bool

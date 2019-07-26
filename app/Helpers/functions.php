@@ -78,15 +78,13 @@ function isTimeGreater($time, $interval = 10)
  * @param bool $is_music_file
  * @return mixed
  */
-function uploadFile($files, $disk, $is_music_file = false)
+function uploadFile($files, $disk, $is_music = false)
 {
     $file_name = $files->getClientOriginalName();
-    $file_path = uniqid().time() . '-' . $file_name;
+    ($is_music) ? $file_path = $file_name : $file_path = uniqid().time() . '-' . $file_name;
     $files->storeAs('./',$file_path, $disk);
     $exist_file = file_exists(storage_path().'\\app\public\\'.$disk.'\\'.$file_path);
-    if($exist_file){
-        return ($is_music_file) ? responseState(0,'上传成功',[$file_name,$file_path]) : responseState(0,'上传成功',$file_path);
-    }
+    if($exist_file) return responseState(0,'上传成功',$file_path);
     return responseState(1,'上传失败');
 }
 
@@ -140,12 +138,15 @@ function getUserIp()
  */
 function getUserPosition($ip)
 {
-    if(empty($ip)){
-        return  '缺少用户ip';
-    }
     $url = 'http://ip.taobao.com/service/getIpInfo.php?ip='.$ip;
-    $ipContent = file_get_contents($url);
-    $ipContent = json_decode($ipContent,true);
-    return $ipContent;
+    try{
+        $ipContent = file_get_contents($url);
+        $ipContent = json_decode($ipContent,true);
+        return responseState(0,'获取成功', $ipContent);
+    }catch (\Exception $e){
+        return responseState(1,'获取失败');
+    }
+
+
 }
 

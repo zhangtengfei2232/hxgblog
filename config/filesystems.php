@@ -70,6 +70,10 @@ return [
             'driver' => 'local',
             'root' => storage_path('app/public/music'),
         ],
+        'music_lyric' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/music_lyric'),
+        ],
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

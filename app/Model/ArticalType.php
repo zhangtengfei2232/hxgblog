@@ -109,4 +109,18 @@ class ArticalType extends BaseModel
         return $art_type_data;
     }
 
+    /**
+     * 判断类型是否有文章存在
+     * @param $type_id_data
+     * @return mixed
+     */
+    public static function judgeTypeHasArt($type_id_data)
+    {
+        foreach ($type_id_data as $key => $id){
+            $is_has_art = ArticalType::where('type_id', $id)->count() > 0;
+            if($is_has_art) return responseState(1,'你所选类型有文章，无法删除！');
+        }
+        return responseState(0,'验证通过');
+    }
+
 }

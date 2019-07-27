@@ -34,7 +34,6 @@ class ArticalController extends Controller
     {
         ($request->has('page')) ? $page = $request->page : $page = 0;
         $art_id_datas = ArticalType::byTypeSelectArticalId($request->type_id, $page);
-//        return responseToJson(0,'asdas',$art_id_datas);
         $datas['articals'] = Artical::byIdSelectArticalData($art_id_datas);
         return responseToJson(0,'success', $datas);
     }
@@ -55,7 +54,7 @@ class ArticalController extends Controller
         $datas['new_articals']          = Artical::selectNewArticalData();            //最新文章
         $datas['browse_top']            = Artical::selectBrowseTopData();             //浏览最多的文章
         $datas['comments']              = Comment::selectTopLevelMessage(config('selectfield.comment'),'', $art_id[0]); //文章评论
-        $datas['artical_data']          = Artical::byIdSelectArticalData($art_id);    //文章数据
+        $datas['artical_data']          = Artical::byIdSelectArticalData($art_id, 2);    //文章数据
         $datas['praise_trample_status'] = PraiseTrample::selectArticalPraiseTrample($art_id[0]);
         $datas['artical_types']         = ArticalType::selectArticalTypeName($art_id[0]);
         $datas['music_path']            = Exhibit::selectPresentMusicFile(4);

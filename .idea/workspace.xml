@@ -2,105 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2553bbbf-fc56-47cd-9cf4-4120e55eaadc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/BackControllers/MaArtTypeController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/CommonControllers/CaptchaController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/CommonControllers/TencentSmsController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/ErrorControllers/EmptyController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/composer.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/demo/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/demo/composer/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/demo/composer/app.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/demo/composer/composer.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/demo/simple/app.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/PROJECT_VERSION" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/Qcloud.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/Qcloud/Sms.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/Qcloud/Sms/FileVoiceSender.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/Qcloud/Sms/SmsMobileStatusPuller.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/Qcloud/Sms/SmsMultiSender.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/Qcloud/Sms/SmsSenderUtil.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/Qcloud/Sms/SmsSingleSender.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/Qcloud/Sms/SmsStatusPuller.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/Qcloud/Sms/SmsVoicePromptSender.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/Qcloud/Sms/SmsVoiceVerifyCodeSender.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/Qcloud/Sms/TtsVoiceSender.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/Qcloud/Sms/VoiceFileUploader.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/SAMI_VERSION" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/classes.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/css/bootstrap-theme.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/css/bootstrap.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/css/sami.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/doc-index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/fonts/glyphicons-halflings-regular.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/fonts/glyphicons-halflings-regular.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/fonts/glyphicons-halflings-regular.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/fonts/glyphicons-halflings-regular.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/images/image1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/images/image2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/images/image3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/images/image4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/images/image5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/images/image6.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/images/image7.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/images/image8.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/images/image9.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/interfaces.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/js/bootstrap.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/js/jquery-1.11.1.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/js/typeahead.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/namespaces.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/opensearch.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/renderer.index" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/sami.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/search.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/docs/traits.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/gendoc.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/sami_config.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/src/FileVoiceSender.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/src/SmsMobileStatusPuller.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/src/SmsMultiSender.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/src/SmsSenderUtil.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/src/SmsSingleSender.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/src/SmsStatusPuller.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/src/SmsVoicePromptSender.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/src/SmsVoiceVerifyCodeSender.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/src/TtsVoiceSender.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/src/VoiceFileUploader.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Libs/qcloudsms_php-master/src/index.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/tencent.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/empty.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/error.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/hxgblog.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/hxgblog.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Helpers/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/functions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Helpers/validate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/validate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/BackControllers/MaAlbumController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/BackControllers/MaAlbumController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/BackControllers/MaArticalController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/BackControllers/MaArticalController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/BackControllers/MaExhibitController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/BackControllers/MaExhibitController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CommonControllers/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CommonControllers/LoginController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CommonControllers/ObtainFileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CommonControllers/ObtainFileController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CommonControllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CommonControllers/UserController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FrontControllers/ArticalController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FrontControllers/ArticalController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FrontControllers/LeaveMessageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FrontControllers/LeaveMessageController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FrontControllers/MainpageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FrontControllers/MainpageController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Model/ArticalType.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/ArticalType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Model/BaseModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/BaseModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Model/Exhibit.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/Exhibit.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Model/Photo.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/Photo.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Model/Type.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/Type.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Model/Users.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/Users.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/filesystems.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/upload.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/upload.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -119,17 +23,50 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/web.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="83" column="12" lean-forward="true" selection-start-line="83" selection-start-column="12" selection-end-line="83" selection-end-column="12" />
+            <state relative-caret-position="1704">
+              <caret line="80" selection-start-line="80" selection-end-line="80" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CommonControllers/TencentSmsController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="324">
+              <caret line="28" column="39" selection-start-line="28" selection-start-column="39" selection-end-line="28" selection-end-column="39" />
+              <folding>
+                <element signature="e#58#94#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/FrontControllers/MainpageController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="13" column="5" lean-forward="true" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/FrontControllers/ArticalController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="3" column="13" lean-forward="true" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+            <state relative-caret-position="312">
+              <caret line="56" column="83" selection-start-line="56" selection-start-column="83" selection-end-line="56" selection-end-column="83" />
+              <folding>
+                <element signature="e#57#93#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Model/Artical.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="64" column="7" lean-forward="true" selection-start-line="64" selection-start-column="7" selection-end-line="64" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -211,12 +148,12 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/CommonControllers/UserController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/CommonControllers/TencentSmsController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/FrontControllers/MainpageController.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/FrontControllers/ArticalController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/FrontControllers/LeaveMessageController.php" />
         <option value="$PROJECT_DIR$/app/Model/Photo.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/BackControllers/MaAlbumController.php" />
         <option value="$PROJECT_DIR$/app/Helpers/validate.php" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/FrontControllers/ArticalController.php" />
       </list>
     </option>
   </component>
@@ -330,6 +267,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -367,21 +305,7 @@
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="Http" type="462c0819:PsiDirectoryNode" />
               <item name="Controllers" type="462c0819:PsiDirectoryNode" />
-              <item name="BackControllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="hxgblog-backend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hxgblog-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
               <item name="FrontControllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="hxgblog-backend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hxgblog-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Model" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="hxgblog-backend" type="b2602c69:ProjectViewProjectNode" />
@@ -397,14 +321,13 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SearchEverywhereHistoryKey" value="backg&#9;ACTION&#9;Images.SetBackgroundImage&#10;backgr&#9;ACTION&#9;Images.SetBackgroundImage&#10;background&#9;ACTION&#9;Images.SetBackgroundImage" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../hxgblog-frontend" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -492,12 +415,14 @@
       <workItem from="1563505762439" duration="677000" />
       <workItem from="1563508268724" duration="47233000" />
       <workItem from="1563697935383" duration="40268000" />
-      <workItem from="1563930283995" duration="72769000" />
+      <workItem from="1563930283995" duration="72975000" />
+      <workItem from="1564128271692" duration="46000" />
+      <workItem from="1564197501049" duration="2108000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="759598000" />
+    <option name="totallyTimeSpent" value="761958000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -512,7 +437,7 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4990476" visible="true" weight="0.27114093" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4990476" visible="true" weight="0.27919462" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" sideWeight="0.50095236" side_tool="true" weight="0.1883378" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -732,13 +657,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Model/Artical.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1032">
-          <caret line="58" column="42" lean-forward="true" selection-start-line="58" selection-start-column="42" selection-end-line="58" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CommonControllers/ObtainFileController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="312">
@@ -796,32 +714,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CommonControllers/TencentSmsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
-          <folding>
-            <element signature="e#58#94#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/BackControllers/MaExhibitController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="348">
           <caret line="139" lean-forward="true" selection-start-line="139" selection-end-line="139" />
           <folding>
             <element signature="e#55#91#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/FrontControllers/ArticalController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="52" column="34" lean-forward="true" selection-start-line="52" selection-start-column="34" selection-end-line="52" selection-end-column="34" />
-          <folding>
-            <element signature="e#57#93#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -844,13 +742,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="321">
           <caret line="33" column="5" lean-forward="true" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/FrontControllers/MainpageController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="16" column="47" lean-forward="true" selection-start-line="16" selection-start-column="47" selection-end-line="16" selection-end-column="47" />
         </state>
       </provider>
     </entry>
@@ -889,17 +780,51 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/web.php">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="83" column="12" lean-forward="true" selection-start-line="83" selection-start-column="12" selection-end-line="83" selection-end-column="12" />
+        <state relative-caret-position="168">
+          <caret line="7" column="14" lean-forward="true" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/routes/web.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="3" column="13" lean-forward="true" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+        <state relative-caret-position="1704">
+          <caret line="80" selection-start-line="80" selection-end-line="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CommonControllers/TencentSmsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="28" column="39" selection-start-line="28" selection-start-column="39" selection-end-line="28" selection-end-column="39" />
+          <folding>
+            <element signature="e#58#94#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/FrontControllers/MainpageController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="13" column="5" lean-forward="true" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Model/Artical.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="64" column="7" lean-forward="true" selection-start-line="64" selection-start-column="7" selection-end-line="64" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/FrontControllers/ArticalController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="56" column="83" selection-start-line="56" selection-start-column="83" selection-end-line="56" selection-end-column="83" />
+          <folding>
+            <element signature="e#57#93#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

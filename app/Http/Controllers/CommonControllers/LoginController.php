@@ -41,6 +41,7 @@ class LoginController extends Controller
             $user->generateToken();
             $this->loginSuccess($user);
             $user = $user->toArray();
+            unset($user['password']);
             return responseToJson(0,'登录成功',$user);
         }
         return responseToJson(2,'账号或密码不正确');
@@ -58,6 +59,7 @@ class LoginController extends Controller
             $user->generateToken();
             $this->loginSuccess($user, 2);
             $user = $user->toArray();
+            unset($user['password']);
             return responseToJson(0,'登录成功',$user);
         }
         return responseToJson(2,'账号或密码不正确');
@@ -79,6 +81,7 @@ class LoginController extends Controller
         Auth::login($user);                                    //改为用户实例认证
         $this->loginSuccess($user);
         $user = $user->toArray();
+        unset($user['password']);
         return responseToJson(0,'登录成功',$user);
     }
 
@@ -98,6 +101,7 @@ class LoginController extends Controller
         Auth::login($user);                                    //改为用户实例认证
         $this->loginSuccess($user,2);
         $user = $user->toArray();
+        unset($user['password']);
         return responseToJson(0,'登录成功',$user);
 
     }

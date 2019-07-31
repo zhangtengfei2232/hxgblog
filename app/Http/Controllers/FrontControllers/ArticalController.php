@@ -59,7 +59,8 @@ class ArticalController extends Controller
         $datas['artical_types']         = ArticalType::selectArticalTypeName($art_id[0]);
         $datas['music_path']            = Exhibit::selectPresentMusicFile(4);
         $datas['art_say']               = Exhibit::selectPresentExhibitData(2);
-        $datas['music_lyric']           = file_get_contents(storage_path().'\\app\public\music_lyric\\'.Exhibit::selectPresentExhibitData(4));
+        $music_lyric_path               = storage_path().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'music_lyric'.DIRECTORY_SEPARATOR.Exhibit::selectPresentExhibitData(4);
+        $datas['music_lyric']           = file_get_contents($music_lyric_path);
         return responseToJson(0,'success', $datas);
     }
 

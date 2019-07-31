@@ -150,7 +150,6 @@ class Artical extends BaseModel
     public static function getArticalData($total)
     {
         return Artical::paginate($total);
-
     }
 
     /**

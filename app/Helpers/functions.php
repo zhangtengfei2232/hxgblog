@@ -45,7 +45,7 @@ function convertArticaId($art_id_datas)
 function isAddArticalBrowse($art_id, $time)
 {
     if(!session()->has($art_id))  return true;      //当前文章，没有被访问过
-    if(($time - session($art_id)) > 10) return true;//判断用户上次访问时间和当前时间的差值是否满足访问条件
+    if(($time - session($art_id)) > 8888) return true;//判断用户上次访问时间和当前时间的差值是否满足访问条件
     else return false;
 }
 
@@ -83,7 +83,7 @@ function uploadFile($files, $disk, $is_music = false)
     $file_name = $files->getClientOriginalName();
     ($is_music) ? $file_path = $file_name : $file_path = uniqid().time() . '-' . $file_name;
     $files->storeAs('./',$file_path, $disk);
-    $exist_file = file_exists(storage_path().'\\app\public\\'.$disk.'\\'.$file_path);
+    $exist_file = file_exists(storage_path().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.$disk.DIRECTORY_SEPARATOR.$file_path);
     if($exist_file) return responseState(0,'上传成功',$file_path);
     return responseState(1,'上传失败');
 }
@@ -97,7 +97,7 @@ function uploadFile($files, $disk, $is_music = false)
 function deleteFile($fileRoad, $disk)
 {
     Storage::disk($disk)->delete($fileRoad);
-    return !file_exists(storage_path().'\\app\public\\'.$disk.'\\'.$fileRoad);
+    return !file_exists(storage_path().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.$disk.DIRECTORY_SEPARATOR.$fileRoad);
 }
 
 /**

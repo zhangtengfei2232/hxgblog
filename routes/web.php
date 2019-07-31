@@ -37,7 +37,6 @@ Route::namespace('FrontControllers')->group(function () {
 
 
     Route::get('mainPage', 'MainpageController@showMainPage');                            //显示主页面
-    Route::post('registerUser', 'UserController@registerUser');                           //注册新用户
     Route::get('showArticalPage', 'ArticalController@showArticalPage');                   //显示文章页面
     Route::get('typeSelectArtical', 'ArticalController@typeSelectArtical');               //根据文章类型搜索文章
     Route::get('showArticalDetail', 'ArticalController@showArticalDetail');               //查一篇文章的所有内容
@@ -49,7 +48,7 @@ Route::namespace('FrontControllers')->group(function () {
     Route::post('judgeQuestionAnswer', 'AlbumController@judgeQuestionAnswer');            //判断相册问题答案是否正确
     Route::get('byAlbumIdSelectPhoto', 'AlbumController@byAlbumIdSelectPhoto');           //根据相册的ID查询照片
 
-    Route::get('selectLeaveMessage', 'leaveMessageController@selectLeaveMessage');        //查询留言信息
+    Route::get('selectLeaveMessage', 'LeaveMessageController@selectLeaveMessage');        //查询留言信息
     //前台需要验证的路由
     Route::middleware('loginCheck', 'auth:api', 'updateToken:api')->group(function () {
         Route::post('sendReplayComment','ArticalController@sendReplayComment');            //添加回复评论
@@ -58,13 +57,16 @@ Route::namespace('FrontControllers')->group(function () {
         Route::post('praiseOrTrampleArtical', 'ArticalController@praiseOrTrampleArtical'); //文章赞/踩
 
         Route::post('replayMessage', 'LeaveMessageController@replayMessage');           //回复留言
-        Route::post('deleteLeaveMessage', 'leaveMessageController@deleteLeaveMessage'); //删除留言
-        Route::post('addLeaveMessage', 'leaveMessageController@addLeaveMessage');       //添加留言
+        Route::post('deleteLeaveMessage', 'LeaveMessageController@deleteLeaveMessage'); //删除留言
+        Route::post('addLeaveMessage', 'LeaveMessageController@addLeaveMessage');       //添加留言
 
     });
 });
 //获取资源需要验证
 Route::namespace('CommonControllers')->group(function () {
+
+    Route::post('registerUser', 'UserController@registerUser');                           //注册新用户
+
     /**
      * 登录、退出路由
      */

@@ -27,7 +27,7 @@ class ArticalType extends BaseModel
      */
     public static function selectArticalTypeName($art_id)
     {
-        return ArticalType::select('type_name')->leftJoin('Type', 'type.type_id', '=', 'artical_type.type_id')
+        return ArticalType::select('type_name')->leftJoin('type', 'type.type_id', '=', 'artical_type.type_id')
                ->where('arti_id', $art_id)->get();
     }
 

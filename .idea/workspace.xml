@@ -2,15 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2553bbbf-fc56-47cd-9cf4-4120e55eaadc" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Helpers/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/functions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FrontControllers/ArticalController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FrontControllers/ArticalController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Model/Artical.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/Artical.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Model/ArticalType.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Model/ArticalType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/app/public/artical/art4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/app/public/image/5d328701b58311563592449-IMG_1284.JPG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/app/public/image/ztf1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Helpers/validate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Helpers/validate.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,64 +21,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/routes/web.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="37" lean-forward="true" selection-start-line="37" selection-end-line="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/BackControllers/MaArticalController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="94" column="35" lean-forward="true" selection-start-line="94" selection-start-column="35" selection-end-line="94" selection-end-column="35" />
-              <folding>
-                <element signature="e#55#91#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Helpers/validate.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="502">
-              <caret line="87" column="3" lean-forward="true" selection-start-line="87" selection-start-column="3" selection-end-line="87" selection-end-column="3" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CommonControllers/TencentSmsController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="576">
-              <caret line="27" column="36" selection-start-line="27" selection-start-column="36" selection-end-line="27" selection-end-column="36" />
-              <folding>
-                <element signature="e#58#94#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/FrontControllers/ArticalController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="468">
-              <caret line="61" column="132" lean-forward="true" selection-start-line="61" selection-start-column="56" selection-end-line="61" selection-end-column="132" />
-              <folding>
-                <element signature="e#57#93#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/FrontControllers/MainpageController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="17" column="82" lean-forward="true" selection-start-line="17" selection-start-column="82" selection-end-line="17" selection-end-column="82" />
+            <state relative-caret-position="456">
+              <caret line="72" column="35" lean-forward="true" selection-start-line="72" selection-start-column="35" selection-end-line="72" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -92,17 +32,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Model/Artical.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="153" lean-forward="true" selection-start-line="153" selection-end-line="153" />
+            <state relative-caret-position="218">
+              <caret line="137" column="5" lean-forward="true" selection-start-line="137" selection-start-column="5" selection-end-line="137" selection-end-column="5" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Model/BaseModel.php">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/BackControllers/MaArticalController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="321">
-              <caret line="38" column="41" lean-forward="true" selection-start-line="38" selection-start-column="41" selection-end-line="38" selection-end-column="41" />
+            <state relative-caret-position="336">
+              <caret line="110" column="17" lean-forward="true" selection-start-line="110" selection-start-column="17" selection-end-line="110" selection-end-column="17" />
+              <folding>
+                <element signature="e#55#91#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -180,17 +123,17 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/FrontControllers/LeaveMessageController.php" />
         <option value="$PROJECT_DIR$/app/Model/Photo.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/BackControllers/MaAlbumController.php" />
-        <option value="$PROJECT_DIR$/app/Helpers/validate.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/CommonControllers/LoginController.php" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/app/Model/ArticalType.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/CommonControllers/TencentSmsController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/FrontControllers/ArticalController.php" />
         <option value="$PROJECT_DIR$/routes/web.php" />
         <option value="$PROJECT_DIR$/app/Model/Artical.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/BackControllers/MaArticalController.php" />
         <option value="$PROJECT_DIR$/app/Helpers/functions.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/FrontControllers/MainpageController.php" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/app/Helpers/validate.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/BackControllers/MaArticalController.php" />
       </list>
     </option>
   </component>
@@ -304,6 +247,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -368,17 +312,6 @@
             <path>
               <item name="hxgblog-backend" type="b2602c69:ProjectViewProjectNode" />
               <item name="hxgblog-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="hxgblog-backend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hxgblog-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="hxgblog-backend" type="b2602c69:ProjectViewProjectNode" />
-              <item name="hxgblog-backend" type="462c0819:PsiDirectoryNode" />
               <item name="routes" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -390,14 +323,13 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SearchEverywhereHistoryKey" value="backg&#9;ACTION&#9;Images.SetBackgroundImage&#10;backgr&#9;ACTION&#9;Images.SetBackgroundImage&#10;background&#9;ACTION&#9;Images.SetBackgroundImage" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../hxgblog-frontend" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -488,12 +420,14 @@
       <workItem from="1563930283995" duration="72975000" />
       <workItem from="1564128271692" duration="46000" />
       <workItem from="1564197501049" duration="16412000" />
-      <workItem from="1564358622203" duration="7229000" />
+      <workItem from="1564358622203" duration="7500000" />
+      <workItem from="1566702073431" duration="701000" />
+      <workItem from="1566776676656" duration="1364000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="783491000" />
+    <option name="totallyTimeSpent" value="785827000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -508,7 +442,7 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4990476" visible="true" weight="0.18993288" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4990476" visible="true" weight="0.18322147" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" sideWeight="0.50095236" side_tool="true" weight="0.1883378" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -685,20 +619,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="12" column="6" lean-forward="true" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="13" column="17" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/welcome.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
@@ -817,16 +737,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CommonControllers/TencentSmsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="27" column="36" selection-start-line="27" selection-start-column="36" selection-end-line="27" selection-end-column="36" />
-          <folding>
-            <element signature="e#58#94#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Model/ArticalType.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="24">
@@ -834,41 +744,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/web.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="37" lean-forward="true" selection-start-line="37" selection-end-line="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Model/Artical.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="153" lean-forward="true" selection-start-line="153" selection-end-line="153" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Model/BaseModel.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="321">
           <caret line="38" column="41" lean-forward="true" selection-start-line="38" selection-start-column="41" selection-end-line="38" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/BackControllers/MaArticalController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="94" column="35" lean-forward="true" selection-start-line="94" selection-start-column="35" selection-end-line="94" selection-end-column="35" />
-          <folding>
-            <element signature="e#55#91#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Helpers/validate.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="502">
-          <caret line="87" column="3" lean-forward="true" selection-start-line="87" selection-start-column="3" selection-end-line="87" selection-end-column="3" />
         </state>
       </provider>
     </entry>
@@ -889,10 +768,65 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="8" column="19" lean-forward="true" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/FrontControllers/MainpageController.php">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="18" column="32" lean-forward="true" selection-start-line="18" selection-start-column="32" selection-end-line="18" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/web.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="46" column="42" selection-start-line="46" selection-start-column="42" selection-end-line="46" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="6" column="21" lean-forward="true" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/CommonControllers/TencentSmsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="576">
+          <caret line="27" column="36" selection-start-line="27" selection-start-column="36" selection-end-line="27" selection-end-column="36" />
+          <folding>
+            <element signature="e#58#94#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Helpers/validate.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="72" column="35" lean-forward="true" selection-start-line="72" selection-start-column="35" selection-end-line="72" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Model/Artical.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="218">
+          <caret line="137" column="5" lean-forward="true" selection-start-line="137" selection-start-column="5" selection-end-line="137" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/BackControllers/MaArticalController.php">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
-          <caret line="17" column="82" lean-forward="true" selection-start-line="17" selection-start-column="82" selection-end-line="17" selection-end-column="82" />
+          <caret line="110" column="17" lean-forward="true" selection-start-line="110" selection-start-column="17" selection-end-line="110" selection-end-column="17" />
+          <folding>
+            <element signature="e#55#91#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

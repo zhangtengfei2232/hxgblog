@@ -103,7 +103,7 @@ function judgeMultipleFile($file_data)
 function validateArticalData($data)
 {
     if(emptyArray($data)) return responseState(1,'文章信息填写不完整');
-    if(strlen($data['arti_title']) > 30) responseState(1,'文章题目过长');
+    if(strlen($data['arti_title']) > 200) responseState(1,'文章题目过长');
     if($data['arti_title'] != strip_tags($data['arti_title'])) return responseState(1,'你输入的文章题目不合法');
     if($data['arti_content'] != strip_tags($data['arti_content']))return responseState(1,'你输入的文章题目不合法');
     return responseState(0,'验证通过');

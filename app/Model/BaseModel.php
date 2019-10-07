@@ -5,6 +5,7 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class BaseModel extends Model
 {
@@ -39,7 +40,8 @@ class BaseModel extends Model
             $data[$i] = (array)$data[$i];
             $time = explode('-',$data[$i]['created_at']);
             if($is_art){
-                if(strlen($data[$i]['arti_content']) > 150 && $is_art) $data[$i]['arti_content'] = mb_substr($data[$i]['arti_content'],0,1).".......";
+                if(strlen(strip_tags($data[$i]['arti_content'])) > 450) $data[$i]['arti_content'] = mb_substr(strip_tags($data[$i]['arti_content']),0, 150).".......";
+                if(strlen($data[$i]['arti_title']) > 30) $data[$i]['arti_title'] = mb_substr($data[$i]['arti_title'],0, 20).".......";
             }
             $data[$i]['years']     = $time[0];
             $data[$i]['monthDay'] = $time[1] . '-' . $time[2];
@@ -47,6 +49,7 @@ class BaseModel extends Model
         }
         return $data;
     }
+
     /**
      * 查 '某一篇文章的所有顶级评论' / '留言'
      * @param $art_id

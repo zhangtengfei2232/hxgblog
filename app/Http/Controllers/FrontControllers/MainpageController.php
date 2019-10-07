@@ -13,7 +13,7 @@ class MainpageController extends Controller
     public function showMainPage()
     {
         $data['new_artical'] = Artical::timeResolution(Artical::selectNewArticalData());
-        $data['browse_top']  = Artical::selectBrowseTopData();
+        $data['browse_top']  = Artical::timeResolution(Artical::selectBrowseTopData());
         $data['new_photo']   = Photo::selectNewPhotoData();
         $data['exhibit_data'] = explode('+',Exhibit::selectPresentExhibitData(1));
         return responseToJson(0,"success",$data);

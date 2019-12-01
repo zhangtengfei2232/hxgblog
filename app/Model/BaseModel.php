@@ -5,7 +5,6 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class BaseModel extends Model
 {
@@ -67,10 +66,12 @@ class BaseModel extends Model
         (!empty(session()->has('user'))) ? $is_login = true : $is_login = false;
         ($is_login) ? $user_phone = session('user')->phone : $user_phone = " ";
         ($is_login && session('user')->role == 1) ? $is_admin = true : $is_admin = false;
-//        dd
         foreach ($data as $key => $value) {
             ($data[$key]['phone'] == $user_phone || $is_admin) ? $data[$key]['is_mine'] = true : $data[$key]['is_mine'] = false;
             $child_comment = self::selectALLChildMessageData($config_param,$data[$key][$config_param['id_field']], $user_phone, $data[$key]['is_mine'], $is_msg);
+            if ( empty($child_comment)) {
+                $child_comment = [];
+            }
             $data[$key][$config_param['count']] = count($child_comment);
             $data[$key][$config_param['child_field']] = $child_comment;
             if($is_msg) $data[$key]['is_admin'] = $is_admin;

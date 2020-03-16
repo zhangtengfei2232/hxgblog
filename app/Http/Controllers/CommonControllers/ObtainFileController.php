@@ -52,11 +52,12 @@ class ObtainFileController extends Controller
      * 根据IP获取当前用户所在城市
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getCityName()
+    public function getCityInfo()
     {
-        $city_name   = getUserPosition("218.29.60.105");
+        $city_name   = getUserPosition("218.29.60.105");               //根据IP获取当地城市名字
         if($city_name['code'] == 1) return responseToJson(1,'获取失败');
-        $data['city_name']     = $city_name['data']['data']['city'];
+        $data['city_name']    = $city_name['data'];
+        $data['weather_info'] = getWeatherInfoByCity($city_name['data']);      //根据城市名字获取当地天气信息
         return responseToJson(0,'查询成功',$data);
     }
 

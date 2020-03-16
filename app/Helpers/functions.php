@@ -127,7 +127,7 @@ function getUserIp()
     } else if (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], "unknown")){
         $ip = $_SERVER['REMOTE_ADDR'];
     } else
-    $ip = "unknown";
+        $ip = "unknown";
     return $ip;
 }
 
@@ -138,15 +138,48 @@ function getUserIp()
  */
 function getUserPosition($ip)
 {
-    $url = 'http://ip.taobao.com/service/getIpInfo.php?ip='.$ip;
+    //$url = 'http://ip.taobao.com/service/getIpInfo.php?ip='.$ip;//淘宝
+    //$url = 'http://whois.pconline.com.cn/ipJson.jsp?ip=' . $ip . '&json=true';
+    //$url = 'https://apis.map.qq.com/ws/location/v1/ip=' . $ip . '&key=KUZBZ-PGO63-C3M3F-YU5RO-DK7JE-AEFT3';//腾讯
+    $url = 'http://api.map.baidu.com/location/ip?ip=' . $ip .'&ak=u265UuYotdbAW9RIYhjPn5xoIGdz4EVw';
     try{
         $ipContent = file_get_contents($url);
-        $ipContent = json_decode($ipContent,true);
-        return responseState(0,'获取成功', $ipContent);
+        $ipContent = json_decode($ipContent, true);
+        if (!empty($ipContent['content'])){
+            return responseState(0,'获取成功', $ipContent['content']['address_detail']['city']);
+        }
     }catch (\Exception $e){
         return responseState(1,'获取失败');
     }
-
-
 }
 
+/**
+ * 根据城市名字获取当地天气信息
+ * @param $city_name
+ * @return false|mixed|SimpleXMLElement|string
+ */
+function getWeatherInfoByCity($city_name)
+{
+//    $url = 'http://wthrcdn.etouch.cn/WeatherApi?city=' . urlencode($city_name);
+    $url = 'http://wthrcdn.etouch.cn/weather_mini?city=' . urlencode($city_name);
+    //方法一：
+//    $curl = curl_init();
+//    curl_setopt($curl, CURLOPT_URL, $url);
+//    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+//    $header = [];
+//    $header[] = 'Content-Type:application/json;charset=utf-8';
+//    curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
+//    $data = curl_exec($curl);
+//    $prefix = dechex(ord($data[0])) . dechex(ord($data[1]));
+//    $is_gzip = ('1f8b' == strtolower($prefix));
+//    ($is_gzip) && $data = gzdecode($data);
+//    curl_close($curl);
+    //方法二：获取返回的xml数据
+//    $weather_info = gzdecode(file_get_contents($url));
+//    $weather_info = simplexml_load_string($weather_info);     //xml转object
+//    $weather_info = json_encode($weather_info);               //object转json
+//    $weather_info = json_decode($weather_info, true);         //json转array
+    $weather_info = json_decode(gzdecode(file_get_contents($url)), true);
+    //方法三：获取返回的JSON
+    return $weather_info['data']['forecast'];
+}

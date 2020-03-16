@@ -79,7 +79,7 @@ Route::namespace('CommonControllers')->group(function () {
 
     Route::get('downloadFile', 'ObtainFileController@downloadFile');                  //下载后台资源
 
-    Route::get('getCityName', 'ObtainFileController@getCityName');                    //获取天气城市名
+    Route::get('getCityInfo', 'ObtainFileController@getCityInfo');                    //获取天气城市名
 
     Route::get('getSmsCode', 'TencentSmsController@getSmsCode');
     Route::post('byCodeUpdatePassword', 'UserController@byCodeUpdatePassword');      //用户根据短信验证码修改密码

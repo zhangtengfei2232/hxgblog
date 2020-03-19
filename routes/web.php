@@ -86,6 +86,10 @@ Route::namespace('CommonControllers')->group(function () {
     //前台用户登录
     Route::post('frontLogin', 'LoginController@frontLogin');
 
+    //GitHub登录
+    //获取code的github回调地址
+    Route::get('gitHub', 'GitHubLogin@gitHubCodeCallBack');
+
     //前台短信登录
     Route::post('frontSmsLogin', 'LoginController@frontSmsLogin');                    //前台短信登录
     Route::post('backSmsLogin', 'LoginController@backSmsLogin');                      //后台短信登录

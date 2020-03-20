@@ -210,19 +210,20 @@
      * @return bool|string
      */
     function getHttpResponsePOST($url = '', $param = array()) {
-        if (empty($url) || empty($param)) {
-            return false;
+        if (empty($url)) {
         }
         $ch = curl_init();//初始化curl
         curl_setopt($ch, CURLOPT_URL,$url);//抓取指定网页
         curl_setopt($ch, CURLOPT_HEADER, false);//是否返回响应头信息
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);//要求结果为字符串且输出到屏幕上
         curl_setopt($ch, CURLOPT_POST, true);//post提交方式
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $param);
+        if (!empty($param)) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $param);
+        }
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); //是否将结果返回
         $data = curl_exec($ch);//运行curl
         if (curl_errno($ch)) {
-            Log::info('Errno'.curl_error($ch));//捕抓异常
+            echo 'Errno'. json_encode(curl_error($ch));//捕抓异常
         }
         curl_close($ch);
         return $data;

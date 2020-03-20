@@ -87,8 +87,22 @@ Route::namespace('CommonControllers')->group(function () {
     Route::post('frontLogin', 'LoginController@frontLogin');
 
     //GitHub登录
-    //获取code的github回调地址
-    Route::get('gitHub', 'GitHubLogin@gitHubCodeCallBack');
+    //获取code和access_token的github回调地址
+    Route::get('gitHub', 'GitHubLogin@gitHubCallBack');
+
+    //百度账号登录
+    //获取code和access_token的百度回调地址
+    Route::get('baiDu', 'BaiDuLogin@baiDuCallBack');
+
+    //QQ账号登录
+    //获取code和access_token的QQ回调地址
+    Route::get('qq', 'QQLogin@qqCallBack');
+
+    //微博账号登录
+    //获取code和access_token的微博回调地址
+    Route::get('weiBoOAuth', 'WeiBoLogin@weiBoOAuthCallBack');
+    //取消授权的回调地址
+    Route::get('weiBoCancelOAuth', 'WeiBoLogin@weiBoCancelOAuthCallBack');
 
     //前台短信登录
     Route::post('frontSmsLogin', 'LoginController@frontSmsLogin');                    //前台短信登录

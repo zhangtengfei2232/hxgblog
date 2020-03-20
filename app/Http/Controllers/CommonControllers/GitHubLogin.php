@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 
 class GitHubLogin extends Controller
 {
-    public function gitHubCodeCallBack(Request $request)
+    public function gitHubCallBack(Request $request)
     {
         if ($request->has('code')) {
             Log::info('xxxxxx:' . json_encode($request->code));

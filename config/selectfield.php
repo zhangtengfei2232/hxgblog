@@ -8,7 +8,7 @@ return [
         'count' => 'come_count',
         'child_field' => 'child_comment',
         'select_field' => ['come_id', 'come_content', 'come_father_id',
-            'comment.created_at', 'nick_name', 'head_portrait','comment.phone']
+            'comment.created_at', 'nick_name', 'head_portrait','comment.user_id']
     ],
     'leave_message' => [
         'id_field' => 'msg_id',
@@ -18,6 +18,6 @@ return [
         'count' => 'msg_count',
         'child_field' => 'child_message',
         'select_field' => ['msg_id', 'msg_content', 'msg_father_id',
-            'leave_message.created_at', 'nick_name', 'head_portrait','leave_message.phone']
+            'leave_message.created_at', 'nick_name', 'head_portrait','leave_message.user_id']
     ]
 ];

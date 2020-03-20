@@ -77,7 +77,7 @@ class ArticalController extends Controller
         $data['top_level_id']   = $request->top_level_id;
         $data['come_father_id'] = $request->father_id;
         $data['arti_id']        = $request->art_id;
-        $data['phone']          = session('user')->phone;
+        $data['user_id']        = session('user')->user_id;
         $data['created_at']     = time();
         $add_comment            = Comment::addCommentData($data);
         if($add_comment['code'] == 1) responseToJson(1,$add_comment['msg']);
@@ -99,7 +99,7 @@ class ArticalController extends Controller
         $data['come_father_id'] = 0;
         $data['top_level_id']   = 0;
         $data['arti_id']        = $request->art_id;
-        $data['phone']          = session('user')->phone;
+        $data['user_id']          = session('user')->user_id;
         $data['created_at']     = time();
         $add_comment            = Comment::addCommentData($data);
         if($add_comment['code'] == 1) responseToJson(1, $add_comment['msg']);
@@ -138,7 +138,7 @@ class ArticalController extends Controller
      */
     public function byTopIdSelectAllComment(Request $request)
     {
-        $comment_data = Comment::selectALLChildMessageData(config('selectfield.comment'), $request->top_level_id, session('user')->phone);
+        $comment_data = Comment::selectALLChildMessageData(config('selectfield.comment'), $request->top_level_id, session('user')->user_id);
         return responseToJson(0,'查询成功', $comment_data);
     }
 

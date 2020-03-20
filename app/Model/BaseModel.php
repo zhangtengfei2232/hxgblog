@@ -58,17 +58,17 @@ class BaseModel extends Model
     {
         ($config_param['table_name'] == "leave_message") ? $is_msg = true : $is_msg = false;
         $data = $config_param['model_name']::select($config_param['select_field'])
-            ->leftJoin('users', $config_param['table_name'].'.phone', '=', 'users.phone')
+            ->leftJoin('users', $config_param['table_name'].'.user_id', '=', 'users.user_id')
             ->where($config_param['father_id_field'], 0);
         //文章评论查询
         ($config_param['table_name'] == 'comment') ? $data = $data->where('arti_id', $art_id)->get()->toArray()
         :$data = $data->offset($page * 2)->orderBy('created_at', 'desc')->limit(2)->get()->toArray();
         (!empty(session()->has('user'))) ? $is_login = true : $is_login = false;
-        ($is_login) ? $user_phone = session('user')->phone : $user_phone = " ";
+        ($is_login) ? $user_id = session('user')->user_id : $user_id = " ";
         ($is_login && session('user')->role == 1) ? $is_admin = true : $is_admin = false;
         foreach ($data as $key => $value) {
-            ($data[$key]['phone'] == $user_phone || $is_admin) ? $data[$key]['is_mine'] = true : $data[$key]['is_mine'] = false;
-            $child_comment = self::selectALLChildMessageData($config_param,$data[$key][$config_param['id_field']], $user_phone, $data[$key]['is_mine'], $is_msg);
+            ($data[$key]['user_id'] == $user_id || $is_admin) ? $data[$key]['is_mine'] = true : $data[$key]['is_mine'] = false;
+            $child_comment = self::selectALLChildMessageData($config_param,$data[$key][$config_param['id_field']], $user_id, $data[$key]['is_mine'], $is_msg);
             if ( empty($child_comment)) {
                 $child_comment = [];
             }
@@ -85,29 +85,29 @@ class BaseModel extends Model
      * @param $father_id
      * @return array|void
      */
-    public static function selectALLChildMessageData($config_param ,$father_id, $user_phone, $is_mine, $is_msg)
+    public static function selectALLChildMessageData($config_param ,$father_id, $user_id, $is_mine, $is_msg)
     {
         $comment = $config_param['model_name']::select($config_param['select_field'])->orderBy('created_at', 'asc')
-            ->leftJoin('users', $config_param['table_name'].'.phone', '=', 'users.phone')
+            ->leftJoin('users', $config_param['table_name'].'.user_id', '=', 'users.user_id')
             ->where($config_param['father_id_field'], $father_id)->get()->toArray();
         if(empty($comment)) return ;
         foreach ($comment as $key => $data){
-            $father_infor = $config_param['model_name']::select('nick_name','users.phone')
-                ->leftJoin('users', $config_param['table_name'].'.phone', '=', 'users.phone')
+            $father_info = $config_param['model_name']::select('nick_name','users.user_id')
+                ->leftJoin('users', $config_param['table_name'].'.user_id', '=', 'users.user_id')
                 ->where($config_param['id_field'],$comment[$key][$config_param['father_id_field']])
                 ->first();
-            if(empty($father_infor)) continue;
-            $comment[$key]['father_nick_name'] = $father_infor->nick_name;
-            $comment[$key]['father_phone'] = $father_infor->phone;
+            if(empty($father_info)) continue;
+            $comment[$key]['father_nick_name'] = $father_info->nick_name;
+            $comment[$key]['father_id'] = $father_info->user_id;
             if($is_msg){    //是留言板
                 ($is_mine) ? $comment[$key]['is_mine'] = true : $comment[$key]['is_mine'] = false;
             } else {
-                ($comment[$key]['phone'] == $user_phone) ? $comment[$key]['is_mine'] = true : $comment[$key]['is_mine'] = false;
+                ($comment[$key]['user_id'] == $user_id) ? $comment[$key]['is_mine'] = true : $comment[$key]['is_mine'] = false;
             }
         }
         foreach ($comment as $value) {
             array_push(self::$information_data, $value);                  //把查询的数据放到数组中
-            self::selectALLChildMessageData($config_param, $value[$config_param['id_field']], $user_phone, $is_mine, $is_msg); //递归子查询
+            self::selectALLChildMessageData($config_param, $value[$config_param['id_field']], $user_id, $is_mine, $is_msg); //递归子查询
         }
         return self::$information_data;
     }

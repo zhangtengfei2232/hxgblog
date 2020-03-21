@@ -27,7 +27,7 @@ class AnswerStatus extends BaseModel
             Log::info(session('user'));
             if(!empty($data['albu_question']) && !empty(session('user'))) {  //如果相册有密保,且有用户登录
                 $num = AnswerStatus::where([['albu_id',$data['albu_id']],
-                    ['phone', session('user')->phone]])->count();
+                    ['user_id', session('user')->user_id]])->count();
                 if($num > 0) $is_answer = true; //查看当前用户之前，是否回答过此相册的密保
             }
             if(empty($data['albu_question']) || $is_answer){    //无密保或者用户已经回答过密保

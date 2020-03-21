@@ -65,7 +65,7 @@ class LeaveMessageController extends Controller
         $data['msg_content']      = $request->msg_content;
         $validate_content         = validateCommentContent($data['msg_content']);
         if($validate_content['code'] == 1) return responseToJson(1, $validate_content['msg']);
-        $data['phone']            = session('user')->phone;
+        $data['user_id']            = session('user')->user_id;
         $data['msg_father_id']    = $request->father_id;
         $data['msg_top_level_id'] = $request->top_level_id;
         $data['created_at']       = time();
@@ -75,7 +75,7 @@ class LeaveMessageController extends Controller
         $data['created_at'] = date('Y-m-d', $data['created_at']);
         $data['msg_id'] = $add_replay_message['data'];
         $data['father_nick_name'] = $father_infor->nick_name;
-        $data['father_phone']     = $father_infor->phone;
+        $data['father_user_id']     = $father_infor->user_id;
         return responseToJson(0,"回复成功", $data);
     }
 

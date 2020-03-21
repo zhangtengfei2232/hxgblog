@@ -32,8 +32,8 @@ class LeaveMessage extends BaseModel
      */
     public static function selectFatherInformation($father_id)
     {
-        return LeaveMessage::select('nick_name','users.phone')->where('msg_father_id', $father_id)
-               ->leftJoin('users', 'users.phone', '=', 'leave_message.phone')->first();
+        return LeaveMessage::select('nick_name','users.user_id')->where('msg_id', $father_id)
+               ->leftJoin('users', 'users.user_id', '=', 'leave_message.user_id')->first();
     }
 
 

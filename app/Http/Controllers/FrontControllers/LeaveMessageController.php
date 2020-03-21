@@ -31,12 +31,12 @@ class LeaveMessageController extends Controller
      */
     public function addLeaveMessage(Request $request)
     {
-        $user_infor = session('user');
-        if(empty($user_infor)) return responseToJson(1,'请你重新登录');
+        $user_info = session('user');
+        if(empty($user_info)) return responseToJson(1,'请你重新登录');
         $data['msg_content']      = $request->msg_content;
         $validate_content         = validateCommentContent($data['msg_content']);
         if($validate_content['code'] == 1) return responseToJson(1, $validate_content['msg']);
-        $data['phone']            = session('user')->phone;
+        $data['user_id']          = session('user')->user_id;
         $data['msg_father_id']    = 0;
         $data['created_at']       = time();
         $add_replay_message = LeaveMessage::addLeaveMessage($data);
@@ -48,8 +48,8 @@ class LeaveMessageController extends Controller
         $data['is_mine'] = true;
         $data['msg_id']        = $add_replay_message['data'];
         $data['child_message'] = null;
-        $data['head_portrait'] = $user_infor->head_portrait;
-        $data['nick_name']     = $user_infor->nick_name;
+        $data['head_portrait'] = $user_info->head_portrait;
+        $data['nick_name']     = $user_info->nick_name;
         $data['msg_count']     = 0;
         (session('user')->role == 1) ? $data['is_admin'] = true : $data['is_admin'] = false;
         return responseToJson(0,"回复成功", $data);

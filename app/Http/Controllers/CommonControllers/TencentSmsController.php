@@ -25,11 +25,11 @@ class TencentSmsController extends Controller
         $smsSign       = $tencentConfig['smsSign'];                   //签名参数使用的是`签名内容`，而不是`签名ID`
         // 指定模板ID单发短信
         try {
-            $ssender = new SmsSingleSender($appid, $appkey);
+            $sender = new SmsSingleSender($appid, $appkey);
             $random_number = random_int(999,9999);                    //验证码随机数
             $effective_time = 1;                                      //有效时间
             $params = [$random_number, $effective_time];
-            $result = $ssender->sendWithParam("86", $phoneNumbers[0], $templateId,
+            $result = $sender->sendWithParam("86", $phoneNumbers[0], $templateId,
                 $params, $smsSign, "", "");                // 签名参数未提供或者为空时，会使用默认签名发送短信
             if(json_decode($result)->errmsg == "OK"){
                 session(['code_info' => $random_number . ',' . time() . ',' . $phone]);

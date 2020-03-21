@@ -1,12 +1,7 @@
 /node_modules
 /public/hot
 /storage/app/public/artical/
-/storage/app/public/head_portrait/
-/storage/app/public/image/
-/storage/app/public/music/
-/storage/app/public/music_lyric/
-/storage/framework/
-/storage/logs
+
 /vendor
 .env
 .phpunit.result.cache

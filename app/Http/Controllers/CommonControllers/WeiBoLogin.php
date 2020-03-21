@@ -46,7 +46,7 @@ class WeiBoLogin extends Controller
 
     public function weiBoCancelOAuthCallBack(Request $request)
     {
-        Log::info('r');
+        Log::info('rsdsd');
 
     }
 

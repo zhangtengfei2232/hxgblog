@@ -104,6 +104,9 @@ Route::namespace('CommonControllers')->group(function () {
     //取消授权的回调地址
     Route::get('weiBoCancelOAuth', 'WeiBoLogin@weiBoCancelOAuthCallBack');
 
+    //支付宝登录
+    Route::get('aliPayLoginCallBack', 'AliPayLogin@aliPayLoginCallBack');
+
     //前台短信登录
     Route::post('frontSmsLogin', 'LoginController@frontSmsLogin');                    //前台短信登录
     Route::post('backSmsLogin', 'LoginController@backSmsLogin');                      //后台短信登录

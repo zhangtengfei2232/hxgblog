@@ -30,7 +30,8 @@ class QQLogin extends Controller
         Log::info(json_encode($response));
         if (strpos($response, "callback") !== false)
         {
-            dealQQErrorMessage($response, '获取token信息失败');
+            $error_msg = dealQQData($response);
+            dealQQErrorMessage($error_msg, '获取token信息失败');
             exit;
         }
         $access_token_info = array();
@@ -40,7 +41,7 @@ class QQLogin extends Controller
             exit;
         }
         $access_token = $access_token_info['access_token'];
-        $get_openid_url = $qq_login_fg['openid_url'] . 'dsd';
+        $get_openid_url = $qq_login_fg['openid_url'] . $access_token;
         $openid_data = getHttpResponseGET($get_openid_url);
         Log::info('openid' . json_encode($openid_data));
         if (strpos($openid_data, "callback") === false) {

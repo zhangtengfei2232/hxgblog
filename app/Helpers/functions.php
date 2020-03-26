@@ -302,12 +302,11 @@ function verify($data, $sign) {
 
 /**
  * 处理QQ登录异常信息
- * @param $response
+ * @param $error_msg
  * @param string $msg
  */
-function dealQQErrorMessage($response, $msg = '')
+function dealQQErrorMessage($error_msg, $msg = '')
 {
-    $error_msg = dealQQData($response);
     if (isset($error_msg['error']))
     {
         echo "<h1>$msg</h1>";

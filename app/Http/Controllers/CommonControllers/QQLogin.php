@@ -27,45 +27,27 @@ class QQLogin extends Controller
         );
         $token_url = $qq_login_fg['access_token_url'] . http_build_query($param);
         $response = file_get_contents($token_url);
-        if (strpos($response, "callback") == false)
+        Log::info(json_encode($response));
+        if (strpos($response, "callback") !== false)
         {
-            echo '获取token信息失败';
+            dealQQErrorMessage($response, '获取token信息失败');
             exit;
         }
-        $left_pos = strpos($response, "(");
-        $right_pos = strrpos($response, ")");
-        $response  = substr($response, $left_pos + 1, $right_pos - $left_pos -1);
-        $token_msg = json_decode($response, true);
-        if (isset($token_msg['error']))
-        {
-            echo "<h3>error:</h3>" . $token_msg['error'];
-            echo "<h3>msg:</h3>" . $token_msg['error_description'];
-            exit;
-        }
-        if (empty($token_msg['access_token'])) {
+        $access_token_info = array();
+        parse_str($response, $access_token_info);
+        if (empty($access_token_info['access_token'])) {
             echo '获取的token信息为空,稍后重试';
             exit;
         }
-        $token_info = array();
-        parse_str($response, $token_info);
-        $access_token = $token_info['access_token'];
-        Log::info('ccccc' . $access_token);
+        $access_token = $access_token_info['access_token'];
         $get_openid_url = $qq_login_fg['openid_url'] . $access_token;
         $openid_data = getHttpResponseGET($get_openid_url);
-        if (strpos($openid_data, "callback") == false) {
-            echo '获取openid失败';
+        Log::info('openid' . json_encode($openid_data));
+        if (strpos($openid_data, "callback") === false) {
+            dealQQErrorMessage($openid_data, '获取openid失败');
             exit;
         }
-        $left_pos = strpos($openid_data, "(");
-        $right_pos = strrpos($openid_data, ")");
-        $openid_data  = substr($openid_data, $left_pos + 1, $right_pos - $left_pos -1);
-        $openid_msg = json_decode($openid_data, true);
-        if (isset($openid_msg['error']))
-        {
-            echo "<h3>error:</h3>" . $token_msg['error'];
-            echo "<h3>msg:</h3>" . $token_msg['error_description'];
-            exit;
-        }
+        $openid_data = dealQQData($openid_data);
         if (empty($openid_data['openid'])) {
             echo '获取的openid信息为空，请稍后重试';
             exit;

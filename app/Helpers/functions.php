@@ -211,6 +211,7 @@ function getHttpResponseGET($url,$header = null) {
  */
 function getHttpResponsePOST($url = '', $param = array()) {
     if (empty($url)) {
+        return false;
     }
     $ch = curl_init();//初始化curl
     curl_setopt($ch, CURLOPT_URL,$url);//抓取指定网页
@@ -227,18 +228,6 @@ function getHttpResponsePOST($url = '', $param = array()) {
     }
     curl_close($ch);
     return $data;
-}
-
-/**
- * 请求支付宝接口参数排序
-* @param $param
-* @return mixed
-*/
-function aliPayParamSort($param)
-{
-    ksort($param);
-    reset($param);
-    return $param;
 }
 
 function enRSA2($data)
@@ -298,26 +287,44 @@ function rsaSign($str, $private_key_path)
  */
 
 function verify($data, $sign) {
-
     //读取支付宝公钥文件
-
     $path = public_path() . 'key/public_key.pem';
     $pubKey = file_get_contents($path);
-
     //转换为openssl格式密钥
-
     $res = openssl_get_publickey($pubKey);
-
     //调用openssl内置方法验签，返回bool值
-
     $result = (bool)openssl_verify($data, base64_decode($sign), $res);
-
     //释放资源
-
     openssl_free_key($res);
-
     //返回资源是否成功
-
     return $result;
+}
 
+/**
+ * 处理QQ登录异常信息
+ * @param $response
+ * @param string $msg
+ */
+function dealQQErrorMessage($response, $msg = '')
+{
+    $error_msg = dealQQData($response);
+    if (isset($error_msg['error']))
+    {
+        echo "<h1>$msg</h1>";
+        echo "<h3>error:</h3>" . $error_msg['error'];
+        echo "<h3>msg:</h3>" . $error_msg['error_description'];
+    }
+}
+
+/**
+ * 处理QQ返回的数据，返回数组形式
+ * @param $response
+ * @return mixed
+ */
+function dealQQData($response)
+{
+    $left_pos  = strpos($response, "(");
+    $right_pos = strrpos($response, ")");
+    $response = json_decode(substr($response, $left_pos + 1, $right_pos - $left_pos -1), true);
+    return $response;
 }

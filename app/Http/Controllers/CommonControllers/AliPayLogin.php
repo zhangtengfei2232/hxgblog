@@ -59,7 +59,7 @@ class AliPayLogin extends Controller
         $query = $signStr . '&sign=' . $sign;
         Log::info($ali_pay_login_cg['base_url'] . '?' . $query);
         $user_info = getHttpResponsePOST($ali_pay_login_cg['base_url'], $query);
-        $user_info = mb_convert_encoding($user_info, 'utf-8', 'gbk');
+        $user_info = method($user_info, 'utf-8', 'gbk');
         Log::info('info' . $user_info);
         $user_info = json_decode($user_info, true);
         dd($user_info);

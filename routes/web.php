@@ -37,12 +37,12 @@ Route::namespace('FrontControllers')->group(function () {
 
 
     Route::get('mainPage', 'MainpageController@showMainPage');                            //显示主页面
-    Route::get('showArticalPage', 'ArticalController@showArticalPage');                   //显示文章页面
-    Route::get('typeSelectArtical', 'ArticalController@typeSelectArtical');               //根据文章类型搜索文章
-    Route::get('showArticalDetail', 'ArticalController@showArticalDetail');               //查一篇文章的所有内容
-    Route::post('byNameSelectArtical', 'ArticalController@byNameSelectArtical');          //根据文章名字模糊查询文章
-    Route::get('byTopIdSelectAllComment','ArticalController@byTopIdSelectAllComment');    //查某一个评论的所有评论
-    Route::get('getArticalAllType', 'ArticalController@getArticalAllType');               //获取文章类型
+    Route::get('showArticlePage', 'ArticleController@showArticlePage');                   //显示文章页面
+    Route::get('typeSelectArticle', 'ArticleController@typeSelectArticle');               //根据文章类型搜索文章
+    Route::get('showArticleDetail', 'ArticleController@showArticleDetail');               //查一篇文章的所有内容
+    Route::post('byNameSelectArticle', 'ArticleController@byNameSelectArticle');          //根据文章名字模糊查询文章
+    Route::get('byTopIdSelectAllComment','ArticleController@byTopIdSelectAllComment');    //查某一个评论的所有评论
+    Route::get('getArticleAllType', 'ArticleController@getArticleAllType');               //获取文章类型
 
     Route::get('selectAllAlbumInformation', 'AlbumController@selectAllAlbumInformation'); //查询所有相册信息
     Route::post('judgeQuestionAnswer', 'AlbumController@judgeQuestionAnswer');            //判断相册问题答案是否正确
@@ -51,10 +51,10 @@ Route::namespace('FrontControllers')->group(function () {
     Route::get('selectLeaveMessage', 'LeaveMessageController@selectLeaveMessage');        //查询留言信息
     //前台需要验证的路由
     Route::middleware('loginCheck', 'auth:api', 'updateToken:api')->group(function () {
-        Route::post('sendReplayComment','ArticalController@sendReplayComment');            //添加回复评论
-        Route::post('addPublishComment', 'ArticalController@addPublishComment');           //添加评论
-        Route::post('deleteArticalComment', 'ArticalController@deleteArticalComment');     //删除文章评论
-        Route::post('praiseOrTrampleArtical', 'ArticalController@praiseOrTrampleArtical'); //文章赞/踩
+        Route::post('sendReplayComment','ArticleController@sendReplayComment');            //添加回复评论
+        Route::post('addPublishComment', 'ArticleController@addPublishComment');           //添加评论
+        Route::post('deleteArticleComment', 'ArticleController@deleteArticleComment');     //删除文章评论
+        Route::post('praiseOrTrampleArticle', 'ArticleController@praiseOrTrampleArticle'); //文章赞/踩
 
         Route::post('replayMessage', 'LeaveMessageController@replayMessage');           //回复留言
         Route::post('deleteLeaveMessage', 'LeaveMessageController@deleteLeaveMessage'); //删除留言
@@ -65,7 +65,7 @@ Route::namespace('FrontControllers')->group(function () {
 //获取资源需要验证
 Route::namespace('CommonControllers')->group(function () {
 
-    Route::post('registerUser', 'UserController@registerUser');                           //注册新用户
+    Route::post('registerUser', 'UserController@registerUser');                       //注册新用户
 
     /**
      * 登录、退出路由
@@ -82,7 +82,7 @@ Route::namespace('CommonControllers')->group(function () {
     Route::get('getCityInfo', 'ObtainFileController@getCityInfo');                    //获取天气城市名
 
     Route::get('getSmsCode', 'TencentSmsController@getSmsCode');
-    Route::post('byCodeUpdatePassword', 'UserController@byCodeUpdatePassword');      //用户根据短信验证码修改密码
+    Route::post('byCodeUpdatePassword', 'UserController@byCodeUpdatePassword');       //用户根据短信验证码修改密码
     //前台用户登录
     Route::post('frontLogin', 'LoginController@frontLogin');
 
@@ -131,18 +131,18 @@ Route::namespace('CommonControllers')->group(function () {
 Route::namespace('BackControllers')->group(function (){
     Route::middleware('loginCheck', 'auth:api', 'updateToken:api')->group(function () {
 
-        Route::get('getArtical', 'MaArticalController@getArtical');                        //获取文章
-        Route::get('combinateSelectArtical', 'MaArticalController@combinateSelectArtical');//组合查询文章
-        Route::get('byTypeSelectArtical', 'MaArticalController@byTypeSelectArtical');      //根据文章类型搜索
-        Route::get('getAloneArtical', 'MaArticalController@getAloneArtical');              //查询单个文章信息
-        Route::post('addArtical', 'MaArticalController@addArtical');                       //添加文章
-        Route::post('deleteArtical', 'MaArticalController@deleteArtical');                 //删除文章
-        Route::post('updateArtical', 'MaArticalController@updateArtical');                 //修改文章信息
+        Route::get('getArticle', 'MaArticleController@getArticle');                        //获取文章
+        Route::get('combineSelectArticle', 'MaArticleController@combineSelectArticle');    //组合查询文章
+        Route::get('byTypeSelectArticle', 'MaArticleController@byTypeSelectArticle');      //根据文章类型搜索
+        Route::get('getAloneArticle', 'MaArticleController@getAloneArticle');              //查询单个文章信息
+        Route::post('addArticle', 'MaArticleController@addArticle');                       //添加文章
+        Route::post('deleteArticle', 'MaArticleController@deleteArticle');                 //删除文章
+        Route::post('updateArticle', 'MaArticleController@updateArticle');                 //修改文章信息
 
-        Route::get('getAlbumInfor', 'MaAlbumController@getAlbumInfor');                         //获取相册信息
+        Route::get('getAlbumInfo', 'MaAlbumController@getAlbumInfo');                           //获取相册信息
         Route::post('addAlbum', 'MaAlbumController@addAlbum');                                  //添加相册信息
         Route::post('deleteAlbum', 'MaAlbumController@deleteAlbum');                            //删除信息
-        Route::post('updateAlbumInfor', 'MaAlbumController@updateAlbumInfor');                  //更新相册信息
+        Route::post('updateAlbumInfo', 'MaAlbumController@updateAlbumInfo');                    //更新相册信息
         Route::post('addAlbumSecretSecurity', 'MaAlbumController@addAlbumSecretSecurity');      //添加相册密保
         Route::post('deleteAlbumSecretSecurity', 'MaAlbumController@deleteAlbumSecretSecurity');//删除相册密保
         Route::post('updateAlbumSecretSecurity', 'MaAlbumController@updateAlbumSecretSecurity');//修改相册密保
@@ -156,7 +156,7 @@ Route::namespace('BackControllers')->group(function (){
         Route::post('updateExhibit', 'MaExhibitController@updateExhibit');                      //修改展览内容
         Route::get('byTimeSelectExhibit', 'MaExhibitController@byTimeSelectExhibit');           //根据时间查询展览内容
         Route::post('replaceExhibit', 'MaExhibitController@replaceExhibit');                    //替换展览内容
-        Route::get('selectAloneExhitbit', 'MaExhibitController@selectAloneExhitbit');           //查单个展览内容
+        Route::get('selectAloneExhibit', 'MaExhibitController@selectAloneExhibit');             //查单个展览内容
 
         Route::get('getArtType', 'MaArtTypeController@getArtType');                             //获取文章类型
         Route::get('byTimeSelectArtType', 'MaArtTypeController@byTimeSelectArtType');           //根据时间查询文章类型

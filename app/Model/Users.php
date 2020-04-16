@@ -23,11 +23,11 @@ class Users extends Authenticatable
         $data = self::hashPassword($data);
         $user = new static($data);
         DB::beginTransaction();
-        try{
+        try {
             $user->save();
             DB::commit();
             return true;
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
             return false;
         }

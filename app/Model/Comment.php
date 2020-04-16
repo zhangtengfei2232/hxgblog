@@ -14,9 +14,9 @@ class Comment extends BaseModel
      */
     public static function addCommentData($comment_data)
     {
-        try{
+        try {
             Comment::insert($comment_data);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return responseState(1,'评论失败');
         }
         return responseState(0,'评论成功');

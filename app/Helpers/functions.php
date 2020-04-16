@@ -1,11 +1,13 @@
 <?php
+
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 /**
  * 后台返回给前台JSON数据
  * @param $code
  * @param $msg
  * @param $data
- * @return \Illuminate\Http\JsonResponse
+ * @return JsonResponse
  */
 function responseToJson($code, $msg, $data = [])
 {
@@ -28,25 +30,30 @@ function responseState($code, $msg, $data = []){
     if(!empty($data)) $result['data'] = $data;
     return $result;
 }
+
 /**
  * 处理根据文章类型搜索出来的文章ID
- * @param $art_id_datas
+ * @param $art_id_data
  * @return array
  */
-function convertArticaId($art_id_datas)
+function convertArticleId($art_id_data)
 {
-    $new_art_id_datas = array();
-    foreach ($art_id_datas as  $item) {
-        array_push($new_art_id_datas,$item->arti_id);
+    $new_art_id_data = array();
+    foreach ($art_id_data as  $item) {
+        array_push($new_art_id_data,$item->arti_id);
     }
-    return $new_art_id_datas;
+    return $new_art_id_data;
 }
 //判断文章浏览量是否可以增加
-function isAddArticalBrowse($art_id, $time)
+function isAddArticleBrowse($art_id, $time)
 {
-    if(!session()->has($art_id))  return true;      //当前文章，没有被访问过
-    if(($time - session($art_id)) > 8888) return true;//判断用户上次访问时间和当前时间的差值是否满足访问条件
-    else return false;
+    if (! session()->has($art_id)) {
+        return true;      //当前文章，没有被访问过
+    }
+    if (($time - session($art_id)) > 8888) {
+        return true;//判断用户上次访问时间和当前时间的差值是否满足访问条件
+    }
+    return false;
 }
 
 /**
@@ -75,7 +82,7 @@ function isTimeGreater($time, $interval = 10)
  * 上传文件
  * @param $files
  * @param $disk
- * @param bool $is_music_file
+ * @param bool $is_music
  * @return mixed
  */
 function uploadFile($files, $disk, $is_music = false)
@@ -84,7 +91,9 @@ function uploadFile($files, $disk, $is_music = false)
     ($is_music) ? $file_path = $file_name : $file_path = uniqid().time() . '-' . $file_name;
     $files->storeAs('./',$file_path, $disk);
     $exist_file = file_exists(storage_path().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.$disk.DIRECTORY_SEPARATOR.$file_path);
-    if($exist_file) return responseState(0,'上传成功',$file_path);
+    if ($exist_file) {
+        return responseState(0,'上传成功',$file_path);
+    }
     return responseState(1,'上传失败');
 }
 
@@ -120,9 +129,9 @@ function getUserIp()
 {
     if (getenv("HTTP_CLIENT_IP") && strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown")){
         $ip = getenv("HTTP_CLIENT_IP");
-    }else if (getenv("HTTP_X_FORWARDED_FOR") && strcasecmp(getenv("HTTP_X_FORWARDED_FOR"), "unknown")){
+    } else if (getenv("HTTP_X_FORWARDED_FOR") && strcasecmp(getenv("HTTP_X_FORWARDED_FOR"), "unknown")){
         $ip = getenv("HTTP_X_FORWARDED_FOR");
-    }else if (getenv("REMOTE_ADDR") && strcasecmp(getenv("REMOTE_ADDR"), "unknown")){
+    } else if (getenv("REMOTE_ADDR") && strcasecmp(getenv("REMOTE_ADDR"), "unknown")){
         $ip = getenv("REMOTE_ADDR");
     } else if (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], "unknown")){
         $ip = $_SERVER['REMOTE_ADDR'];
@@ -142,13 +151,13 @@ function getUserPosition($ip)
     //$url = 'http://whois.pconline.com.cn/ipJson.jsp?ip=' . $ip . '&json=true';
     //$url = 'https://apis.map.qq.com/ws/location/v1/ip=' . $ip . '&key=KUZBZ-PGO63-C3M3F-YU5RO-DK7JE-AEFT3';//腾讯
     $url = 'http://api.map.baidu.com/location/ip?ip=' . $ip .'&ak=u265UuYotdbAW9RIYhjPn5xoIGdz4EVw';
-    try{
+    try {
         $ipContent = file_get_contents($url);
         $ipContent = json_decode($ipContent, true);
-        if (!empty($ipContent['content'])){
+        if (! empty($ipContent['content'])){
             return responseState(0,'获取成功', $ipContent['content']['address_detail']['city']);
         }
-    }catch (\Exception $e){
+    } catch (\Exception $e) {
         return responseState(1,'获取失败');
     }
 }
@@ -193,7 +202,7 @@ function getWeatherInfoByCity($city_name)
 function getHttpResponseGET($url,$header = null) {
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_URL, $url);
-    if(!empty($header)){
+    if (! empty($header)) {
         curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
     }
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -218,7 +227,7 @@ function getHttpResponsePOST($url = '', $param = array()) {
     curl_setopt($ch, CURLOPT_HEADER, false);//是否返回响应头信息
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);//要求结果为字符串且输出到屏幕上
     curl_setopt($ch, CURLOPT_POST, true);//post提交方式
-    if (!empty($param)) {
+    if (! empty($param)) {
         curl_setopt($ch, CURLOPT_POSTFIELDS, $param);
     }
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); //是否将结果返回
@@ -230,6 +239,11 @@ function getHttpResponsePOST($url = '', $param = array()) {
     return $data;
 }
 
+/**
+ *  RSA2加密
+ * @param $data
+ * @return string|null
+ */
 function enRSA2($data)
 {
     $path = public_path() . '/key/private_key.txt';
@@ -241,7 +255,11 @@ function enRSA2($data)
     return $signature;
 }
 
-
+/**
+ * 支付宝请求参数拼接为urlEncode格式字符串
+ * @param $dataArr
+ * @return string
+ */
 function aliPayParamToString($dataArr)
 {
     ksort($dataArr);
@@ -259,33 +277,20 @@ function aliPayParamToString($dataArr)
 function rsaSign($str, $private_key_path)
 {
     $priKey = file_get_contents($private_key_path);
-
     $res = openssl_get_privatekey($priKey);
-
     openssl_sign($str, $sign, $res);
-
     openssl_free_key($res);
-
     //base64编码
-
     $sign = base64_encode($sign);
-
     return $sign;
-
 }
 
-/**RSA验签
-
+/** RSA验签
  * $data待签名数据
-
  * $sign需要验签的签名
-
  * 验签用支付宝公钥
-
  * return 验签是否通过 bool值
-
  */
-
 function verify($data, $sign) {
     //读取支付宝公钥文件
     $path = public_path() . 'key/public_key.pem';
@@ -307,8 +312,7 @@ function verify($data, $sign) {
  */
 function dealQQErrorMessage($error_msg, $msg = '')
 {
-    if (isset($error_msg['error']))
-    {
+    if (isset($error_msg['error'])) {
         echo "<h1>$msg</h1>";
         echo "<h3>error:</h3>" . $error_msg['error'];
         echo "<h3>msg:</h3>" . $error_msg['error_description'];

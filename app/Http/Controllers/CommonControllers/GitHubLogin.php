@@ -28,7 +28,7 @@ class GitHubLogin extends Controller
         $data = array();
         parse_str($content,$data);
         //请求用户信息
-        if (!empty($data['access_token'])) {
+        if (! empty($data['access_token'])) {
             $info_url = $github_login_cg['get_user_url'] . $data['access_token'];
             $token = $data['access_token'];
             $headers[] = 'Authorization: token '. $token;

@@ -27,7 +27,7 @@ class BaiDuLogin extends Controller
         $token = json_decode(getHttpResponsePOST($url, $param), true);
         $access_token = $token['access_token'];
         Log::info('ccccc' . $access_token);
-        if (!empty($access_token)) {
+        if (! empty($access_token)) {
             $url = $bai_du_login_cg['user_info_url'] . $access_token;
             $info = getHttpResponseGET($url);
             Log::info($info);

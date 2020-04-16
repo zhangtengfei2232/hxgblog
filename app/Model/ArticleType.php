@@ -3,9 +3,9 @@
 namespace App\Model;
 
 
-class ArticalType extends BaseModel
+class ArticleType extends BaseModel
 {
-    protected $table = 'artical_type';
+    protected $table = 'article_type';
 
     /**
      * 根据文章类型ID去查文章ID
@@ -13,10 +13,10 @@ class ArticalType extends BaseModel
      * @param $page
      * @return mixed
      */
-    public static function byTypeSelectArticalId($art_type_id, $page)
+    public static function byTypeSelectArticleId($art_type_id, $page)
     {
         $page = $page * 2;
-        return ArticalType::select('arti_id')->where('type_id', $art_type_id)
+        return ArticleType::select('arti_id')->where('type_id', $art_type_id)
                ->offset($page)->limit(2)->get();
     }
 
@@ -25,22 +25,22 @@ class ArticalType extends BaseModel
      * @param $art_id
      * @return mixed
      */
-    public static function selectArticalTypeName($art_id)
+    public static function selectArticleTypeName($art_id)
     {
-        return ArticalType::select('type_name')->leftJoin('type', 'type.type_id', '=', 'artical_type.type_id')
+        return ArticleType::select('type_name')->leftJoin('type', 'type.type_id', '=', 'article_type.type_id')
                ->where('arti_id', $art_id)->get();
     }
 
-    public static function selectArticalTypeId($art_id)
+    public static function selectArticleTypeId($art_id)
     {
-        return ArticalType::select('type_id')->where('arti_id', $art_id)->get();
+        return ArticleType::select('type_id')->where('arti_id', $art_id)->get();
     }
     /**
      * 根据文章类型ID数组，查询文章ID
      */
-    public static function byTypeIdselectArticalId($type_id_data, $total)
+    public static function byTypeIdselectArticleId($type_id_data, $total)
     {
-        return ArticalType::select('arti_id')->whereIn('type_id', $type_id_data)->paginate($total);
+        return ArticleType::select('arti_id')->whereIn('type_id', $type_id_data)->paginate($total);
     }
 
     /**
@@ -49,15 +49,15 @@ class ArticalType extends BaseModel
      * @param $type_id_data
      * @return bool
      */
-    public static function updateArticalTypeData($art_id, $type_id_data, $orig_art_type)
+    public static function updateArticleTypeData($art_id, $type_id_data, $orig_art_type)
     {
         $del_type = array_diff($orig_art_type, $type_id_data);
         $ins_type = array_diff($type_id_data, $orig_art_type);
-        if(!empty($ins_type)){
-            if(! self::insertArticalTypeData($art_id, $ins_type)) return false;
+        if (! empty($ins_type) && ! self::insertArticleTypeData($art_id, $ins_type)) {
+            return false;
         }
-        if(!empty($del_type)){
-            if(! self::deleteArticalTypeData($art_id, $del_type)) return false;
+        if (! empty($del_type) && ! self::deleteArticleTypeData($art_id, $del_type)) {
+            return false;
         }
         return true;
     }
@@ -68,10 +68,10 @@ class ArticalType extends BaseModel
      * @param $type_id_data
      * @return bool
      */
-    public static function insertArticalTypeData($art_id, $type_id_data)
+    public static function insertArticleTypeData($art_id, $type_id_data)
     {
         foreach ($type_id_data as $ins_type_id){
-            if(! ArticalType::insert(['arti_id' => $art_id,'type_id' => $ins_type_id])) return false;
+            if(! ArticleType::insert(['arti_id' => $art_id,'type_id' => $ins_type_id])) return false;
         }
         return true;
     }
@@ -82,10 +82,12 @@ class ArticalType extends BaseModel
      * @param $type_id_data
      * @return bool
      */
-    public static function deleteArticalTypeData($art_id, $type_id_data)
+    public static function deleteArticleTypeData($art_id, $type_id_data)
     {
         foreach ($type_id_data as $del_type_id){
-            if(ArticalType::where([['arti_id',$art_id], ['type_id',$del_type_id]])->delete() == 0) return false;
+            if (ArticleType::where([['arti_id',$art_id], ['type_id',$del_type_id]])->delete() == 0) {
+                return false;
+            }
         }
         return true;
     }
@@ -98,9 +100,9 @@ class ArticalType extends BaseModel
     public static function selectArtTypeNum($art_id_data)
     {
         $art_type_data = [];
-        $art_type_id = ArticalType::select('type_id')->whereIn('arti_id', $art_id_data)->get()->toArray();
+        $art_type_id = ArticleType::select('type_id')->whereIn('arti_id', $art_id_data)->get()->toArray();
         foreach ($art_type_id as $type_id){
-            if(array_key_exists($type_id['type_id'],$art_type_data)){
+            if (array_key_exists($type_id['type_id'],$art_type_data)) {
                 $art_type_data[$type_id['type_id']] = $art_type_data[$type_id['type_id']] + 1;
                 continue;
             }
@@ -116,9 +118,11 @@ class ArticalType extends BaseModel
      */
     public static function judgeTypeHasArt($type_id_data)
     {
-        foreach ($type_id_data as $key => $id){
-            $is_has_art = ArticalType::where('type_id', $id)->count() > 0;
-            if($is_has_art) return responseState(1,'你所选类型有文章，无法删除！');
+        foreach ($type_id_data as $key => $id) {
+            $is_has_art = ArticleType::where('type_id', $id)->count() > 0;
+            if ($is_has_art) {
+                return responseState(1,'你所选类型有文章，无法删除！');
+            }
         }
         return responseState(0,'验证通过');
     }

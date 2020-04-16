@@ -15,7 +15,7 @@ class Photo extends BaseModel
     public static function addAlbumPhotoData($album_photo, $album_id)
     {
         foreach ($album_photo as $photo){
-            if(! Photo::insert(['phot_path' => $photo,'albu_id' => $album_id,'created_at' => time()])){
+            if (! Photo::insert(['phot_path' => $photo,'albu_id' => $album_id,'created_at' => time()])) {
                 return false;
             }
         }
@@ -72,11 +72,10 @@ class Photo extends BaseModel
     public static function selectMulAlumFirstPhoto($album_data)
     {
         foreach ($album_data as $key => $album){
-            if($album_data[$key]['photo_num'] > 0){
+            $album_data[$key]['is_has_photo'] = false;
+            if ($album_data[$key]['photo_num'] > 0) {
                 $album_data[$key]['first_photo'] = self::selectAlbumFirstPhoto($album['albu_id']);
                 $album_data[$key]['is_has_photo'] = true;
-            }else{
-                $album_data[$key]['is_has_photo'] = false;
             }
             (empty($album_data[$key]['albu_question'])) ? $album_data[$key]['is_has_question'] = false : $album_data[$key]['is_has_question'] = true;
         }

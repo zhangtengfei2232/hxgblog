@@ -47,7 +47,9 @@ class Type extends BaseModel
     public static function selectArtTypeData($total, $time = [])
     {
         $typeQuery = new Type();
-        if(!empty($time)) $typeQuery = $typeQuery->whereBetween('created_at',$time);
+        if (! empty($time)) {
+            $typeQuery = $typeQuery->whereBetween('created_at',$time);
+        }
         $typeQuery = $typeQuery->paginate($total);
         return $typeQuery;
     }
@@ -56,11 +58,13 @@ class Type extends BaseModel
      * @param $type_id_data
      * @return bool
      */
-    public static function increaseArticalTypeNum($type_id_data)
+    public static function increaseArticleTypeNum($type_id_data)
     {
         foreach ($type_id_data as $type_id){
             $type_num = Type::select('type_count')->where('type_id', $type_id)->first()->type_count + 1;
-            if(Type::where('type_id', $type_id)->update(['type_count' => $type_num]) == 0) return false;
+            if (Type::where('type_id', $type_id)->update(['type_count' => $type_num]) == 0) {
+                return false;
+            }
         }
         return true;
     }
@@ -70,11 +74,13 @@ class Type extends BaseModel
      * @param $type_id_num
      * @return bool
      */
-    public static function reduceArticalTypeNum($type_id_num)
+    public static function reduceArticleTypeNum($type_id_num)
     {
         foreach ($type_id_num as $key => $type_count){
             $ori_type_num = Type::select('type_count')->where('type_id', $key)->first()->type_count;
-            if(Type::where('type_id', $key)->update(['type_count' => ($ori_type_num - $type_count)]) == 0) return false;
+            if (Type::where('type_id', $key)->update(['type_count' => ($ori_type_num - $type_count)]) == 0) {
+                return false;
+            }
         }
         return true;
     }

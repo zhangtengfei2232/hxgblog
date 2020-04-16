@@ -22,19 +22,19 @@ class Exhibit extends BaseModel
     public static function selectExhibitData($exhit_dist, $total, $page, $time = [])
     {
         $exhibit  = Exhibit::where([['exht_status','<>',1],['exht_distinguish', $exhit_dist]]);
-        if(!empty($time)){
+        if (! empty($time)) {
             $exhibit = $exhibit->whereBetween('created_at',$time);
         }
         $exhibit = $exhibit->paginate($total);
         $data['total'] = $exhibit->total();
         $exhibit = ((array)json_decode(json_encode($exhibit)))['data'];
-        if(empty($time) && $page == 1){
+        if (empty($time) && $page == 1) {
             $selected = json_decode(json_encode(Exhibit::where([['exht_distinguish', $exhit_dist],['exht_status',1]])->first()));
             array_unshift($exhibit,$selected);
         }
         foreach ($exhibit as $key => $item){
-            if(strlen($exhibit[$key]->exht_content) > 2){
-                $exhibit[$key]->exht_content = mb_substr($exhibit[$key]->exht_content,0,2) . "......";
+            if (strlen($exhibit[$key]->exht_content) > 2) {
+                $exhibit[$key]->exht_content = mb_substr($exhibit[$key]->exht_content, 0, 2) . "......";
             }
         }
         $data['exhibit_data'] = $exhibit;

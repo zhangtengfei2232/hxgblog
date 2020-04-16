@@ -15,8 +15,10 @@ class TencentSmsController extends Controller
      */
     public function getSmsCode(Request $request)
     {
-        $phone         = $request->phone;
-        if(! Users::validateUser($phone)) return responseToJson(1,'你是外星人吗？');
+        $phone = $request->phone;
+        if (! Users::validateUser($phone)) {
+            return responseToJson(1,'你是外星人吗');
+        }
         $tencentConfig = config('tencent');
         $appid         = $tencentConfig['appid'];                     // 短信应用SDK AppID  1400开头
         $appkey        = $tencentConfig['appkey'];                    // 短信应用SDK AppKey
@@ -30,8 +32,8 @@ class TencentSmsController extends Controller
             $effective_time = 1;                                      //有效时间
             $params = [$random_number, $effective_time];
             $result = $sender->sendWithParam("86", $phoneNumbers[0], $templateId,
-                $params, $smsSign, "", "");                // 签名参数未提供或者为空时，会使用默认签名发送短信
-            if(json_decode($result)->errmsg == "OK"){
+                $params, $smsSign, "", "");   // 签名参数未提供或者为空时，会使用默认签名发送短信
+            if (json_decode($result)->errmsg == "OK") {
                 session(['code_info' => $random_number . ',' . time() . ',' . $phone]);
                 return responseToJson(0,'短信发送成功');
             }
@@ -40,9 +42,4 @@ class TencentSmsController extends Controller
             return responseToJson(1,'短信发送失败');
         }
     }
-
-
-
-
-
 }

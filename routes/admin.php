@@ -1,2 +1,2 @@
 <?php
-Route::any('test','Test@showArtical');
+Route::any('test','Test@showArticle');

@@ -40,7 +40,7 @@ class AliPayLogin extends Controller
         $access_token = getHttpResponsePOST($ali_pay_login_cg['base_url'], $query);
         Log::info('token' . $url . '-----------------------' . json_encode($access_token));
         $access_token_info = json_decode($access_token, true);
-        if (!isset($access_token_info['alipay_system_oauth_token_response'])) {
+        if (! isset($access_token_info['alipay_system_oauth_token_response'])) {
             echo '获取token信息失败';
             exit;
         }

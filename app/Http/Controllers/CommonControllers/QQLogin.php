@@ -15,15 +15,15 @@ class QQLogin extends Controller
             exit;
         }
         Log::info('zzz:' . $request->code);
-        $qq_login_fg = config('qq');
+        $qq_login_cg = config('qq');
         $param = array(
-            'grant_type' => $qq_login_fg['grant_type'],
+            'grant_type' => $qq_login_cg['grant_type'],
             'code' => $request->code,
-            'client_id' => $qq_login_fg['client_id'],
-            'client_secret' => $qq_login_fg['client_secret'],
-            'redirect_uri' => $qq_login_fg['redirect_uri'],
+            'client_id' => $qq_login_cg['client_id'],
+            'client_secret' => $qq_login_cg['client_secret'],
+            'redirect_uri' => $qq_login_cg['redirect_uri'],
         );
-        $token_url = $qq_login_fg['access_token_url'] . http_build_query($param);
+        $token_url = $qq_login_cg['access_token_url'] . http_build_query($param);
         $response = file_get_contents($token_url);
         Log::info(json_encode($response));
         if (strpos($response, "callback") !== false)
@@ -39,7 +39,7 @@ class QQLogin extends Controller
             exit;
         }
         $access_token = $access_token_info['access_token'];
-        $get_openid_url = $qq_login_fg['openid_url'] . $access_token;
+        $get_openid_url = $qq_login_cg['openid_url'] . $access_token;
         $openid_data = getHttpResponseGET($get_openid_url);
         Log::info('openid' . json_encode($openid_data));
         if (strpos($openid_data, "callback") === false) {
@@ -60,7 +60,7 @@ class QQLogin extends Controller
             'oauth_consumer_key' => '101849190',
             'openid' => $openid_data['openid']
         );
-        $url = $qq_login_fg['user_info_url'] . http_build_query($get_info_param);
+        $url = $qq_login_cg['user_info_url'] . http_build_query($get_info_param);
         $info = json_decode(getHttpResponseGET($url), true);
         dd($info);
     }

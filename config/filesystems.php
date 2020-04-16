@@ -58,9 +58,9 @@ return [
             'driver' => 'local',
             'root' => storage_path('app/public/image'),
         ],
-        'artical' => [
+        'article' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/artical'),
+            'root' => storage_path('app/public/article'),
         ],
         'head_portrait' => [
             'driver' => 'local',

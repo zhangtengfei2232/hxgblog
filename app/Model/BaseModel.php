@@ -34,15 +34,22 @@ class BaseModel extends Model
     //文章时间拆分函数
     public static function timeResolution($data, $is_art = true)
     {
-        if(! is_array($data)) $data = json_decode(json_encode($data));
-        for($i = 0; $i < count($data); $i++){
+        if (! is_array($data)) {
+            $data = json_decode(json_encode($data));
+        }
+        for ($i = 0; $i < count($data); $i++) {
             $data[$i] = (array)$data[$i];
             $time = explode('-',$data[$i]['created_at']);
-            if($is_art){
-                if(strlen(strip_tags($data[$i]['arti_content'])) > 450) $data[$i]['arti_content'] = mb_substr(strip_tags($data[$i]['arti_content']),0, 150).".......";
-                if(strlen($data[$i]['arti_title']) > 30) $data[$i]['arti_title'] = mb_substr($data[$i]['arti_title'],0, 20).".......";
+            if ($is_art) {
+                if (strlen(strip_tags($data[$i]['arti_content'])) > 450) {
+                    $filter_char = array(' ', '\n', '*');
+                    $data[$i]['arti_content'] = mb_substr(str_replace($filter_char, '', strip_tags($data[$i]['arti_content'])),0, 150).".......";
+                }
+                if (strlen($data[$i]['arti_title']) > 30) {
+                    $data[$i]['arti_title'] = mb_substr($data[$i]['arti_title'], 0, 20).".......";
+                }
             }
-            $data[$i]['years']     = $time[0];
+            $data[$i]['years']    = $time[0];
             $data[$i]['monthDay'] = $time[1] . '-' . $time[2];
             unset($data[$i]['created_at']);
         }
@@ -74,7 +81,9 @@ class BaseModel extends Model
             }
             $data[$key][$config_param['count']] = count($child_comment);
             $data[$key][$config_param['child_field']] = $child_comment;
-            if($is_msg) $data[$key]['is_admin'] = $is_admin;
+            if ($is_msg) {
+                $data[$key]['is_admin'] = $is_admin;
+            }
             self::$information_data = [];    //因为是static，所以每次查询都要清空子评论内容
         }
         return $data;
@@ -90,16 +99,20 @@ class BaseModel extends Model
         $comment = $config_param['model_name']::select($config_param['select_field'])->orderBy('created_at', 'asc')
             ->leftJoin('users', $config_param['table_name'].'.user_id', '=', 'users.user_id')
             ->where($config_param['father_id_field'], $father_id)->get()->toArray();
-        if(empty($comment)) return ;
+        if (empty($comment)) {
+            return ;
+        }
         foreach ($comment as $key => $data){
             $father_info = $config_param['model_name']::select('nick_name','users.user_id')
                 ->leftJoin('users', $config_param['table_name'].'.user_id', '=', 'users.user_id')
                 ->where($config_param['id_field'],$comment[$key][$config_param['father_id_field']])
                 ->first();
-            if(empty($father_info)) continue;
+            if (empty($father_info)) {
+                continue;
+            }
             $comment[$key]['father_nick_name'] = $father_info->nick_name;
             $comment[$key]['father_id'] = $father_info->user_id;
-            if($is_msg){    //是留言板
+            if ($is_msg) {    //是留言板
                 ($is_mine) ? $comment[$key]['is_mine'] = true : $comment[$key]['is_mine'] = false;
             } else {
                 ($comment[$key]['user_id'] == $user_id) ? $comment[$key]['is_mine'] = true : $comment[$key]['is_mine'] = false;
@@ -124,9 +137,13 @@ class BaseModel extends Model
         $children_come_id_data = $model_name::select($id_field)
             ->where($config_param['father_id_field'],$del_id)->get();
         //当前评论没有子评论
-        if($children_come_id_data->isEmpty()) return $model_name::where($id_field,$del_id)->delete();
+        if ($children_come_id_data->isEmpty()) {
+            return $model_name::where($id_field,$del_id)->delete();
+        }
         foreach ($children_come_id_data as $id_data) $is_delete = self::deleteData($config_param, $id_data->$id_field);
-        if(! $is_delete) return $is_delete;     //如果其中有一个删除失败，直接返回false
+        if (! $is_delete) {
+            return $is_delete;          //如果其中有一个删除失败，直接返回false
+        }
         return $model_name::where($id_field, $del_id)->delete();
     }
 
@@ -136,7 +153,7 @@ class BaseModel extends Model
      * @param $art_id_data
      * @return bool
      */
-    public static function deleteArticalRelevantData($del_config, $art_id_data)
+    public static function deleteArticleRelevantData($del_config, $art_id_data)
     {
         foreach ($del_config as $config) $config::whereIn('arti_id', $art_id_data)->delete();
         return true;

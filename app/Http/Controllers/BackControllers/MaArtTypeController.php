@@ -4,8 +4,9 @@
 namespace App\Http\Controllers\BackControllers;
 
 use App\Http\Controllers\Controller;
-use App\Model\ArticalType;
+use App\Model\ArticleType;
 use App\Model\Type;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class MaArtTypeController extends Controller
@@ -13,7 +14,7 @@ class MaArtTypeController extends Controller
     /**
      * 查询文章类型
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function getArtType(Request $request)
     {
@@ -23,7 +24,7 @@ class MaArtTypeController extends Controller
     /**
      * 添加文章类型
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function addArtType(Request $request)
     {
@@ -35,15 +36,17 @@ class MaArtTypeController extends Controller
     public function deleteArtType(Request $request)
     {
         $type_id_data = $request->type_id_data;
-        $is_has_art   = ArticalType::judgeTypeHasArt($type_id_data);
-        if($is_has_art['code'] == 1) return responseToJson(1,$is_has_art['msg']);
+        $is_has_art   = ArticleType::judgeTypeHasArt($type_id_data);
+        if ($is_has_art['code'] == 1) {
+            return responseToJson(1,$is_has_art['msg']);
+        }
         return Type::deleteArtTypeData($type_id_data) ? responseToJson(0,'删除文章类型成功') : responseToJson(1,'删除文章类型失败');
     }
 
     /**
      * 修改文章类型
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function updateArtType(Request $request)
     {

@@ -3,11 +3,11 @@
 
 namespace App\Http\Controllers\FrontControllers;
 
-
 use App\Http\Controllers\Controller;
 use App\Model\BaseModel;
 use App\Model\Exhibit;
 use App\Model\LeaveMessage;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class LeaveMessageController extends Controller
@@ -15,7 +15,7 @@ class LeaveMessageController extends Controller
     /**
      * 查询留言信息
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function selectLeaveMessage(Request $request)
     {
@@ -27,20 +27,26 @@ class LeaveMessageController extends Controller
     /**
      * 添加留言
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function addLeaveMessage(Request $request)
     {
         $user_info = session('user');
-        if(empty($user_info)) return responseToJson(1,'请你重新登录');
+        if (empty($user_info)) {
+            return responseToJson(1,'请你重新登录');
+        }
         $data['msg_content']      = $request->msg_content;
         $validate_content         = validateCommentContent($data['msg_content']);
-        if($validate_content['code'] == 1) return responseToJson(1, $validate_content['msg']);
+        if ($validate_content['code'] == 1) {
+            return responseToJson(1, $validate_content['msg']);
+        }
         $data['user_id']          = session('user')->user_id;
         $data['msg_father_id']    = 0;
         $data['created_at']       = time();
         $add_replay_message = LeaveMessage::addLeaveMessage($data);
-        if($add_replay_message['code'] == 1) return responseToJson(1,$add_replay_message['msg']);
+        if ($add_replay_message['code'] == 1) {
+            return responseToJson(1,$add_replay_message['msg']);
+        }
         $time = explode('-',date('Y-m-d', $data['created_at']));
         $data['years'] = $time[0];
         $data['monthDay'] = $time[1] . '-' . $time[2];
@@ -57,25 +63,31 @@ class LeaveMessageController extends Controller
     /**
      * 回复留言
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function replayMessage(Request $request)
     {
-        if(empty(session('user'))) return responseToJson(1,'请你重新登录');
+        if (empty(session('user'))) {
+            return responseToJson(1,'请你重新登录');
+        }
         $data['msg_content']      = $request->msg_content;
         $validate_content         = validateCommentContent($data['msg_content']);
-        if($validate_content['code'] == 1) return responseToJson(1, $validate_content['msg']);
+        if ($validate_content['code'] == 1) {
+            return responseToJson(1, $validate_content['msg']);
+        }
         $data['user_id']            = session('user')->user_id;
         $data['msg_father_id']    = $request->father_id;
         $data['msg_top_level_id'] = $request->top_level_id;
         $data['created_at']       = time();
         $add_replay_message = LeaveMessage::addLeaveMessage($data, 2);
-        if($add_replay_message['code'] == 1) return responseToJson(1,$add_replay_message['msg']);
-        $father_infor = LeaveMessage::selectFatherInformation($data['msg_father_id']);
+        if ($add_replay_message['code'] == 1) {
+            return responseToJson(1,$add_replay_message['msg']);
+        }
+        $father_info = LeaveMessage::selectFatherInformation($data['msg_father_id']);
         $data['created_at'] = date('Y-m-d', $data['created_at']);
         $data['msg_id'] = $add_replay_message['data'];
-        $data['father_nick_name'] = $father_infor->nick_name;
-        $data['father_user_id']     = $father_infor->user_id;
+        $data['father_nick_name'] = $father_info->nick_name;
+        $data['father_user_id']     = $father_info->user_id;
         return responseToJson(0,"回复成功", $data);
     }
 
@@ -83,15 +95,15 @@ class LeaveMessageController extends Controller
     public function deleteLeaveMessage(Request $request)
     {
         LeaveMessage::beginTransaction();
-        try{
+        try {
             //其中有一个留言删除失败,直接回滚
-            if(! LeaveMessage::deleteData(config('selectfield.leave_message'), $request->msg_id)){
+            if (! LeaveMessage::deleteData(config('selectfield.leave_message'), $request->msg_id)) {
                 LeaveMessage::rollBack();
                 return responseToJson(1,'删除失败');
             }
             LeaveMessage::commit();
             return responseToJson(0,'删除成功');
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             LeaveMessage::rollBack();
             return responseToJson(1,'删除失败');
         }

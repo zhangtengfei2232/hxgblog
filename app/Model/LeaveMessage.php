@@ -17,10 +17,10 @@ class LeaveMessage extends BaseModel
     public static function addLeaveMessage($message_data, $status = 2)
     {
         ($status == 1) ? $msg = ['留言成功', '留言失败'] : $msg = ['回复成功', '回复失败'];
-        try{
+        try {
             $msg_id = LeaveMessage::insertGetId($message_data);
             return responseState(0,$msg[0], $msg_id);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return responseState(1,$msg[1]);
         }
     }

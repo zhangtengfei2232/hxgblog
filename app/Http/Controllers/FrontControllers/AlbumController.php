@@ -7,13 +7,14 @@ use App\Http\Controllers\Controller;
 use App\Model\Album;
 use App\Model\AnswerStatus;
 use App\Model\Photo;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class AlbumController extends Controller
 {
     /**
      * 显示所有相册
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function selectAllAlbumInformation()
     {
@@ -23,7 +24,7 @@ class AlbumController extends Controller
     /**
      * 判断用户输入的相册问题答案是否正确
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function judgeQuestionAnswer(Request $request)
     {
@@ -34,7 +35,7 @@ class AlbumController extends Controller
     /**
      * 根据相册ID，查询照片
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function byAlbumIdSelectPhoto(Request $request)
     {

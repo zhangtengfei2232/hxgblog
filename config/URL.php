@@ -60,6 +60,33 @@ define('ARTICLE_COVER_FOLDER_NAME', 'article_cover');
 define('ALBUM_FOLDER_NAME', 'album');
 
 
+/**
+ * 数据库设置的资源字段名配置
+ */
+
+//头像路径字段名
+define('HEAD_PORTRAIT_FIELD_NAME', 'head_portrait');
+
+//音乐路径字段名
+define('MUSIC_FIELD_NAME', 'music');
+
+//音乐歌词路径字段名
+define('MUSIC_LYRIC_FIELD_NAME', 'music_lyric');
+
+//文章图片路径字段名
+define('ARTICLE_PHOTO_FIELD_NAME', 'article_photo');
+
+//文章封面图片路径字段名
+define('ARTICLE_COVER_FIELD_NAME', 'article_cover');
+
+//相册图片路径字段名
+define('ALBUM_FIELD_NAME', 'album');
+
+
+/**
+ * URL
+ */
+
 //文件名参数字段名
 define('FILE_NAME', 'filename');
 
@@ -72,8 +99,11 @@ define('ARTICLE_COVER_URL', RESOURCE_BASE_URL . ARTICLE_COVER_FOLDER_NAME . '&' 
 //请求文章图片的URL
 define('ARTICLE_PHOTO_URL', RESOURCE_BASE_URL . ARTICLE_PHOTO_FOLDER_NAME . '&' . FILE_NAME . '=');
 
-//请求文章音乐的URL
-define('ARTICLE_MUSIC_URL', RESOURCE_BASE_URL . MUSIC_FOLDER_NAME . '&' . FILE_NAME . '=');
+//请求音乐的URL
+define('MUSIC_URL', RESOURCE_BASE_URL . MUSIC_FOLDER_NAME . '&' . FILE_NAME . '=');
+
+//请求音乐歌词的URL
+define('MUSIC_LYRIC_URL', RESOURCE_BASE_URL . MUSIC_LYRIC_FOLDER_NAME . '&' . FILE_NAME . '=');
 
 //请求相册图片的URL
 define('ALBUM_PHOTO_URL', RESOURCE_BASE_URL . ALBUM_FOLDER_NAME . '&' . FILE_NAME . '=');

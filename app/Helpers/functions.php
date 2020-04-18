@@ -408,13 +408,16 @@ function dealFormatResourceURL($data, $deal_type)
         //要转换的字段
         foreach ($deal_type as $index => $item) {
             switch ($item) {
-                case ARTICLE_COVER_FOLDER_NAME:                          //文章封面
+                case ARTICLE_COVER_FIELD_NAME:                          //文章封面
                     $value[$item] = ARTICLE_COVER_URL . $value[$item];
                     break;
-                case MUSIC_LYRIC_FOLDER_NAME:                            //文章背景音乐
-                    $value[$item] = ARTICLE_MUSIC_URL . $value[$item];
+                case MUSIC_LYRIC_FIELD_NAME:                            //音乐
+                    $value['exht_name'] = MUSIC_URL . $value[$item];
                     break;
-                case HEAD_PORTRAIT_FOLDER_NAME:                          //头像
+                case MUSIC_FIELD_NAME:                                  //音乐歌词
+                    $value['exht_content'] = MUSIC_LYRIC_URL . $value[$item];
+                    break;
+                case HEAD_PORTRAIT_FIELD_NAME:                          //头像
                     $value[$item] = HEAD_PORTRAIT_URL . $value[$item];
                     break;
             }

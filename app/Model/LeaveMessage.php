@@ -36,6 +36,18 @@ class LeaveMessage extends BaseModel
                ->leftJoin('users', 'users.user_id', '=', 'leave_message.user_id')->first();
     }
 
+    /**
+     * 查询所有留言
+     * @param $config_param
+     * @return array
+     */
+    public static function selectAllLeaveMessage($config_param)
+    {
+        return  $config_param['table_name']::select('msg_content', 'nick_name', 'leave_message.user_id', 'head_portrait')
+            ->leftJoin('users', $config_param['table_name'].'.user_id', '=', 'users.user_id')
+            ->where($config_param['father_id_field'], 0)->toArray();
+    }
+
 
 
 }

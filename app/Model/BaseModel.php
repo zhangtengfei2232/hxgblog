@@ -61,7 +61,7 @@ class BaseModel extends Model
      * @param $art_id
      * @return mixed
      */
-    public static function selectTopLevelMessage($config_param,$page, $art_id = '')
+    public static function selectTopLevelMessage($config_param, $page, $art_id = '')
     {
         ($config_param['table_name'] == "leave_message") ? $is_msg = true : $is_msg = false;
         $data = $config_param['model_name']::select($config_param['select_field'])

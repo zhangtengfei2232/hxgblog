@@ -80,25 +80,25 @@ function judgeReceiveFiles($file, $status = 1)
     $type = $file->getClientOriginalExtension();
     switch ($status) {
         case 1:
-            $file_types = array('jpg', 'JPG', 'png', 'PNG', 'jpeg', 'JPEG');
-            if (! in_array($type, $file_types)) {
+            if (! in_array($type, array('jpg', 'JPG', 'png', 'PNG', 'jpeg', 'JPEG'))) {
                 return responseState(1,'你上传的图片不合法');
             }
+            break;
         case 2:
-            $file_types = array('mp3','MP3');
-            if (! in_array($type, $file_types)) {
+            if (! in_array($type, array('mp3','MP3'))) {
                 return responseState(1,'你上传的音乐文件不合法');
             }
+            break;
         case 3:
-            $file_types = array('lrc');
-            if (! in_array($type, $file_types)) {
+            if (! in_array($type, array('lrc'))) {
                 return responseState(1,'你上传的歌词文件不合法');
             }
+            break;
         case 4:
-            $file_types = array('PDF','pdf', 'WORD', 'word');
-            if (! in_array($type, $file_types)) {
+            if (! in_array($type, array('PDF','pdf', 'WORD', 'word'))) {
                 return responseState(1,'你上传的文件不合法');
             }
+            break;
     }
     return responseState(0,'验证通过');
 }

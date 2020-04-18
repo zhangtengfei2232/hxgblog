@@ -40,7 +40,6 @@ class AlbumController extends Controller
     public function byAlbumIdSelectPhoto(Request $request)
     {
         return responseToJson(0,'查询成功',Photo::byAlbumIdSelectPhotoData($request->album_id, $request->page));
-
     }
 
 }

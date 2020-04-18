@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Model\Users;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -16,39 +17,42 @@ class UserController extends Controller
      */
     public function registerUser(Request $request)
     {
-        $data['nick_name']  = $request->nickName;
-        $data['sex']        = $request->sex;
-        $data['phone']      = $request->phone;
-        $data['email']      = $request->emails;
-        $data['password']   = $request->password;
-        $data['introduce']  = $request->introduce;
+        $data['nick_name']        = $request->nickName;
+        $data['sex']              = $request->sex;
+        $data['phone']            = $request->phone;
+        $data['email']            = $request->emails;
+        $data['password']         = $request->password;
+        $data['introduce']        = $request->introduce;
+        $data['api_token']        = str_random(128);
+        $data['updated_token_at'] = millisecond();
+        $data['register_way']     = Users::ACT_NUM_PWD;
         if (Users::isPhoneExist($request->phone)) {
             return responseToJson(1,'用户手机号已存在');
         }
         $judge_data = validateUserInformation($data);
         if ($judge_data['code'] == 1) {
-            return responseToJson(1,$judge_data['msg']);
+            return responseToJson(1, $judge_data['msg']);
         }
         $head_portrait = $request->file('headPortrait');
         $judge_img = judgeReceiveFiles($head_portrait);
         if ($judge_img['code'] == 1) {
-            return responseToJson(1,$judge_img['msg']);
+            return responseToJson(1, $judge_img['msg']);
         }
-        $disk = config('upload.head_portrait');
         try {
-            $upload_img_road = uploadFile($head_portrait, $disk);
+            $upload_img_road = uploadFile($head_portrait, HEAD_PORTRAIT_FOLDER_NAME);
             if ($upload_img_road['code'] == 1) {
-                return responseToJson(1,'添加用户信息失败');
+                return responseToJson(1, '添加用户信息失败');
             }
-            $data['head_portrait'] = $upload_img_road['data'];
-            $data['role'] = 3;                                //默认为普通用户
+            $data['head_portrait'] = HEAD_PORTRAIT_URL . $upload_img_road['data'];
+            $data['role'] = 3;                                     //默认为普通用户
             Users::addUserData($data);
-            return responseToJson(0,'注册成功');
+            $user = updateLoginAuth(false, Users::LOGIN_WAY_ACT_NUM_PWD, $data['phone']);
+            return responseToJson(0, '注册成功', $user);
         } catch (\Exception $e) {
             if (! empty($upload_img_road)) {
-                deleteFile($upload_img_road, $disk);
+                deleteFile($upload_img_road, HEAD_PORTRAIT_FOLDER_NAME);
             }
-            return responseToJson(1,'注册失败');
+            return responseToJson(1, '注册失败');
         }
     }
     /**
@@ -73,41 +77,40 @@ class UserController extends Controller
         $data['phone']      = $request->phone;
         $data['email']      = $request->emails;
         $data['introduce']  = $request->introduce;
-        if (Users::isNickNameExist($data['nick_name'],$data['phone'])) {
+        if (Users::isNickNameExist($data['nick_name'], $data['phone'])) {
             return responseToJson(1,'用户昵称已存在');
         }
         $judge_data = validateUserInformation($data);
         if ($judge_data['code'] == 1) {
-            return responseToJson(1,$judge_data['msg']);
+            return responseToJson(1, $judge_data['msg']);
         }
-        $disk = config('upload.head_portrait');
         try {
             //用户没有更改了头像
             if (! $request->hasFile('headPortrait')) {
                 Users::updateUserInformationData($data);
-                return responseToJson(0,'修改成功',$data);
+                return responseToJson(0,'修改成功', $data);
             }
             //用户修改头像
             $head_portrait_file = $request->headPortrait;
             $judge_file = judgeReceiveFiles($head_portrait_file);
             if ($judge_file['code'] == 1) {
-                return responseToJson(1,$judge_file['msg']);
+                return responseToJson(1, $judge_file['msg']);
             }
-            $upload_img_road = uploadFile($head_portrait_file, $disk);
+            $upload_img_road = uploadFile($head_portrait_file, HEAD_PORTRAIT_FOLDER_NAME);
             if ($upload_img_road['code'] == 1) {
-                return responseToJson(1,'修改信息失败');
+                return responseToJson(1, '修改信息失败');
             }
             //图片上传成功的后续操作
             $old_head_portrait_road = Users::selectOldHeadPortrait($data['phone']);
             $data['head_portrait'] = $upload_img_road['data'];
             Users::updateUserInformationData($data);
-            deleteFile($old_head_portrait_road, $disk);           //删除以前的用户文件
-            return responseToJson(0,'修改成功',$data);
+            deleteFile($old_head_portrait_road, HEAD_PORTRAIT_FOLDER_NAME);//删除以前的用户文件
+            return responseToJson(0, '修改成功', $data);
         } catch (\Exception $e) {
             if (! empty($upload_img_road)) {
-                deleteFile($upload_img_road, $disk);
+                deleteFile($upload_img_road, HEAD_PORTRAIT_FOLDER_NAME);
             }
-            return responseToJson(1,'修改信息失败');
+            return responseToJson(1, '修改信息失败');
         }
     }
 
@@ -144,7 +147,7 @@ class UserController extends Controller
         $phone    = $request->phone;
         $validateSms = validateSmsLogin($sms_code, $phone);
         if ($validateSms['code'] == 1) {
-            return responseToJson(1,$validateSms['msg']);
+            return responseToJson(1, $validateSms['msg']);
         }
         return Users::updatePassword($phone, $request->new_password) ? responseToJson(0,'修改密码成功') : responseToJson(1,'修改密码失败');
     }

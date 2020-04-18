@@ -24,24 +24,22 @@ class MaExhibitController extends Controller
             $music_file = $request->file('exht_music');
             $music_lyric = $request->file('exht_lyric');
             $is_has_music = true;
-            $music_disk = config('upload.music');
-            $lyric_disk = config('upload.music_lyric');
             $validate_music = judgeReceiveFiles($music_file, 2);
             if ($validate_music['code'] == 1) {
-                return responseToJson(1,$validate_music['msg']);
+                return responseToJson(1, $validate_music['msg']);
             }
             $validate_lyric = judgeReceiveFiles($music_lyric, 3);
             if ($validate_lyric['code'] == 1) {
-                return responseToJson(1,$validate_lyric['msg']);
+                return responseToJson(1, $validate_lyric['msg']);
             }
-            $upload_music = uploadFile($music_file, $music_disk, true);
+            $upload_music = uploadFile($music_file, MUSIC_FOLDER_NAME, true);
             if ($upload_music['code'] == 1) {
-                return responseToJson(1,'添加音乐文件失败');
+                return responseToJson(1, '添加音乐文件失败');
             }
-            $upload_lyric = uploadFile($music_lyric,$lyric_disk, true);
+            $upload_lyric = uploadFile($music_lyric, MUSIC_LYRIC_FOLDER_NAME, true);
             if ($upload_lyric['code'] == 1) {
-                deleteFile($upload_music['data'],$music_disk);  //歌词文件上传失败，上传成功的音乐，删除
-                return responseToJson(1,'添加歌词文件失败');
+                deleteFile($upload_music['data'], MUSIC_FOLDER_NAME);  //歌词文件上传失败，上传成功的音乐，删除
+                return responseToJson(1, '添加歌词文件失败');
             }
             $data['exht_name']    = $upload_music['data'];
             $data['exht_content'] = $upload_lyric['data'];
@@ -51,27 +49,27 @@ class MaExhibitController extends Controller
         }
         $validate_data = validateExhibit($data);
         if ($validate_data['code'] == 1) {
-            return responseToJson(1,$validate_data['msg']);
+            return responseToJson(1, $validate_data['msg']);
         }
         $data['exht_distinguish'] = $exhibit_dist;
         $data['created_at']       = time();
         ($is_has_music) ? $msg = "上传音乐失败" : $msg = "添加名言失败";
         Exhibit::beginTransaction();
-        try{
+        try {
             if (Exhibit::addExhibitData($data)) {
                 Exhibit::commit();
                 ($is_has_music) ? $msg = "上传音乐成功" : $msg = "添加名言成功";
-                return responseToJson(0,$msg);
+                return responseToJson(0, $msg);
             }
         } catch (\Exception $e) {
             if ($is_has_music) {
-                deleteFile($data['exht_name'],$music_disk);  //数据库更新失败，上传成功的音乐和歌词，删除
-                deleteFile($data['exht_content'],$music_lyric);
+                deleteFile($data['exht_name'], MUSIC_FOLDER_NAME);  //数据库更新失败，上传成功的音乐和歌词，删除
+                deleteFile($data['exht_content'],);
             }
             Exhibit::rollBack();
-            return responseToJson(1,$msg);
+            return responseToJson(1, $msg);
         }
-        return responseToJson(1,$msg);
+        return responseToJson(1, $msg);
     }
 
 

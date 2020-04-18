@@ -13,14 +13,87 @@ class Users extends Authenticatable
     protected $dateFormat = 'U';                //重写表的时间存储格式为时间戳
     protected $fillable = ['nick_name', 'email', 'password',
         'head_portrait', 'introduce', 'phone', 'role', 'sex'];
+
+
+    /**
+     * 注册方式区分
+     */
+    CONST ACT_NUM_PWD = 1;              //账号密码注册
+    CONST BAI_DU      = 2;              //百度账号注册
+    CONST ALI_PAY     = 3;              //支付宝注册
+    CONST QQ          = 4;              //qq注册
+    CONST WEI_BO      = 5;              //微博注册
+    CONST GITHUB      = 6;              //github 注册
+
+
+    /**
+     * 注册方式字段标识
+     */
+    CONST ACT_NUM_PWD_FIELD = 'act_num_pwd';
+    CONST BAI_DU_FIELD      = 'bai_du';
+    CONST ALI_PAY_FIELD     = 'ali_pay';
+    CONST QQ_FIELD          = 'qq';
+    CONST WEI_BO_FIELD      = 'wei_bo';
+    CONST GITHUB_FIELD      = 'github';
+
+
+    /**
+     * 注册方式标识映射
+     * @var array
+     */
+    public static $THIRD_PARTY_LOGIN_MAP = array(
+        self::ACT_NUM_PWD => self::ACT_NUM_PWD_FIELD,
+        self::BAI_DU      => self::BAI_DU_FIELD,
+        self::ALI_PAY     => self::ALI_PAY_FIELD,
+        self::QQ          => self::QQ_FIELD,
+        self::WEI_BO      => self::WEI_BO_FIELD,
+        self::GITHUB      => self::GITHUB_FIELD
+    );
+
+    CONST DEFAULT_NICK_NAME_PREFIX_FIELD = '用户';
+
+    /**
+     * 登录方式
+     */
+    CONST LOGIN_WAY_ACT_NUM_PWD = 1;
+    CONST LOGIN_WAY_SMS         = 2;
+    CONST LOGIN_WAY_THIRD_PARTY = 3;
+
+    /**
+     * 登录方式字段标识
+     */
+     CONST LOGIN_WAY_ACT_NUM_PWD_FIELD = '账号';
+     CONST LOGIN_WAY_SMS_FIELD         = '短信';
+     CONST LOGIN_WAY_THIRD_PARTY_FIELD = '第三方';
+
+    /**
+     * 登录方式标识映射
+     */
+    public static $LOGIN_WAY_MAP = array(
+        self::LOGIN_WAY_ACT_NUM_PWD => self::LOGIN_WAY_ACT_NUM_PWD_FIELD,
+        self::LOGIN_WAY_SMS         => self::LOGIN_WAY_SMS_FIELD,
+        self::LOGIN_WAY_THIRD_PARTY => self::LOGIN_WAY_THIRD_PARTY_FIELD
+    );
+
+    CONST ALI_PAY_HD_PT_EXT_NAME = '.JPEG';
+    CONST BAI_DU_HD_PT_EXT_NAME  = '.JPEG';
+    CONST QQ_HD_PT_EXT_NAME      = '.JPEG';
+    CONST WEI_BO_HD_PT_EXT_NAME  = '.JPEG';
+    CONST GITHUB_HD_PT_EXT_NAME  = '.JPEG';
+
+
     /**
      * 添加用户信息
      * @param $data
+     * @param $register_way
      * @return bool
      */
-    public static function addUserData($data)
+    public static function addUserData($data, $register_way = Users::ACT_NUM_PWD)
     {
-        $data = self::hashPassword($data);
+        //如果是账号密码注册，密码需要HASH，认证时候用
+        if ($register_way == self::ACT_NUM_PWD) {
+            $data = self::hashPassword($data);
+        }
         $user = new static($data);
         DB::beginTransaction();
         try {
@@ -111,7 +184,6 @@ class Users extends Authenticatable
     public static function selectOldHeadPortrait($phone)
     {
         return Users::where('phone', $phone)->select('head_portrait')->first()->head_portrait;
-
     }
 
     /**
@@ -152,9 +224,27 @@ class Users extends Authenticatable
      */
     public static function updatePassword($phone, $new_password)
     {
-        return Users::where('phone',$phone)->update(['password' => bcrypt($new_password)]) > 0;
+        return Users::where('phone', $phone)->update(['password' => bcrypt($new_password)]) > 0;
     }
 
+    /**
+     * 根据 access_token 查询用户
+     * @param $access_token
+     * @return mixed
+     */
+    public static function getThirdPartyUserData($access_token)
+    {
+        return Users::where('access_token', $access_token)->get();
+    }
+
+    /**
+     * 统计用户总数
+     * @return int 用户总数
+     */
+    public static function selectUserNum()
+    {
+        return Users::count();
+    }
 
 
 }

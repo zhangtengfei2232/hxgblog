@@ -24,7 +24,7 @@ class LoginController extends Controller
      * 认证服务方（登录时需要使用SessionGuard, 访问api时使用TokenGuard）
      * @return mixed
      */
-    protected function guard()
+    public function guard()
     {
         return Auth::guard('web');              //session
     }
@@ -40,11 +40,7 @@ class LoginController extends Controller
             return responseToJson(1,'验证码不正确');
         }
         if ($this->attemptLogin($request)) {
-            $user = $this->guard()->user();
-            $user->generateToken();
-            $this->loginSuccess($user);
-            $user = $user->toArray();
-            unset($user['password']);
+            $user = updateLoginAuth();
             return responseToJson(0,'登录成功',$user);
         }
         return responseToJson(2,'账号或密码不正确');
@@ -60,11 +56,7 @@ class LoginController extends Controller
             return responseToJson(1,'验证码不正确');
         }
         if ($this->attemptLogin($request)) {
-            $user = $this->guard()->user();
-            $user->generateToken();
-            $this->loginSuccess($user, 2);
-            $user = $user->toArray();
-            unset($user['password']);
+            $user = updateLoginAuth(true);
             return responseToJson(0,'登录成功',$user);
         }
         return responseToJson(2,'账号或密码不正确');
@@ -83,17 +75,12 @@ class LoginController extends Controller
         if ($validateSms['code'] == 1) {
             return responseToJson(1,$validateSms['msg']);
         }
-        $user = Users::getUserData($phone);                    //获取用户实例
-        $user->generateToken();                                //更新api_token
-        Auth::login($user);                                    //改为用户实例认证
-        $this->loginSuccess($user);
-        $user = $user->toArray();
-        unset($user['password']);
-        return responseToJson(0,'登录成功',$user);
+        $user = updateLoginAuth(false, Users::LOGIN_WAY_SMS, $phone);
+        return responseToJson(0,'登录成功', $user);
     }
 
     /**
-     * 后台登陆
+     * 后台短信登陆
      * @param Request $request
      * @return JsonResponse
      */
@@ -105,12 +92,7 @@ class LoginController extends Controller
         if ($validateSms['code'] == 1) {
             return responseToJson(1,$validateSms['msg']);
         }
-        $user = Users::getUserData($phone);                    //获取用户实例
-        $user->generateToken();                                //更新api_token
-        Auth::login($user);                                    //改为用户实例认证
-        $this->loginSuccess($user,2);
-        $user = $user->toArray();
-        unset($user['password']);
+        $user = updateLoginAuth(true, Users::LOGIN_WAY_SMS, $phone);
         return responseToJson(0,'登录成功',$user);
 
     }
@@ -146,11 +128,11 @@ class LoginController extends Controller
 
     /**登录成功之后调用
      * @param $information
-     * @param int $status
+     * @param bool $is_admin
      */
-    public function loginSuccess($information, $status = 1)
+    public function loginSuccess($information, $is_admin = false)
     {
-        ($status == 1) ? session(['user' => $information]) : session(['admin' => $information]);
+        ($is_admin) ? session(['admin' => $information]) : session(['user' => $information]);
     }
 
     /**

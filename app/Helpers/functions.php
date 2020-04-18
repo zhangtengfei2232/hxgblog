@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\CommonControllers\LoginController;
+use App\Model\Users;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 /**
  * 后台返回给前台JSON数据
@@ -88,9 +91,9 @@ function isTimeGreater($time, $interval = 10)
 function uploadFile($files, $disk, $is_music = false)
 {
     $file_name = $files->getClientOriginalName();
-    ($is_music) ? $file_path = $file_name : $file_path = uniqid().time() . '-' . $file_name;
+    ($is_music) ? $file_path = $file_name : $file_path = implode('_', array(uniqid(), time(), $file_name));
     $files->storeAs('./',$file_path, $disk);
-    $exist_file = file_exists(storage_path().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.$disk.DIRECTORY_SEPARATOR.$file_path);
+    $exist_file = file_exists(storage_path() . RESOURCE_ROUTE_DIR . $disk . DIRECTORY_SEPARATOR.$file_path);
     if ($exist_file) {
         return responseState(0,'上传成功',$file_path);
     }
@@ -331,3 +334,92 @@ function dealQQData($response)
     $response = json_decode(substr($response, $left_pos + 1, $right_pos - $left_pos -1), true);
     return $response;
 }
+
+/**
+ * 更新登录用户认证实例
+ * @param bool $is_admin
+ * @param int $login_way
+ * @param string $data
+ * @return array array('user_id' => '1', 'phone' => '11111111111')
+ */
+function updateLoginAuth($is_admin = false, $login_way = Users::LOGIN_WAY_ACT_NUM_PWD, $data = '')
+{
+    $login_obj = new LoginController();
+    //获取用户实例
+    switch ($login_way) {
+        case Users::LOGIN_WAY_ACT_NUM_PWD:               //账号密码登录
+            $user = Users::getUserData($data);
+            break;
+        case Users::LOGIN_WAY_SMS:                       //短信登录
+            $user = $login_obj->guard()->user();
+            break;
+        case Users::LOGIN_WAY_THIRD_PARTY:               //第三方登录
+            $user = $data;
+            break;
+        default:
+            $user = Users::getUserData($data);
+            break;
+    }
+    $user->generateToken();                              //更新api_token
+    Auth::login($user);                                  //改为用户实例认证
+    $login_obj->loginSuccess($user, $is_admin);          //登录信息存入session
+    $user = $user->toArray();
+    //不是第三方登录，把密码去掉
+    if ($login_way != Users::LOGIN_WAY_THIRD_PARTY) {
+        unset($user['password']);
+    }
+    return $user;
+}
+
+/**
+ * 第三方注册时候，将头像下载到本地
+ * @param string $url         获取头像文件的URL
+ * @param string $save_prefix 保存头像文件名的前缀名
+ * @param string $img_ext     保存头像文件名的扩展名
+ * @return bool   true 代表保存成功，false 代表保存失败
+ */
+function downloadHeadPortrait($url, $save_prefix, $img_ext)
+{
+    $path     = storage_path() . RESOURCE_ROUTE_DIR . HEAD_PORTRAIT_FOLDER_NAME . DIRECTORY_SEPARATOR;
+    $filename = implode('_', array($save_prefix, uniqid(), time())) . $img_ext;
+    $address  = $path . $filename;
+    try {
+        ob_start();
+        readfile($url);           //输出图片文件
+        $img = ob_get_contents(); //得到浏览器输出
+        ob_end_clean();           //清除输出并关闭
+        file_put_contents($address, $img);
+        return $filename;
+    } catch (\Exception $e) {
+        return false;
+    }
+}
+
+
+/**
+ * 格式化获取后端资源的URL
+ * @param $data
+ * @param $deal_type
+ */
+function dealFormatResourceURL($data, $deal_type)
+{
+    //原数据
+    foreach ($data as $key => &$value) {
+        //要转换的字段
+        foreach ($deal_type as $index => $item) {
+            switch ($item) {
+                case ARTICLE_COVER_FOLDER_NAME:                          //文章封面
+                    $value[$item] = ARTICLE_COVER_URL . $value[$item];
+                    break;
+                case MUSIC_LYRIC_FOLDER_NAME:                            //文章背景音乐
+                    $value[$item] = ARTICLE_MUSIC_URL . $value[$item];
+                    break;
+                case HEAD_PORTRAIT_FOLDER_NAME:                          //头像
+                    $value[$item] = HEAD_PORTRAIT_URL . $value[$item];
+                    break;
+            }
+        }
+    }
+
+}
+

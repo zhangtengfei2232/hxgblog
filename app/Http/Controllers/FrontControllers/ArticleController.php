@@ -130,12 +130,12 @@ class ArticleController extends Controller
         Comment::beginTransaction();                          //开启事务
         try {
             $come_id = $request->comment_id;
-            if(! Comment::deleteData(config('selectfield.comment'), $come_id)){       //中间出现删除失败的也要回滚。
+            if (! Comment::deleteData(config('selectfield.comment'), $come_id)) {       //中间出现删除失败的也要回滚。
                 Comment::rollBack();
                 return responseToJson(1,"删除失败");
             }
             $art_id = $request->art_id;
-            $art_comment  = Comment::selectTopLevelMessage(config('selectfield.comment'),'', $art_id);
+            $art_comment = Comment::selectTopLevelMessage(config('selectfield.comment'),'', $art_id);
             Comment::commit();                                //提交事务
             return responseToJson(0,"删除成功",$art_comment);
         } catch (\Exception $e) {                               //出现异常也要回滚

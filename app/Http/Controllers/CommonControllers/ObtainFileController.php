@@ -12,12 +12,12 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 class ObtainFileController extends Controller
 {
     /**
-     * 请求用户头像资源
+     * 请求后端资源
      * @param Request $request
      * @return BinaryFileResponse
      * @throws FileNotFoundException
      */
-    public function getPhoto(Request $request)
+    public function getResource(Request $request)
     {
         $disk     = $request->disk;
         $filename = $request->filename;
@@ -48,7 +48,7 @@ class ObtainFileController extends Controller
         $filename = $request->filename;
         $file = DOWNLOAD_ROUTE_DIR . $disk . DIRECTORY_SEPARATOR . $filename;
         if (! file_exists(storage_path($file))) {
-            return redirect('showEmptyView');                         //判断文件是否存在
+            redirect('showEmptyView');                                 //判断文件是否存在
         }
         return response()->download(storage_path($file));
     }
@@ -59,7 +59,7 @@ class ObtainFileController extends Controller
      */
     public function getCityInfo()
     {
-        $city_name   = getUserPosition("218.29.60.105");               //根据IP获取当地城市名字
+        $city_name = getUserPosition("218.29.60.105");               //根据IP获取当地城市名字
         if ($city_name['code'] == 1) {
             return responseToJson(1,'获取失败');
         }
@@ -67,5 +67,7 @@ class ObtainFileController extends Controller
         $data['weather_info'] = getWeatherInfoByCity($city_name['data']);  //根据城市名字获取当地天气信息
         return responseToJson(0,'查询成功',$data);
     }
+
+
 
 }

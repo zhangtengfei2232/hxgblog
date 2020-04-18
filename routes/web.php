@@ -121,7 +121,7 @@ Route::namespace('CommonControllers')->group(function () {
     //判断后台管理员与前台用户是否同时在线
     Route::get('checkUserOrAdminLogin', 'LoginController@checkUserOrAdminLogin');
 
-    Route::get('getPhoto', 'ObtainFileController@getPhoto');
+    Route::get('getResource', 'ObtainFileController@getResource');
     Route::middleware('loginCheck', 'auth:api', 'updateToken:api')->group(function () {
         Route::get('getUserInformation', 'UserController@getUserInformation');        //获取用户信息
         Route::post('updateUserInformation', 'UserController@updateUserInformation'); //修改用户信息
@@ -138,6 +138,8 @@ Route::namespace('BackControllers')->group(function (){
         Route::post('addArticle', 'MaArticleController@addArticle');                       //添加文章
         Route::post('deleteArticle', 'MaArticleController@deleteArticle');                 //删除文章
         Route::post('updateArticle', 'MaArticleController@updateArticle');                 //修改文章信息
+        Route::post('uploadArticlePhoto', 'MaArticleController@uploadArticlePhoto');       //上传文章内容图片
+        Route::post('deleteArticlePhoto', 'MaArticleController@deleteArticlePhoto');       //删除文章内容图片
 
         Route::get('getAlbumInfo', 'MaAlbumController@getAlbumInfo');                           //获取相册信息
         Route::post('addAlbum', 'MaAlbumController@addAlbum');                                  //添加相册信息

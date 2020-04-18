@@ -17,35 +17,46 @@ class MaArticleController extends Controller
      */
     public function addArticle(Request $request)
     {
-        if(!$request->isMethod('POST')) return responseToJson(1,'你请求的方式不对');
+        if (! $request->isMethod('POST')) {
+            return responseToJson(1, '你请求的方式不对');
+        }
         $data['arti_title']   = $request->arti_title;
         $data['arti_content'] = $request->arti_content;
         $validate_data = validateArticleData($data);
-        if(empty($request->arti_type)) return responseToJson(1,'你没有选择文章类型');
-        if($validate_data['code'] == 1) return responseToJson(1,$validate_data['msg']);
-        if(! $request->hasFile('art_cover')) return responseToJson(1,'请你上传文章封面');
+        if (empty($request->arti_type)) {
+            return responseToJson(1, '你没有选择文章类型');
+        }
+        if ($validate_data['code'] == 1) {
+            return responseToJson(1, $validate_data['msg']);
+        }
+        if (! $request->hasFile('art_cover')) {
+            return responseToJson(1, '请你上传文章封面');
+        }
         $art_cover = $request->art_cover;
         $validate_art_cover = judgeReceiveFiles($art_cover);
-        if($validate_art_cover['code'] == 1) return responseToJson(1,$validate_art_cover['msg']);
-        $disk = config('upload.Article');
-        $upload_art_cover = uploadFile($art_cover, $disk);
-        if($upload_art_cover['code'] == 1) return responseToJson(1,$upload_art_cover['msg']);
+        if ($validate_art_cover['code'] == 1) {
+            return responseToJson(1, $validate_art_cover['msg']);
+        }
+        $upload_art_cover = uploadFile($art_cover, ARTICLE_COVER_FOLDER_NAME);
+        if ($upload_art_cover['code'] == 1) {
+            return responseToJson(1, $upload_art_cover['msg']);
+        }
         $data['arti_cover'] = $upload_art_cover['data'];
-        $data['created_at']          = time();
+        $data['created_at'] = time();
         Article::beginTransaction();
-        try{
+        try {
             $add_art      = Article::addArticleData($data);
-            $art_type     = explode(',',$request->arti_type);
+            $art_type     = explode(',', $request->arti_type);
             $add_art_type = ArticleType::insertArticleTypeData($add_art, $art_type);
             $update_type_num = Type::increaseArticleTypeNum($art_type);
-            if($add_art && $add_art_type && $update_type_num){
+            if ($add_art && $add_art_type && $update_type_num) {
                 Article::commit();
-                return responseToJson(0,'添加文章成功');
+                return responseToJson(0, '添加文章成功');
             }
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             Article::rollBack();
-            deleteFile($data['arti_cover'], $disk);
-            return responseToJson(1,'添加文章失败');
+            deleteFile($data['arti_cover'], ARTICLE_COVER_FOLDER_NAME);
+            return responseToJson(1, '添加文章失败');
         }
     }
 
@@ -68,10 +79,10 @@ class MaArticleController extends Controller
             }
         } catch (\Exception $e) {
             Article::rollBack();
-            return responseToJson(1,"删除文章失败");
+            return responseToJson(1, "删除文章失败");
         }
-        deleteMultipleFile($art_cover_road, config('upload.Article'));  //删除文章的封面
-        return responseToJson(0,'删除文章成功');
+        deleteMultipleFile($art_cover_road, ARTICLE_COVER_FOLDER_NAME);  //删除文章的封面
+        return responseToJson(0, '删除文章成功');
     }
 
     /**
@@ -82,13 +93,13 @@ class MaArticleController extends Controller
     public function updateArticle(Request $request)
     {
         if (!$request->isMethod('POST')) {
-            return responseToJson(1,'请求方式不对');
+            return responseToJson(1, '请求方式不对');
         }
         $data['arti_title']   = $request->arti_title;
         $data['arti_content'] = $request->arti_content;
         $validate_data = validateArticleData($data);
         if ($validate_data['code'] == 1) {
-            return responseToJson(1,$validate_data['msg']);
+            return responseToJson(1, $validate_data['msg']);
         }
         $data['arti_id']   = $request->arti_id;
         ($request->is_update_cover == "true") ? $is_update_cover = true : $is_update_cover = false;
@@ -96,42 +107,41 @@ class MaArticleController extends Controller
             $art_cover = $request->art_cover;
             $validate_art_cover = judgeReceiveFiles($art_cover);
             if ($validate_art_cover['code'] == 1) {
-                return responseToJson(1,$validate_art_cover['msg']);
+                return responseToJson(1, $validate_art_cover['msg']);
             }
-            $disk = config('upload.Article');
-            $upload_art_cover = uploadFile($art_cover, $disk);
+            $upload_art_cover = uploadFile($art_cover, ARTICLE_COVER_FOLDER_NAME);
             if ($upload_art_cover['code'] == 1) {
-                return responseToJson(1,$upload_art_cover['msg']);
+                return responseToJson(1, $upload_art_cover['msg']);
             }
             $data['arti_cover'] = $upload_art_cover['data'];
         }
         Article::beginTransaction();
         try {
-            $art_type = explode(',',$request->arti_type);
+            $art_type = explode(',', $request->arti_type);
             $orig_art_type = explode(',', $request->orig_arti_type);
             $update_art = Article::updateArticleData($data);
             $update_art_type = ArticleType::updateArticleTypeData($data['arti_id'], $art_type, $orig_art_type);
             if ($update_art && $update_art_type) {
                 if ($is_update_cover) {                   //如果更改文章封面，删除以前的
-                    if (! deleteFile($request->arti_cover,$disk)) {
+                    if (! deleteFile($request->arti_cover, ARTICLE_COVER_FOLDER_NAME)) {
                         Article::rollBack();
-                        return responseToJson(1,'修改失败');
+                        return responseToJson(1, '修改失败');
                     }
                 }
                 Article::commit();
-                return responseToJson(0,'修改成功');
+                return responseToJson(0, '修改成功');
             }
             //更新失败，删除上传成功的文章封面
             if ($is_update_cover) {
-                deleteFile($upload_art_cover, $disk);
+                deleteFile($upload_art_cover, ARTICLE_COVER_FOLDER_NAME);
             }
         } catch (\Exception $e) {
             Article::rollBack();
             //出现异常，删除上传成功的文章封面
             if ($is_update_cover) {
-                deleteFile($upload_art_cover, $disk);
+                deleteFile($upload_art_cover, ARTICLE_COVER_FOLDER_NAME);
             }
-            return responseToJson(1,'修改失败');
+            return responseToJson(1, '修改失败');
         }
     }
 
@@ -144,7 +154,7 @@ class MaArticleController extends Controller
     {
         $data['art_data']      = Article::getArticleData($request->total);
         $data['art_type_data'] = Type::selectAllTypeData();
-        return responseToJson(0,'查询成功', $data);
+        return responseToJson(0, '查询成功', $data);
     }
     /**
      * 组合查询文章
@@ -155,7 +165,7 @@ class MaArticleController extends Controller
     {
         (!empty($request->time)) ? $time = $request->time : $time = "";
         (!empty($request->art_name)) ? $art_name = $request->art_name : $art_name = "";
-        return responseToJson(0,'查询成功',Article::selectArticleData($art_name, $time, $request->total));
+        return responseToJson(0, '查询成功', Article::selectArticleData($art_name, $time, $request->total));
     }
 
     /**
@@ -173,7 +183,7 @@ class MaArticleController extends Controller
         }
         $information['art_data'] = Article::byIdSelectArticleData($art_id_data ,2);
         $information['total']    = $data->total;
-        return responseToJson(0,'查询成功', $information);
+        return responseToJson(0, '查询成功', $information);
     }
 
     /**
@@ -187,9 +197,37 @@ class MaArticleController extends Controller
         $art_id = $request->art_id;
         $art_data['Article']       = Article::selectAloneArticleData($art_id);
         $art_data['art_type']      = ArticleType::selectArticleTypeId($art_id);
-        foreach ($art_data['art_type'] as $type) array_push($art_type_id_data, $type->type_id);
+        foreach ($art_data['art_type'] as $type) {
+            array_push($art_type_id_data, $type->type_id);
+        }
         $art_data['art_type'] = $art_type_id_data;
         $art_data['art_type_data'] = Type::selectAllTypeData();
-        return responseToJson(0,'查询成功', $art_data);
+        return responseToJson(0, '查询成功', $art_data);
+    }
+
+    /**
+     * 上传文章内容图片
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function uploadArticlePhoto(Request $request)
+    {
+        if (! $request->hasFile('article_photo')) {
+            return responseToJson(1, '请你上传文章图片');
+        }
+        $art_cover = $request->article_photo;
+        $validate_article_photo = judgeReceiveFiles($art_cover);
+        if ($validate_article_photo['code'] == 1) {
+            return responseToJson(1, $validate_article_photo['msg']);
+        }
+        $result = uploadFile($validate_article_photo, ARTICLE_PHOTO_FOLDER_NAME);
+        return responseToJson($result['code'], $result['msg'], $result['data']);
+    }
+
+
+    public function deleteArticlePhoto(Request $request)
+    {
+        $result = deleteFile(ARTICLE_PHOTO_FOLDER_NAME, $request->article_photo_road);
+        return ($result) ? responseToJson(0, '删除成功') : responseToJson(1, '删除失败');
     }
 }

@@ -36,7 +36,7 @@ Route::namespace('ErrorControllers')->group(function () {
 Route::namespace('FrontControllers')->group(function () {
 
 
-    Route::get('mainPage', 'MainpageController@showMainPage');                            //显示主页面
+    Route::get('mainPage', 'MainPageController@showMainPage');                            //显示主页面
     Route::get('showArticlePage', 'ArticleController@showArticlePage');                   //显示文章页面
     Route::get('typeSelectArticle', 'ArticleController@typeSelectArticle');               //根据文章类型搜索文章
     Route::get('showArticleDetail', 'ArticleController@showArticleDetail');               //查一篇文章的所有内容

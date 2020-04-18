@@ -8,7 +8,7 @@ use App\Model\Exhibit;
 use App\Model\LeaveMessage;
 use App\Model\Photo;
 
-class MainpageController extends Controller
+class MainPageController extends Controller
 {
     //首页
     public function showMainPage()

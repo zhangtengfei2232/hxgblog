@@ -77,7 +77,7 @@ define('MUSIC_LYRIC_FIELD_NAME', 'music_lyric');
 define('ARTICLE_PHOTO_FIELD_NAME', 'article_photo');
 
 //文章封面图片路径字段名
-define('ARTICLE_COVER_FIELD_NAME', 'article_cover');
+define('ARTICLE_COVER_FIELD_NAME', 'arti_cover');
 
 //相册图片路径字段名
 define('ALBUM_FIELD_NAME', 'album');

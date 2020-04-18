@@ -18,7 +18,7 @@ class MainpageController extends Controller
         $data['new_photo']     = Photo::selectNewPhotoData();
         $data['exhibit_data']  = explode('+', Exhibit::selectPresentExhibitData(1));
         $data['leave_message'] = LeaveMessage::selectAllLeaveMessage(config('selectfield.leave_message'));
-        $data['leave_message'] = dealFormatResourceURL($data['leave_message'], array(HEAD_PORTRAIT_FOLDER_NAME, ARTICLE_COVER_FOLDER_NAME));
+        $data['leave_message'] = dealFormatResourceURL($data['leave_message'], array(HEAD_PORTRAIT_FIELD_NAME, ARTICLE_COVER_FIELD_NAME));
         return responseToJson(0,"success", $data);
     }
 

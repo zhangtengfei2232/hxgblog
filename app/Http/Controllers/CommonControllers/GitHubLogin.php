@@ -18,7 +18,7 @@ class GitHubLogin extends Controller
         Log::info('xxxxxx:' . json_encode($request->code));
         $github_login_cg = config('github');
         $param = array(
-            'code'          => $request->code,
+            'code'          => $request->input('code'),
             'client_id'     => $github_login_cg['client_id'],
             'client_secret' => $github_login_cg['client_secret'],
         );
@@ -69,6 +69,7 @@ class GitHubLogin extends Controller
         echo '保存信息失败,稍后重试';
         return false;
     }
+
 
     /**
      * 处理QQ返回的用户信息

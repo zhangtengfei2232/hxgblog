@@ -14,6 +14,8 @@ class EmptyController extends Controller
     public function showFourView(){
         return view('error');
     }
+
+
     /**
      * 用户没有请求到资源报错，返回给用户资源为空页面
      */

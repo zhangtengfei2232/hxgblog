@@ -77,7 +77,7 @@ define('MUSIC_LYRIC_FIELD_NAME', 'music_lyric');
 define('ARTICLE_PHOTO_FIELD_NAME', 'article_photo');
 
 //文章封面图片路径字段名
-define('ARTICLE_COVER_FIELD_NAME', 'arti_cover');
+define('ARTICLE_COVER_FIELD_NAME', 'art_cover');
 
 //相册图片路径字段名
 define('ALBUM_FIELD_NAME', 'album');
@@ -124,7 +124,7 @@ define('download_music', DOWNLOAD_FILE_BASE_URL . MUSIC_FOLDER_NAME . '&' . FILE
  * 百度账号登录
  */
 //百度基础配置
-$bai_du_login_cg = config('baidu');
+$bai_du_login_cg = config('bai_du');
 
 //scope
 define('BAI_DU_SCOPE', 'netdisk');
@@ -174,7 +174,7 @@ define('QQ_LOGIN_URL', QQ_BASE_LOGIN_URL . QQ_PARAM);
  * 支付宝登录
  */
 //支付宝基础配置
-$ali_pay_login_cg = config('alipay')['login'];
+$ali_pay_login_cg = config('ali_pay')['login'];
 
 //支付宝第三方登录基础URL
 define('ALI_PAY_BASE_LOGIN_URL', 'https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?scope=' . $ali_pay_login_cg['scope']);
@@ -196,7 +196,7 @@ define('ALI_PAY_LOGIN_URL', ALI_PAY_BASE_LOGIN_URL . ALI_PAY_PARAM);
  * 微博登录
  */
 //微博基础配置
-$wei_bo_login_cg = config('weibo')['login'];
+$wei_bo_login_cg = config('wei_bo')['login'];
 
 //微博第三方登录基础URL
 define('WEI_BO_BASE_LOGIN_URL', 'https://api.weibo.com/oauth2/authorize?response_type=code');

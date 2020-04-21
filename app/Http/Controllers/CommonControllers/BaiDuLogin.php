@@ -11,15 +11,14 @@ class BaiDuLogin extends Controller
 {
     public function baiDuCallBack(Request $request)
     {
-        Log::info('zzz:' . $request->code);
         if (! $request->has('code')) {
             echo '没有获取到code';
             exit;
         }
-        $bai_du_login_cg = config('baidu');
+        $bai_du_login_cg = config('bai_du');
         $param = array(
             'grant_type'    => $bai_du_login_cg['grant_type'],
-            'code'          => $request->code,
+            'code'          => $request->input('code'),
             'client_id'     => $bai_du_login_cg['client_id'],
             'client_secret' => $bai_du_login_cg['client_secret'],
             'redirect_uri'  => $bai_du_login_cg['redirect_uri'],
@@ -65,6 +64,7 @@ class BaiDuLogin extends Controller
         return false;
 
     }
+
 
     /**
      * 处理百度返回的用户信息

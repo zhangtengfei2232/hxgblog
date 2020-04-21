@@ -19,10 +19,10 @@ class MaExhibitController extends Controller
             return responseToJson(1,'你请求的方式不对');
         }
         $is_has_music = false;
-        $exhibit_dist = $request->exht_dist;
+        $exhibit_dist = $request->input('exh_dist');
         if ($exhibit_dist == 4) {                       //判断是否为音乐上传
-            $music_file = $request->file('exht_music');
-            $music_lyric = $request->file('exht_lyric');
+            $music_file = $request->file('exh_music');
+            $music_lyric = $request->file('exh_lyric');
             $is_has_music = true;
             $validate_music = judgeReceiveFiles($music_file, 2);
             if ($validate_music['code'] == 1) {
@@ -41,30 +41,30 @@ class MaExhibitController extends Controller
                 deleteFile($upload_music['data'], MUSIC_FOLDER_NAME);  //歌词文件上传失败，上传成功的音乐，删除
                 return responseToJson(1, '添加歌词文件失败');
             }
-            $data['exht_name']    = $upload_music['data'];
-            $data['exht_content'] = $upload_lyric['data'];
+            $data['exh_name']    = $upload_music['data'];
+            $data['exh_content'] = $upload_lyric['data'];
         } else {
-            $data['exht_content'] = $request->exht_content;
-            $data['exht_name']    = $request->exht_name;
+            $data['exh_content'] = $request->input('exh_content');
+            $data['exh_name']    = $request->input('exh_name');
         }
         $validate_data = validateExhibit($data);
         if ($validate_data['code'] == 1) {
             return responseToJson(1, $validate_data['msg']);
         }
-        $data['exht_distinguish'] = $exhibit_dist;
+        $data['exh_distinguish'] = $exhibit_dist;
         $data['created_at']       = time();
-        ($is_has_music) ? $msg = "上传音乐失败" : $msg = "添加名言失败";
+        ($is_has_music) ? $msg = '上传音乐失败' : $msg = '添加名言失败';
         Exhibit::beginTransaction();
         try {
             if (Exhibit::addExhibitData($data)) {
                 Exhibit::commit();
-                ($is_has_music) ? $msg = "上传音乐成功" : $msg = "添加名言成功";
+                ($is_has_music) ? $msg = '上传音乐成功' : $msg = '添加名言成功';
                 return responseToJson(0, $msg);
             }
         } catch (\Exception $e) {
             if ($is_has_music) {
-                deleteFile($data['exht_name'], MUSIC_FOLDER_NAME);  //数据库更新失败，上传成功的音乐和歌词，删除
-                deleteFile($data['exht_content'],);
+                deleteFile($data['exh_name'], MUSIC_FOLDER_NAME);  //数据库更新失败，上传成功的音乐和歌词，删除
+                deleteFile($data['exh_content'], MUSIC_LYRIC_FOLDER_NAME);
             }
             Exhibit::rollBack();
             return responseToJson(1, $msg);
@@ -80,14 +80,14 @@ class MaExhibitController extends Controller
      */
     public function deleteExhibit(Request $request)
     {
-        $exht_id_data = $request->exht_id_data;
-        if ($request->exht_dist == 4) {
-            $road_data = Exhibit::selectMusicRoad($exht_id_data);
+        $exh_id_data = $request->input('exh_id_data');
+        if ($request->input('exh_dist') == 4) {
+            $road_data = Exhibit::selectMusicRoad($exh_id_data);
             $music_road = $road_data[0];
             $lyric_road = $road_data[1];
             Exhibit::beginTransaction();
             try {
-                $delete_music_data = Exhibit::deleteExhibitData($exht_id_data);
+                $delete_music_data = Exhibit::deleteExhibitData($exh_id_data);
                 if ($delete_music_data) {
                     Exhibit::commit();
                 }
@@ -97,10 +97,11 @@ class MaExhibitController extends Controller
             }
             deleteMultipleFile($music_road, config('upload.music'));
             deleteMultipleFile($lyric_road, config('upload.music_lyric'));
-            return responseToJson(0,'删除展览内容成功');
+            return responseToJson(0, '删除展览内容成功');
         }
-        return (Exhibit::deleteExhibitData($exht_id_data)) ? responseToJson(0,'删除展览内容成功') : responseToJson(1,'删除展览内容失败');
+        return (Exhibit::deleteExhibitData($exh_id_data)) ? responseToJson(0, '删除展览内容成功') : responseToJson(1, '删除展览内容失败');
     }
+
 
     /**
      * 修改展览内容
@@ -109,15 +110,16 @@ class MaExhibitController extends Controller
      */
     public function updateExhibit(Request $request)
     {
-        $data['exht_id'] = $request->exht_id;
-        $data['exht_content'] = $request->exht_content;
-        $data['exht_name'] = $request->exht_name;
+        $data['exh_id'] = $request->input('exh_id');
+        $data['exh_content'] = $request->input('exh_content');
+        $data['exh_name'] = $request->input('exh_name');
         $validate_data = validateExhibit($data);
         if ($validate_data['code'] == 1) {
-            return responseToJson(1,$validate_data['msg']);
+            return responseToJson(1, $validate_data['msg']);
         }
-        return (Exhibit::updateExhibitData($data)) ? responseToJson(0,'修改名言成功') : responseToJson(1,'修改名言成功');
+        return (Exhibit::updateExhibitData($data)) ? responseToJson(0, '修改名言成功') : responseToJson(1, '修改名言成功');
     }
+
 
     /**
      * 根据展览类别查询内容
@@ -126,8 +128,9 @@ class MaExhibitController extends Controller
      */
     public function selectExhibit(Request $request)
     {
-        return responseToJson(0,'查询成功',Exhibit::selectExhibitData($request->exht_dist, $request->total, $request->page));
+        return responseToJson(0, '查询成功', Exhibit::selectExhibitData($request->input('exh_dist'), $request->input('total'), $request->input('page')));
     }
+
 
     /**
      * 查询单个展览内容
@@ -136,8 +139,9 @@ class MaExhibitController extends Controller
      */
     public function selectAloneExhibit(Request $request)
     {
-        return responseToJson(0,'查询成功',Exhibit::selectAloneExhibitData($request->exht_id));
+        return responseToJson(0, '查询成功', Exhibit::selectAloneExhibitData($request->input('exh_id')));
     }
+
 
     /**
      * 根据时间查询展览内容
@@ -146,16 +150,18 @@ class MaExhibitController extends Controller
      */
     public function byTimeSelectExhibit(Request $request)
     {
-        return responseToJson(0,'查询成功', Exhibit::selectExhibitData($request->exht_dist, $request->total, $request->page, $request->time));
+        return responseToJson(0, '查询成功', Exhibit::selectExhibitData($request->input('exh_dist'), $request->input('total'), $request->input('page'), $request->input('time')));
     }
+
 
     /**
      * 替换展览内容
+     * @param Request $request
      * @return JsonResponse
      */
     public function replaceExhibit(Request $request)
     {
-        return (Exhibit::replaceExhibitData($request->orig_select_id, $request->new_select_id)) ? responseToJson(0,'替换名言成功') : responseToJson(1,'替换名言失败');
+        return (Exhibit::replaceExhibitData($request->input('orig_select_id'), $request->input('new_select_id'))) ? responseToJson(0, '替换名言成功') : responseToJson(1, '替换名言失败');
     }
 
 

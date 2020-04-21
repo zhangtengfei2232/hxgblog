@@ -18,8 +18,9 @@ class AlbumController extends Controller
      */
     public function selectAllAlbumInformation()
     {
-        return responseToJson(0,'查找成功', AnswerStatus::isHasJurisdiction(Album::selectAllAlbumData()));
+        return responseToJson(0, '查找成功', AnswerStatus::isHasJurisdiction(Album::selectAllAlbumData()));
     }
+
 
     /**
      * 判断用户输入的相册问题答案是否正确
@@ -28,9 +29,10 @@ class AlbumController extends Controller
      */
     public function judgeQuestionAnswer(Request $request)
     {
-        $is_correct = Album::judgeQuestionAnswerData($request->album_id, $request->answer);
-        return ($is_correct) ? responseToJson(0,'回答正确') : responseToJson(1,'回答错误');
+        $is_correct = Album::judgeQuestionAnswerData($request->input('album_id'), $request->input('answer'));
+        return ($is_correct) ? responseToJson(0, '回答正确') : responseToJson(1, '回答错误');
     }
+
 
     /**
      * 根据相册ID，查询照片
@@ -39,7 +41,7 @@ class AlbumController extends Controller
      */
     public function byAlbumIdSelectPhoto(Request $request)
     {
-        return responseToJson(0,'查询成功',Photo::byAlbumIdSelectPhotoData($request->album_id, $request->page));
+        return responseToJson(0, '查询成功', Photo::byAlbumIdSelectPhotoData($request->input('album_id'), $request->input('page')));
     }
 
 }

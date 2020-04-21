@@ -11,11 +11,12 @@ class TencentSmsController extends Controller
 {
     /**
      * 发送短信登录验证码
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function getSmsCode(Request $request)
     {
-        $phone = $request->phone;
+        $phone = $request->input('phone');
         if (! Users::validateUser($phone)) {
             return responseToJson(1,'你是外星人吗');
         }
@@ -35,11 +36,11 @@ class TencentSmsController extends Controller
                 $params, $smsSign, "", "");   // 签名参数未提供或者为空时，会使用默认签名发送短信
             if (json_decode($result)->errmsg == "OK") {
                 session(['code_info' => $random_number . ',' . time() . ',' . $phone]);
-                return responseToJson(0,'短信发送成功');
+                return responseToJson(0, '短信发送成功');
             }
-            return responseToJson(1,'短信发送失败');
+            return responseToJson(1, '短信发送失败');
         } catch (\Exception $e) {
-            return responseToJson(1,'短信发送失败');
+            return responseToJson(1, '短信发送失败');
         }
     }
 }

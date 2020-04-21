@@ -129,32 +129,32 @@ function validateArticleData($data)
     if (emptyArray($data)) {
         return responseState(1,'文章信息填写不完整');
     }
-    if(strlen($data['arti_title']) > 200) {
+    if(strlen($data['art_title']) > 200) {
         return responseState(1,'文章题目过长');
     }
-    if ($data['arti_title'] != strip_tags($data['arti_title'])) {
+    if ($data['art_title'] != strip_tags($data['art_title'])) {
         return responseState(1,'你输入的文章题目不合法');
     }
-    if ($data['arti_content'] != strip_tags($data['arti_content'])) {
+    if ($data['art_content'] != strip_tags($data['art_content'])) {
         return responseState(1,'你输入的文章题目不合法');
     }
     return responseState(0,'验证通过');
 }
 
 /**
- * 验证相册信息
+ *  验证相册信息
  * @param $data
- * @return \Illuminate\Http\JsonResponse
+ * @return mixed
  */
 function validateAlbumData($data)
 {
     if (emptyArray($data)) {
         return responseState(1,'相册信息填写不完整');
     }
-    if (strlen($data['albu_name']) > 30) {
+    if (strlen($data['alb_name']) > 30) {
         return responseState(1,'你填写的相册名字过长');
     }
-    if (strlen($data['albu_introduce']) > 200) {
+    if (strlen($data['alb_introduce']) > 200) {
         return responseState(1,'你填写的相册介绍过长');
     }
     return responseState(0,'验证通过');
@@ -167,10 +167,10 @@ function validateAlbumData($data)
  */
 function validateAlbumSecSty($data)
 {
-    if (strlen($data['albu_question']) > 30) {
+    if (strlen($data['alb_question']) > 30) {
         return responseState(1,'你填写的相册密保问题过长');
     }
-    if (strlen($data['albu_answer']) > 30) {
+    if (strlen($data['alb_answer']) > 30) {
         return responseState(1,'你填写的相册密保答案过长');
     }
     return responseState(0,'验证通过');
@@ -186,10 +186,10 @@ function validateExhibit($data)
     if (emptyArray($data)) {
         return responseState(1,'你填写的不完整');
     }
-    if (strlen($data['exht_name']) > 100) {
+    if (strlen($data['exh_name']) > 100) {
         return responseState(1,'你填写的名言名字过长');
     }
-    if (strlen($data['exht_content']) > 220) {
+    if (strlen($data['exh_content']) > 220) {
         return responseState(1,'你填写的名言内容过长');
     }
     return responseState(0,'验证通过');

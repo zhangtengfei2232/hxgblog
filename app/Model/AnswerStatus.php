@@ -25,18 +25,18 @@ class AnswerStatus extends BaseModel
             $data['first_photo'] = " ";
             $is_answer = false;
             Log::info(session('user'));
-            if (! empty($data['albu_question']) && !empty(session('user'))) {  //如果相册有密保,且有用户登录
-                $num = AnswerStatus::where([['albu_id',$data['albu_id']],
+            if (! empty($data['alb_question']) && ! empty(session('user'))) {  //如果相册有密保,且有用户登录
+                $num = AnswerStatus::where([['alb_id', $data['alb_id']],
                     ['user_id', session('user')->user_id]])->count();
                 if ($num > 0) {
                     $is_answer = true; //查看当前用户之前，是否回答过此相册的密保
                 }
             }
-            if (empty($data['albu_question']) || $is_answer) {    //无密保或者用户已经回答过密保
+            if (empty($data['alb_question']) || $is_answer) {    //无密保或者用户已经回答过密保
                 $data['is_has_password'] = false;
                 //相册照片不为空，查询第一张照片
                 if ($data['photo_num'] > 0) {
-                    $data['first_photo'] = Photo::selectAlbumFirstPhoto($data['albu_id']);
+                    $data['first_photo'] = Photo::selectAlbumFirstPhoto($data['alb_id']);
                     $data['is_has_photo'] = true;
                 }
             }
@@ -45,6 +45,7 @@ class AnswerStatus extends BaseModel
         return $album_information;
     }
 
+
     /**
      * 删除关于此相册的所有回答问题状态
      * @param $album_id
@@ -52,7 +53,7 @@ class AnswerStatus extends BaseModel
      */
     public static function deleteAnswerStatus($album_id)
     {
-        AnswerStatus::where('albu_id', $album_id)->delete();
+        AnswerStatus::where('alb_id', $album_id)->delete();
         return true;
     }
 

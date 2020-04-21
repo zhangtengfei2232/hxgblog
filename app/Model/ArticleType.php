@@ -16,9 +16,10 @@ class ArticleType extends BaseModel
     public static function byTypeSelectArticleId($art_type_id, $page)
     {
         $page = $page * 2;
-        return ArticleType::select('arti_id')->where('type_id', $art_type_id)
+        return ArticleType::select('art_id')->where('type_id', $art_type_id)
                ->offset($page)->limit(2)->get();
     }
+
 
     /**
      * 查询文章的文章类型ID
@@ -28,25 +29,38 @@ class ArticleType extends BaseModel
     public static function selectArticleTypeName($art_id)
     {
         return ArticleType::select('type_name')->leftJoin('type', 'type.type_id', '=', 'article_type.type_id')
-               ->where('arti_id', $art_id)->get();
+               ->where('art_id', $art_id)->get();
     }
 
+
+    /**
+     *查询文章对应的类型
+     * @param $art_id
+     * @return mixed
+     */
     public static function selectArticleTypeId($art_id)
     {
-        return ArticleType::select('type_id')->where('arti_id', $art_id)->get();
+        return ArticleType::select('type_id')->where('art_id', $art_id)->get();
     }
+
+
     /**
      * 根据文章类型ID数组，查询文章ID
+     * @param $type_id_data
+     * @param $total
+     * @return
      */
     public static function byTypeIdselectArticleId($type_id_data, $total)
     {
-        return ArticleType::select('arti_id')->whereIn('type_id', $type_id_data)->paginate($total);
+        return ArticleType::select('art_id')->whereIn('type_id', $type_id_data)->paginate($total);
     }
+
 
     /**
      * 修改文章的类型
      * @param $art_id
      * @param $type_id_data
+     * @param $orig_art_type
      * @return bool
      */
     public static function updateArticleTypeData($art_id, $type_id_data, $orig_art_type)
@@ -62,6 +76,7 @@ class ArticleType extends BaseModel
         return true;
     }
 
+
     /**
      * 添加单个文章的类型
      * @param $art_id
@@ -71,10 +86,11 @@ class ArticleType extends BaseModel
     public static function insertArticleTypeData($art_id, $type_id_data)
     {
         foreach ($type_id_data as $ins_type_id){
-            if(! ArticleType::insert(['arti_id' => $art_id,'type_id' => $ins_type_id])) return false;
+            if(! ArticleType::insert(['art_id' => $art_id, 'type_id' => $ins_type_id])) return false;
         }
         return true;
     }
+
 
     /**
      * 删除单个文章的类型
@@ -85,12 +101,13 @@ class ArticleType extends BaseModel
     public static function deleteArticleTypeData($art_id, $type_id_data)
     {
         foreach ($type_id_data as $del_type_id){
-            if (ArticleType::where([['arti_id',$art_id], ['type_id',$del_type_id]])->delete() == 0) {
+            if (ArticleType::where([['art_id', $art_id], ['type_id', $del_type_id]])->delete() == 0) {
                 return false;
             }
         }
         return true;
     }
+
 
     /**
      * 删除文章时候，查询文章类型数量 | 以 'type_id实际值'作为数组索引，对应的数量作为值
@@ -100,9 +117,9 @@ class ArticleType extends BaseModel
     public static function selectArtTypeNum($art_id_data)
     {
         $art_type_data = [];
-        $art_type_id = ArticleType::select('type_id')->whereIn('arti_id', $art_id_data)->get()->toArray();
+        $art_type_id = ArticleType::select('type_id')->whereIn('art_id', $art_id_data)->get()->toArray();
         foreach ($art_type_id as $type_id){
-            if (array_key_exists($type_id['type_id'],$art_type_data)) {
+            if (array_key_exists($type_id['type_id'], $art_type_data)) {
                 $art_type_data[$type_id['type_id']] = $art_type_data[$type_id['type_id']] + 1;
                 continue;
             }
@@ -110,6 +127,7 @@ class ArticleType extends BaseModel
         }
         return $art_type_data;
     }
+
 
     /**
      * 判断类型是否有文章存在
@@ -121,10 +139,10 @@ class ArticleType extends BaseModel
         foreach ($type_id_data as $key => $id) {
             $is_has_art = ArticleType::where('type_id', $id)->count() > 0;
             if ($is_has_art) {
-                return responseState(1,'你所选类型有文章，无法删除！');
+                return responseState(1, '你所选类型有文章，无法删除！');
             }
         }
-        return responseState(0,'验证通过');
+        return responseState(0, '验证通过');
     }
 
 }

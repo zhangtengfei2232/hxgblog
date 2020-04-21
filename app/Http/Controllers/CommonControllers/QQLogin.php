@@ -15,11 +15,10 @@ class QQLogin extends Controller
             echo '没有获取到code';
             exit;
         }
-        Log::info('zzz:' . $request->code);
         $qq_login_cg = config('qq');
         $param = array(
             'grant_type'    => $qq_login_cg['grant_type'],
-            'code'          => $request->code,
+            'code'          => $request->input('code'),
             'client_id'     => $qq_login_cg['client_id'],
             'client_secret' => $qq_login_cg['client_secret'],
             'redirect_uri'  => $qq_login_cg['redirect_uri'],
@@ -92,6 +91,7 @@ class QQLogin extends Controller
         return false;
     }
 
+
     /**
      * 处理QQ返回的用户信息
      * @param $user_info
@@ -108,7 +108,6 @@ class QQLogin extends Controller
             'login_way'      => Users::LOGIN_WAY_THIRD_PARTY,
             'access_token'   => $user_info['access_token']
         );
-
     }
 
 }

@@ -17,10 +17,11 @@ class Comment extends BaseModel
         try {
             Comment::insert($comment_data);
         } catch (\Exception $e) {
-            return responseState(1,'评论失败');
+            return responseState(1, '评论失败');
         }
-        return responseState(0,'评论成功');
+        return responseState(0, '评论成功');
     }
+
 
     /**
      * 查询某一条顶级评论的子评论数
@@ -34,8 +35,10 @@ class Comment extends BaseModel
         return $comment_data;
     }
 
+
     /**
      * 判断此评论是否为顶级评论
+     * @param $come_id
      * @return bool
      */
     public  static function isTopLevelComment($come_id):bool

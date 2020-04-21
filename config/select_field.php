@@ -1,13 +1,13 @@
 <?php
 return [
     'comment' => [
-        'id_field'        => 'come_id',
-        'father_id_field' => 'come_father_id',
+        'id_field'        => 'com_id',
+        'father_id_field' => 'com_father_id',
         'table_name'      => 'comment',
         'model_name'      => \App\Model\Comment::class,
-        'count'           => 'come_count',
+        'count'           => 'com_count',
         'child_field'     => 'child_comment',
-        'select_field'    => ['come_id', 'come_content', 'come_father_id',
+        'select_field'    => ['com_id', 'com_content', 'com_father_id',
             'comment.created_at', 'nick_name', 'head_portrait','comment.user_id']
     ],
     'leave_message' => [

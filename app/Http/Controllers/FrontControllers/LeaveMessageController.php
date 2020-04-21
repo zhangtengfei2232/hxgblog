@@ -19,10 +19,11 @@ class LeaveMessageController extends Controller
      */
     public function selectLeaveMessage(Request $request)
     {
-        $data['leave_msg_data'] = BaseModel::timeResolution(LeaveMessage::selectTopLevelMessage(config('selectfield.leave_message'), $request->page), false);
+        $data['leave_msg_data'] = BaseModel::timeResolution(LeaveMessage::selectTopLevelMessage(config('select_field.leave_message'), $request->input('page')), false);
         $data['leave_say_data'] = Exhibit::selectPresentExhibitData(3);
         return responseToJson(0, '查询成功', $data);
     }
+
 
     /**
      * 添加留言
@@ -35,8 +36,8 @@ class LeaveMessageController extends Controller
         if (empty($user_info)) {
             return responseToJson(1, '请你重新登录');
         }
-        $data['msg_content']      = $request->msg_content;
-        $validate_content         = validateCommentContent($data['msg_content']);
+        $data['msg_content'] = $request->input('msg_content');
+        $validate_content    = validateCommentContent($data['msg_content']);
         if ($validate_content['code'] == 1) {
             return responseToJson(1, $validate_content['msg']);
         }
@@ -60,6 +61,8 @@ class LeaveMessageController extends Controller
         (session('user')->role == 1) ? $data['is_admin'] = true : $data['is_admin'] = false;
         return responseToJson(0, "回复成功", $data);
     }
+
+
     /**
      * 回复留言
      * @param Request $request
@@ -70,18 +73,18 @@ class LeaveMessageController extends Controller
         if (empty(session('user'))) {
             return responseToJson(1, '请你重新登录');
         }
-        $data['msg_content'] = $request->msg_content;
+        $data['msg_content'] = $request->input('msg_content');
         $validate_content    = validateCommentContent($data['msg_content']);
         if ($validate_content['code'] == 1) {
             return responseToJson(1, $validate_content['msg']);
         }
         $data['user_id']          = session('user')->user_id;
-        $data['msg_father_id']    = $request->father_id;
-        $data['msg_top_level_id'] = $request->top_level_id;
+        $data['msg_father_id']    = $request->input('father_id');
+        $data['msg_top_level_id'] = $request->input('top_level_id');
         $data['created_at']       = time();
         $add_replay_message = LeaveMessage::addLeaveMessage($data, 2);
         if ($add_replay_message['code'] == 1) {
-            return responseToJson(1,$add_replay_message['msg']);
+            return responseToJson(1, $add_replay_message['msg']);
         }
         $father_info = LeaveMessage::selectFatherInformation($data['msg_father_id']);
         $data['created_at'] = date('Y-m-d', $data['created_at']);
@@ -91,13 +94,18 @@ class LeaveMessageController extends Controller
         return responseToJson(0, "回复成功", $data);
     }
 
-    //删除留言
+
+    /**
+     * 删除留言
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function deleteLeaveMessage(Request $request)
     {
         LeaveMessage::beginTransaction();
         try {
             //其中有一个留言删除失败,直接回滚
-            if (! LeaveMessage::deleteData(config('selectfield.leave_message'), $request->msg_id)) {
+            if (! LeaveMessage::deleteData(config('select_field.leave_message'), $request->input('msg_id'))) {
                 LeaveMessage::rollBack();
                 return responseToJson(1, '删除失败');
             }

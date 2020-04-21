@@ -17,17 +17,17 @@ class UserController extends Controller
      */
     public function registerUser(Request $request)
     {
-        $data['nick_name']        = $request->nickName;
-        $data['sex']              = $request->sex;
-        $data['phone']            = $request->phone;
-        $data['email']            = $request->emails;
-        $data['password']         = $request->password;
-        $data['introduce']        = $request->introduce;
+        $data['nick_name']        = $request->input('nickName');
+        $data['sex']              = $request->input('sex');
+        $data['phone']            = $request->input('phone');
+        $data['email']            = $request->input('email');
+        $data['password']         = $request->input('password');
+        $data['introduce']        = $request->input('introduce');
         $data['api_token']        = str_random(128);
         $data['updated_token_at'] = millisecond();
         $data['register_way']     = Users::ACT_NUM_PWD;
-        if (Users::isPhoneExist($request->phone)) {
-            return responseToJson(1,'用户手机号已存在');
+        if (Users::isPhoneExist($request->input('phone'))) {
+            return responseToJson(1, '用户手机号已存在');
         }
         $judge_data = validateUserInformation($data);
         if ($judge_data['code'] == 1) {
@@ -55,6 +55,8 @@ class UserController extends Controller
             return responseToJson(1, '注册失败');
         }
     }
+
+
     /**
      * 获取用户信息
      * @param Request $request
@@ -62,9 +64,11 @@ class UserController extends Controller
      */
     public function getUserInformation(Request $request)
     {
-        ($request->has('user_phone')) ? $user_phone = $request->user_phone : $user_phone = session('user')->phone;
-        return responseToJson(0,'查询成功',Users::getUserInformationData($user_phone));
+        $user_phone = ($request->has('user_phone')) ?  $request->input('user_phone') : session('user')->phone;
+        return responseToJson(0, '查询成功', Users::getUserInformationData($user_phone));
     }
+
+
     /**
      * 修改用户信息
      * @param Request $request
@@ -72,11 +76,11 @@ class UserController extends Controller
      */
     public function updateUserInformation(Request $request)
     {
-        $data['nick_name']  = $request->nickName;
-        $data['sex']        = $request->sex;
-        $data['phone']      = $request->phone;
-        $data['email']      = $request->emails;
-        $data['introduce']  = $request->introduce;
+        $data['nick_name']  = $request->input('nickName');
+        $data['sex']        = $request->input('sex');
+        $data['phone']      = $request->input('phone');
+        $data['email']      = $request->input('email');
+        $data['introduce']  = $request->input('introduce');
         if (Users::isNickNameExist($data['nick_name'], $data['phone'])) {
             return responseToJson(1,'用户昵称已存在');
         }
@@ -91,7 +95,7 @@ class UserController extends Controller
                 return responseToJson(0,'修改成功', $data);
             }
             //用户修改头像
-            $head_portrait_file = $request->headPortrait;
+            $head_portrait_file = $request->file('headPortrait');
             $judge_file = judgeReceiveFiles($head_portrait_file);
             if ($judge_file['code'] == 1) {
                 return responseToJson(1, $judge_file['msg']);
@@ -114,6 +118,7 @@ class UserController extends Controller
         }
     }
 
+
     /**登录后修改用户密码
      * @param Request $request
      * @return JsonResponse
@@ -121,7 +126,7 @@ class UserController extends Controller
     public function updatePassword(Request $request)
     {
 
-        if ($request->role == "admin") {
+        if ($request->input('role') == "admin") {
             if (! session()->has('admin')) {
                 return responseToJson(2, '请重新登录');
             }
@@ -132,9 +137,10 @@ class UserController extends Controller
             }
             $user = session('user');
         }
-        return Users::updatePassword($user->phone, $request->new_password) ? responseToJson(0,'修改密码成功')
-                : responseToJson(1,'修改密码失败');
+        return Users::updatePassword($user->phone, $request->input('new_password')) ? responseToJson(0, '修改密码成功')
+                : responseToJson(1, '修改密码失败');
     }
+
 
     /**
      * 用户忘记密码，根据短信验证码修改密码
@@ -143,12 +149,12 @@ class UserController extends Controller
      */
     public function byCodeUpdatePassword(Request $request)
     {
-        $sms_code = $request->sms_code;
-        $phone    = $request->phone;
+        $sms_code = $request->input('sms_code');
+        $phone    = $request->input('phone');
         $validateSms = validateSmsLogin($sms_code, $phone);
         if ($validateSms['code'] == 1) {
             return responseToJson(1, $validateSms['msg']);
         }
-        return Users::updatePassword($phone, $request->new_password) ? responseToJson(0,'修改密码成功') : responseToJson(1,'修改密码失败');
+        return Users::updatePassword($phone, $request->input('new_password')) ? responseToJson(0, '修改密码成功') : responseToJson(1, '修改密码失败');
     }
 }

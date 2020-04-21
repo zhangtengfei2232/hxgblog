@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 class LoginController extends Controller
 {
     use AuthenticatesUsers;
+
+
     /**
      * 登录使用的账号字段名
      * @return string
@@ -19,6 +21,7 @@ class LoginController extends Controller
     {
         return 'phone';
     }
+
 
     /**
      * 认证服务方（登录时需要使用SessionGuard, 访问api时使用TokenGuard）
@@ -29,6 +32,7 @@ class LoginController extends Controller
         return Auth::guard('web');              //session
     }
 
+
     /**
      * 前台用户登录
      * @param Request $request
@@ -36,31 +40,34 @@ class LoginController extends Controller
      */
     public function frontLogin(Request $request)
     {
-        if (! captcha_check($request->captcha_code)) {
-            return responseToJson(1,'验证码不正确');
+        if (! captcha_check($request->input('captcha_code'))) {
+            return responseToJson(1, '验证码不正确');
         }
         if ($this->attemptLogin($request)) {
             $user = updateLoginAuth();
-            return responseToJson(0,'登录成功',$user);
+            return responseToJson(0, '登录成功',$user);
         }
-        return responseToJson(2,'账号或密码不正确');
+        return responseToJson(2, '账号或密码不正确');
     }
 
 
     /**
      * 后台用户登录
+     * @param Request $request
+     * @return JsonResponse
      */
     public function backLogin(Request $request)
     {
-        if (! captcha_check($request->captcha_code)) {
-            return responseToJson(1,'验证码不正确');
+        if (! captcha_check($request->input('captcha_code'))) {
+            return responseToJson(1, '验证码不正确');
         }
         if ($this->attemptLogin($request)) {
             $user = updateLoginAuth(true);
-            return responseToJson(0,'登录成功',$user);
+            return responseToJson(0, '登录成功', $user);
         }
-        return responseToJson(2,'账号或密码不正确');
+        return responseToJson(2, '账号或密码不正确');
     }
+
 
     /**
      * 前台短信登录
@@ -69,15 +76,16 @@ class LoginController extends Controller
      */
     public function frontSmsLogin(Request $request)
     {
-        $sms_code = $request->sms_code;
-        $phone = $request->phone;
+        $sms_code = $request->input('sms_code');
+        $phone = $request->input('phone');
         $validateSms = validateSmsLogin($sms_code, $phone);
         if ($validateSms['code'] == 1) {
-            return responseToJson(1,$validateSms['msg']);
+            return responseToJson(1, $validateSms['msg']);
         }
         $user = updateLoginAuth(false, Users::LOGIN_WAY_SMS, $phone);
-        return responseToJson(0,'登录成功', $user);
+        return responseToJson(0, '登录成功', $user);
     }
+
 
     /**
      * 后台短信登陆
@@ -86,16 +94,17 @@ class LoginController extends Controller
      */
     public function backSmsLogin(Request $request)
     {
-        $sms_code = $request->sms_code;
-        $phone = $request->phone;
+        $sms_code = $request->input('sms_code');
+        $phone = $request->input('phone');
         $validateSms = validateSmsLogin($sms_code, $phone);
         if ($validateSms['code'] == 1) {
-            return responseToJson(1,$validateSms['msg']);
+            return responseToJson(1, $validateSms['msg']);
         }
         $user = updateLoginAuth(true, Users::LOGIN_WAY_SMS, $phone);
-        return responseToJson(0,'登录成功',$user);
-
+        return responseToJson(0, '登录成功', $user);
     }
+
+
     /**
      * 前台用户退出
      * @return JsonResponse
@@ -108,8 +117,9 @@ class LoginController extends Controller
             $user->save();
         }
         session()->forget('user');
-        return responseToJson(0,'退出成功',session('user'));
+        return responseToJson(0, '退出成功', session('user'));
     }
+
 
     /**
      * 后台用户退出
@@ -123,8 +133,9 @@ class LoginController extends Controller
             $user->save();
         }
         session()->forget('admin');
-        return responseToJson(0,'退出成功');
+        return responseToJson(0, '退出成功');
     }
+
 
     /**登录成功之后调用
      * @param $information
@@ -135,6 +146,7 @@ class LoginController extends Controller
         ($is_admin) ? session(['admin' => $information]) : session(['user' => $information]);
     }
 
+
     /**
      * 判断 '前台用户 / 后台管理员' 是否处于登录状态
      * @param Request $request
@@ -142,15 +154,16 @@ class LoginController extends Controller
      */
     public function checkLogin(Request $request)
     {
-        if (($request->status == 1) && empty(session('user'))) {
-            return responseToJson(2,'你未登录');
+        if (($request->input('status') == 1) && empty(session('user'))) {
+            return responseToJson(2, '你未登录');
         } else {
             if (empty(session('admin'))) {
-                return responseToJson(2,'你未登录');
+                return responseToJson(2, '你未登录');
             }
         }
-        return responseToJson(0,'已登录');
+        return responseToJson(0, '已登录');
     }
+
 
     /**
      * 判断后台管理员与前台用户是否同时在线
@@ -158,9 +171,9 @@ class LoginController extends Controller
      */
     public function checkUserOrAdminLogin(){
         if (empty(session('user')) && empty(session('admin'))) {
-            return responseToJson(2,'未登录');
+            return responseToJson(2, '未登录');
         }
-        return responseToJson(1,'已登录',session('admin'));
+        return responseToJson(1, '已登录', session('admin'));
     }
 
 

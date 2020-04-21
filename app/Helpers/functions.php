@@ -43,7 +43,7 @@ function convertArticleId($art_id_data)
 {
     $new_art_id_data = array();
     foreach ($art_id_data as  $item) {
-        array_push($new_art_id_data,$item->arti_id);
+        array_push($new_art_id_data,$item->art_id);
     }
     return $new_art_id_data;
 }
@@ -412,10 +412,10 @@ function dealFormatResourceURL($data, $deal_type)
                     $value[$item] = ARTICLE_COVER_URL . $value[$item];
                     break;
                 case MUSIC_LYRIC_FIELD_NAME:                            //音乐
-                    $value['exht_name'] = MUSIC_URL . $value[$item];
+                    $value['exh_name'] = MUSIC_URL . $value[$item];
                     break;
                 case MUSIC_FIELD_NAME:                                  //音乐歌词
-                    $value['exht_content'] = MUSIC_LYRIC_URL . $value[$item];
+                    $value['exh_content'] = MUSIC_LYRIC_URL . $value[$item];
                     break;
                 case HEAD_PORTRAIT_FIELD_NAME:                          //头像
                     $value[$item] = HEAD_PORTRAIT_URL . $value[$item];

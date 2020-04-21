@@ -16,13 +16,13 @@ class WeiBoLogin extends Controller
             echo '没有获取到code';
             exit;
         }
-        $wei_bo_login_cg = config('weibo')['login'];
+        $wei_bo_login_cg = config('wei_bo')['login'];
         $param = array(
             'client_id'     => $wei_bo_login_cg['client_id'],
             'client_secret' => $wei_bo_login_cg['client_secret'],
             'grant_type'    => $wei_bo_login_cg['grant_type'],
             'redirect_uri'  => $wei_bo_login_cg['oauth_redirect_uri'],
-            'code'          => $request->code
+            'code'          => $request->input('code')
         );
         $get_token_url = $wei_bo_login_cg['access_token_url'] . http_build_query($param);
         $token_info = json_decode(getHttpResponsePOST($get_token_url) ,true);
@@ -71,11 +71,14 @@ class WeiBoLogin extends Controller
         return false;
     }
 
+
+
     public function weiBoCancelOAuthCallBack(Request $request)
     {
         Log::info('rsdsd');
 
     }
+
 
     /**
      * 处理QQ返回的用户信息

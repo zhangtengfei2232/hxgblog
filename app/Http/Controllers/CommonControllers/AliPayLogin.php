@@ -12,13 +12,12 @@ class AliPayLogin extends Controller
 {
     public function aliPayLoginCallBack(Request $request)
     {
-        Log::info($request->auth_code);
         if (! $request->has('auth_code')) {
             echo '获取app_auth_code失败,请重试';
             exit;
         }
         //获取app_auth_token
-        $ali_pay_login_cg = config('alipay')['login'];
+        $ali_pay_login_cg = config('ali_pay')['login'];
         $base_param = array(
             'app_id'     => $ali_pay_login_cg['app_id'],
             'grant_type' => $ali_pay_login_cg['grant_type'],
@@ -28,7 +27,7 @@ class AliPayLogin extends Controller
         );
         $get_token_param = array_merge($base_param, array(
             'method'     => $ali_pay_login_cg['get_token_api'],
-            'code'       => $request->auth_code,
+            'code'       => $request->input('auth_code'),
             'timestamp'  => date('Y-m-d H:i:s')
         ));
         Log::info('canshu' . json_encode($get_token_param));
@@ -92,6 +91,7 @@ class AliPayLogin extends Controller
         echo '保存信息失败,稍后重试';
         return false;
     }
+
 
     /**
      * 处理支付宝返回的用户信息

@@ -23,6 +23,7 @@ class BaseModel extends Model
         'password', 'updated_token_at',
     ];
 
+
     /**
      * @param mixed $value
      * @return false|int|null|string
@@ -31,7 +32,14 @@ class BaseModel extends Model
     {
         return strtotime(parent::fromDateTime($value));
     }
-    //文章时间拆分函数
+
+
+    /**
+     * 文章时间拆分函数
+     * @param $data
+     * @param bool $is_art
+     * @return array|mixed
+     */
     public static function timeResolution($data, $is_art = true)
     {
         if (! is_array($data)) {
@@ -41,12 +49,12 @@ class BaseModel extends Model
             $data[$i] = (array)$data[$i];
             $time = explode('-',$data[$i]['created_at']);
             if ($is_art) {
-                if (strlen(strip_tags($data[$i]['arti_content'])) > 450) {
+                if (strlen(strip_tags($data[$i]['art_content'])) > 450) {
                     $filter_char = array(' ', '\n', '*');
-                    $data[$i]['arti_content'] = mb_substr(str_replace($filter_char, '', strip_tags($data[$i]['arti_content'])),0, 150).".......";
+                    $data[$i]['art_content'] = mb_substr(str_replace($filter_char, '', strip_tags($data[$i]['art_content'])),0, 150).".......";
                 }
-                if (strlen($data[$i]['arti_title']) > 30) {
-                    $data[$i]['arti_title'] = mb_substr($data[$i]['arti_title'], 0, 20).".......";
+                if (strlen($data[$i]['art_title']) > 30) {
+                    $data[$i]['art_title'] = mb_substr($data[$i]['art_title'], 0, 20).".......";
                 }
             }
             $data[$i]['years']    = $time[0];
@@ -56,9 +64,12 @@ class BaseModel extends Model
         return $data;
     }
 
+
     /**
      * 查 '某一篇文章的所有顶级评论' / '留言'
-     * @param $art_id
+     * @param $config_param
+     * @param $page
+     * @param string $art_id
      * @return mixed
      */
     public static function selectTopLevelMessage($config_param, $page, $art_id = '')
@@ -68,7 +79,7 @@ class BaseModel extends Model
             ->leftJoin('users', $config_param['table_name'].'.user_id', '=', 'users.user_id')
             ->where($config_param['father_id_field'], 0);
         //文章评论查询
-        ($config_param['table_name'] == 'comment') ? $data = $data->where('arti_id', $art_id)->get()->toArray()
+        ($config_param['table_name'] == 'comment') ? $data = $data->where('art_id', $art_id)->get()->toArray()
         :$data = $data->offset($page * 2)->orderBy('created_at', 'desc')->limit(2)->get()->toArray();
         (!empty(session()->has('user'))) ? $is_login = true : $is_login = false;
         ($is_login) ? $user_id = session('user')->user_id : $user_id = " ";
@@ -89,9 +100,14 @@ class BaseModel extends Model
         return $data;
     }
 
+
     /**
      * 根据 '文章评论/留言' ===>顶级ID，查询所有子评论
+     * @param $config_param
      * @param $father_id
+     * @param $user_id
+     * @param $is_mine
+     * @param $is_msg
      * @return array|void
      */
     public static function selectALLChildMessageData($config_param ,$father_id, $user_id, $is_mine, $is_msg)
@@ -125,27 +141,33 @@ class BaseModel extends Model
         return self::$information_data;
     }
 
+
     /**
      * 删除文章评论
-     * @param $come_id
+     * @param $config_param
+     * @param $del_id
      * @return mixed
      */
     public static function deleteData($config_param, $del_id)
     {
+        $is_delete = false;              //是否有删除失败的标识
         $id_field = $config_param['id_field'];
         $model_name = $config_param['model_name'];
         $children_come_id_data = $model_name::select($id_field)
-            ->where($config_param['father_id_field'],$del_id)->get();
+            ->where($config_param['father_id_field'], $del_id)->get();
         //当前评论没有子评论
         if ($children_come_id_data->isEmpty()) {
-            return $model_name::where($id_field,$del_id)->delete();
+            return $model_name::where($id_field, $del_id)->delete();
         }
-        foreach ($children_come_id_data as $id_data) $is_delete = self::deleteData($config_param, $id_data->$id_field);
+        foreach ($children_come_id_data as $id_data) {
+            $is_delete = self::deleteData($config_param, $id_data->$id_field);
+        }
         if (! $is_delete) {
             return $is_delete;          //如果其中有一个删除失败，直接返回false
         }
         return $model_name::where($id_field, $del_id)->delete();
     }
+
 
     /**
      * 删除关于文章的所有数据
@@ -155,21 +177,34 @@ class BaseModel extends Model
      */
     public static function deleteArticleRelevantData($del_config, $art_id_data)
     {
-        foreach ($del_config as $config) $config::whereIn('arti_id', $art_id_data)->delete();
+        foreach ($del_config as $config) {
+            $config::whereIn('art_id', $art_id_data)->delete();
+        }
         return true;
     }
 
-    //开启事务
+
+    /**
+     * 开启事务
+     */
     public static function beginTransaction()
     {
         return DB::beginTransaction();
     }
-    //没有异常，提交事务
+
+
+    /**
+     * 没有异常，提交事务
+     */
     public static function commit()
     {
         return DB::commit();
     }
-    //回滚
+
+
+    /**
+     * 回滚
+     */
     public static function rollBack()
     {
         return DB::rollBack();

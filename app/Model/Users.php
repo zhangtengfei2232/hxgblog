@@ -106,13 +106,18 @@ class Users extends Authenticatable
         }
     }
 
-    /**修改用户信息
+
+    /**
+     * 修改用户信息
      * @param $data
+     * @return mixed
      */
     public static function updateUserData($data)
     {
-        $data = self::hashPassword($data);
+         return self::hashPassword($data);
     }
+
+
     /**
      * 如果有密码就加密
      * @param $data
@@ -126,6 +131,7 @@ class Users extends Authenticatable
         return $data;
     }
 
+
     /**
      * 更新token
      * @return mixed|string
@@ -137,6 +143,7 @@ class Users extends Authenticatable
         $this->save();
         return $this->api_token;
     }
+
 
     /**
      * 获取用户信息
@@ -150,6 +157,7 @@ class Users extends Authenticatable
         )->first();
     }
 
+
     /**
      * 判断用户手机号是否存在
      * @param $user_phone
@@ -160,9 +168,11 @@ class Users extends Authenticatable
         return (Users::where('phone','=', $user_phone)->count()) > 1 ?  true : false;
     }
 
+
     /**
      * 判断用户的昵称是否被占用
      * @param $user_nick_name
+     * @param $phone
      * @return bool
      */
     public static function isNickNameExist($user_nick_name, $phone){
@@ -171,10 +181,16 @@ class Users extends Authenticatable
             ['nick_name','=', $user_nick_name]
         ])->count()) > 1 ? true : false;
     }
+
+    /**
+     * 修改用户信息
+     * @param $data
+     */
     public static function updateUserInformationData($data)
     {
         Users::where('phone', $data['phone'])->update($data);
     }
+
 
     /**
      * 查询以前的用户头像文件路径
@@ -186,6 +202,7 @@ class Users extends Authenticatable
         return Users::where('phone', $phone)->select('head_portrait')->first()->head_portrait;
     }
 
+
     /**
      * 查询用户的角色
      * @param $phone
@@ -195,6 +212,7 @@ class Users extends Authenticatable
     {
         return Users::select('role')->where('phone', $phone)->first()->role;
     }
+
 
     /**
      * 判断是否有这个用户
@@ -206,6 +224,7 @@ class Users extends Authenticatable
         return Users::where('phone',$phone)->exists();
     }
 
+
     /**
      * 获取用户实例
      * @param $phone
@@ -215,6 +234,7 @@ class Users extends Authenticatable
     {
         return Users::where('phone', $phone)->first();
     }
+
 
     /**
      * 修改用户密码
@@ -227,6 +247,7 @@ class Users extends Authenticatable
         return Users::where('phone', $phone)->update(['password' => bcrypt($new_password)]) > 0;
     }
 
+
     /**
      * 根据 access_token 查询用户
      * @param $access_token
@@ -236,6 +257,7 @@ class Users extends Authenticatable
     {
         return Users::where('access_token', $access_token)->get();
     }
+
 
     /**
      * 统计用户总数

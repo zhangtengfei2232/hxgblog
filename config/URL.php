@@ -57,7 +57,7 @@ define('ARTICLE_PHOTO_FOLDER_NAME', 'article_photo');
 define('ARTICLE_COVER_FOLDER_NAME', 'article_cover');
 
 //相册图片文件夹名
-define('ALBUM_FOLDER_NAME', 'album');
+define('ALBUM_PHOTO_FOLDER_NAME', 'album');
 
 
 /**
@@ -68,10 +68,10 @@ define('ALBUM_FOLDER_NAME', 'album');
 define('HEAD_PORTRAIT_FIELD_NAME', 'head_portrait');
 
 //音乐路径字段名
-define('MUSIC_FIELD_NAME', 'music');
+define('MUSIC_FIELD_NAME', 'exh_name');
 
 //音乐歌词路径字段名
-define('MUSIC_LYRIC_FIELD_NAME', 'music_lyric');
+define('MUSIC_LYRIC_FIELD_NAME', 'exh_content');
 
 //文章图片路径字段名
 define('ARTICLE_PHOTO_FIELD_NAME', 'article_photo');
@@ -80,7 +80,7 @@ define('ARTICLE_PHOTO_FIELD_NAME', 'article_photo');
 define('ARTICLE_COVER_FIELD_NAME', 'art_cover');
 
 //相册图片路径字段名
-define('ALBUM_FIELD_NAME', 'album');
+define('ALBUM_PHOTO_FIELD_NAME', 'pho_path');
 
 
 /**
@@ -106,7 +106,7 @@ define('MUSIC_URL', RESOURCE_BASE_URL . MUSIC_FOLDER_NAME . '&' . FILE_NAME . '=
 define('MUSIC_LYRIC_URL', RESOURCE_BASE_URL . MUSIC_LYRIC_FOLDER_NAME . '&' . FILE_NAME . '=');
 
 //请求相册图片的URL
-define('ALBUM_PHOTO_URL', RESOURCE_BASE_URL . ALBUM_FOLDER_NAME . '&' . FILE_NAME . '=');
+define('ALBUM_PHOTO_URL', RESOURCE_BASE_URL . ALBUM_PHOTO_FOLDER_NAME . '&' . FILE_NAME . '=');
 
 
 

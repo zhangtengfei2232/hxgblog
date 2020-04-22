@@ -420,6 +420,9 @@ function dealFormatResourceURL($data, $deal_type)
                 case HEAD_PORTRAIT_FIELD_NAME:                          //头像
                     $value[$item] = HEAD_PORTRAIT_URL . $value[$item];
                     break;
+                case ALBUM_PHOTO_FIELD_NAME:                            //相册图片
+                    $value[$item] = ALBUM_PHOTO_URL . $value[$item];
+                    break;
             }
         }
     }

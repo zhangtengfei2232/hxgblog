@@ -16,7 +16,7 @@ class Photo extends BaseModel
     public static function addAlbumPhotoData($album_photo, $album_id)
     {
         foreach ($album_photo as $photo){
-            if (! Photo::insert(['pho_path' => $photo, 'alb_id' => $album_id, 'created_at' => time()])) {
+            if (! Photo::insert(['photo_path' => $photo, 'alb_id' => $album_id, 'created_at' => time()])) {
                 return false;
             }
         }
@@ -31,7 +31,7 @@ class Photo extends BaseModel
      */
     public static function selectNewPhotoData()
     {
-        return Photo::select('pho_path')->orderBy('created_at', 'desc')->limit(6)->get();
+        return Photo::select('photo_path')->orderBy('created_at', 'desc')->limit(6)->get();
 //        ->where('alb_question',"")->leftJoin('album','photo.alb_id','=','album.alb_id')
     }
 
@@ -54,7 +54,7 @@ class Photo extends BaseModel
      */
     public static function selectAlbumFirstPhoto($album_id)
     {
-        return Photo::select('pho_path')->where('alb_id', $album_id)->orderBy('created_at', 'desc')->first()->pho_path;
+        return Photo::select('photo_path')->where('alb_id', $album_id)->orderBy('created_at', 'desc')->first()->photo_path;
     }
 
 
@@ -80,7 +80,7 @@ class Photo extends BaseModel
         foreach ($album_data as $key => $album){
             $album_data[$key]['is_has_photo'] = false;
             if ($album_data[$key]['photo_num'] > 0) {
-                $album_data[$key]['first_photo'] = self::selectAlbumFirstPhoto($album['alb_id']);
+                $album_data[$key]['first_photo_path'] = self::selectAlbumFirstPhoto($album['alb_id']);
                 $album_data[$key]['is_has_photo'] = true;
             }
             (empty($album_data[$key]['alb_question'])) ? $album_data[$key]['is_has_question'] = false : $album_data[$key]['is_has_question'] = true;
@@ -97,8 +97,8 @@ class Photo extends BaseModel
     public static function selectAlbumImgRoad($album_id)
     {
         $album_img_road = [];
-        $img_road= Photo::select('pho_path')->where('alb_id', $album_id)->get()->toArray();
-        foreach ($img_road as $key => $road) array_push($album_img_road, $img_road[$key]['pho_path']);
+        $img_road= Photo::select('photo_path')->where('alb_id', $album_id)->get()->toArray();
+        foreach ($img_road as $key => $road) array_push($album_img_road, $img_road[$key]['photo_path']);
         return $album_img_road;
     }
 

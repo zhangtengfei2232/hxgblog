@@ -18,7 +18,7 @@ class AlbumController extends Controller
      */
     public function selectAllAlbumInformation()
     {
-        return responseToJson(0, '查找成功', AnswerStatus::isHasJurisdiction(Album::selectAllAlbumData()));
+        return responseToJson(0, '查找成功', dealFormatResourceURL(AnswerStatus::isHasJurisdiction(Album::selectAllAlbumData()), array(ALBUM_FIRST_PHOTO_FIELD_NAME)));
     }
 
 
@@ -41,7 +41,7 @@ class AlbumController extends Controller
      */
     public function byAlbumIdSelectPhoto(Request $request)
     {
-        return responseToJson(0, '查询成功', Photo::byAlbumIdSelectPhotoData($request->input('album_id'), $request->input('page')));
+        return responseToJson(0, '查询成功', dealFormatResourceURL(Photo::byAlbumIdSelectPhotoData($request->input('album_id'), $request->input('page')), array(ALBUM_PHOTO_FIELD_NAME)));
     }
 
 }

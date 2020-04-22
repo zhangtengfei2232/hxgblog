@@ -46,9 +46,9 @@ class LeaveMessage extends BaseModel
      */
     public static function selectAllLeaveMessage($config_param)
     {
-        return  $config_param['table_name']::select('msg_content', 'nick_name', 'leave_message.user_id', 'head_portrait')
+        return  $config_param['model_name']::select('msg_content', 'nick_name', 'leave_message.user_id', 'head_portrait')
             ->leftJoin('users', $config_param['table_name'] . '.user_id', '=', 'users.user_id')
-            ->where($config_param['father_id_field'], 0)->toArray();
+            ->where($config_param['father_id_field'], 0)->get()->toArray();
     }
 
 

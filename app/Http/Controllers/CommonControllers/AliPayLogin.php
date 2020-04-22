@@ -17,16 +17,15 @@ class AliPayLogin extends Controller
             exit;
         }
         //获取app_auth_token
-        $ali_pay_login_cg = config('ali_pay')['login'];
         $base_param = array(
-            'app_id'     => $ali_pay_login_cg['app_id'],
-            'grant_type' => $ali_pay_login_cg['grant_type'],
-            'charset'    => $ali_pay_login_cg['charset'],
-            'sign_type'  => $ali_pay_login_cg['sign_type'],
-            'version'    => $ali_pay_login_cg['version'],
+            'app_id'     => ALI_PAY_CLIENT_ID,
+            'grant_type' => GRANT_TYPE,
+            'charset'    => ALI_PAY_CHART_SET,
+            'sign_type'  => ALI_PAY_SIGN_TYPE,
+            'version'    =>ALI_PAY_VERSION,
         );
         $get_token_param = array_merge($base_param, array(
-            'method'     => $ali_pay_login_cg['get_token_api'],
+            'method'     => ALI_PAY_TOKEN_API,
             'code'       => $request->input('auth_code'),
             'timestamp'  => date('Y-m-d H:i:s')
         ));
@@ -37,8 +36,8 @@ class AliPayLogin extends Controller
         Log::info('rsa' . $rsa);
         $sign = urlencode($rsa);
         $query = $signStr . '&sign=' . $sign;
-        $url = $ali_pay_login_cg['base_url'] . $query;
-        $access_token = getHttpResponsePOST($ali_pay_login_cg['base_url'], $query);
+        $url = ALI_PAY_ICE_BASE_URL . $query;
+        $access_token = getHttpResponsePOST(ALI_PAY_ICE_BASE_URL, $query);
         Log::info('token' . $url . '-----------------------' . json_encode($access_token));
         $access_token_info = json_decode($access_token, true);
         if (! isset($access_token_info['alipay_system_oauth_token_response'])) {
@@ -56,7 +55,7 @@ class AliPayLogin extends Controller
 
         //请求用户信息
         $get_info_param = array_merge($base_param, array(
-                'method'     => $ali_pay_login_cg['user_info_api'],
+                'method'     => ALI_PAY_USER_INFO_API,
                 'timestamp'  => date('Y-m-d H:i:s'),
                 'auth_token' => $access_token,
         ));
@@ -64,8 +63,8 @@ class AliPayLogin extends Controller
         $rsaStr = enRSA2($signStr);
         $sign = urlencode($rsaStr);
         $query = $signStr . '&sign=' . $sign;
-        Log::info($ali_pay_login_cg['base_url'] . '?' . $query);
-        $user_info = getHttpResponsePOST($ali_pay_login_cg['base_url'], $query);
+        Log::info(ALI_PAY_ICE_BASE_URL . '?' . $query);
+        $user_info = getHttpResponsePOST(ALI_PAY_ICE_BASE_URL, $query);
         $user_info = mb_convert_encoding($user_info, 'utf-8', 'gbk');
         Log::info('info' . $user_info);
         $user_info = json_decode($user_info, true);
@@ -84,8 +83,7 @@ class AliPayLogin extends Controller
         $user_info = $this->_dealFormatData($user_info['alipay_user_info_share_response']);
         $add_user  = Users::addUserData($user_info, Users::ALI_PAY);
         if ($add_user) {
-            redirect()->to(FRONT_END_URL . session('frontend_path')); //跳转到当时前端登录页面
-            return true;
+            return redirect()->to(session('frontend_url')); //跳转到当时前端登录页面
         }
         deleteFile($download_head_portrait, HEAD_PORTRAIT_FOLDER_NAME);
         echo '保存信息失败,稍后重试';
@@ -106,7 +104,6 @@ class AliPayLogin extends Controller
             'third_party_id' => $user_info['user_id'],
             'sex'            => ($user_info['gender'] == 'm') ? 0 : 1,
             'register_way'   => Users::ALI_PAY,
-            'login_way'      => Users::LOGIN_WAY_THIRD_PARTY,
             'access_token'   => $user_info['access_token']
         );
     }

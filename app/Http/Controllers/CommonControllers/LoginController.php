@@ -44,7 +44,7 @@ class LoginController extends Controller
             return responseToJson(1, '验证码不正确');
         }
         if ($this->attemptLogin($request)) {
-            $user = updateLoginAuth();
+            $user = updateLoginAuth(false, Users::LOGIN_WAY_ACT_NUM_PWD, $request->input('phone'));
             return responseToJson(0, '登录成功',$user);
         }
         return responseToJson(2, '账号或密码不正确');
@@ -154,8 +154,10 @@ class LoginController extends Controller
      */
     public function checkLogin(Request $request)
     {
-        if (($request->input('status') == 1) && empty(session('user'))) {
-            return responseToJson(2, '你未登录');
+        if (($request->input('status') == 1)) {
+            if (empty(session('user'))) {
+                return responseToJson(2, '你未登录');
+            }
         } else {
             if (empty(session('admin'))) {
                 return responseToJson(2, '你未登录');
@@ -174,6 +176,25 @@ class LoginController extends Controller
             return responseToJson(2, '未登录');
         }
         return responseToJson(1, '已登录', session('admin'));
+    }
+
+
+    /**
+     * 获取第三方登录URL
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getThirdPartyURL(Request $request)
+    {
+        session(['frontend_url' => $request->input('frontend_url')]);
+        $URL = array(
+            'bai_du'  => BAI_DU_LOGIN_URL,
+            'qq'      => QQ_LOGIN_URL,
+            'ali_pay' => ALI_PAY_LOGIN_URL,
+            'wei_bo'  => WEI_BO_LOGIN_URL,
+            'git_hub' => GITHUB_LOGIN_URL,
+        );
+        return responseToJson(0, '获取成功', $URL);
     }
 
 

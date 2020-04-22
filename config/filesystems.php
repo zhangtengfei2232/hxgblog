@@ -54,13 +54,17 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
-        'image' => [
+        'album_photo' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/image'),
+            'root' => storage_path('app/public/album_photo'),
         ],
-        'article' => [
+        'article_photo' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/article'),
+            'root' => storage_path('app/public/article_photo'),
+        ],
+        'article_cover' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/article_cover'),
         ],
         'head_portrait' => [
             'driver' => 'local',

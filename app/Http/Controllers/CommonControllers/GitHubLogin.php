@@ -15,14 +15,12 @@ class GitHubLogin extends Controller
             echo '获取code失败，请重试！';
             exit;
         }
-        Log::info('xxxxxx:' . json_encode($request->code));
-        $github_login_cg = config('github');
         $param = array(
             'code'          => $request->input('code'),
-            'client_id'     => $github_login_cg['client_id'],
-            'client_secret' => $github_login_cg['client_secret'],
+            'client_id'     => GITHUB_CLIENT_ID,
+            'client_secret' => GITHUB_CLIENT_SECRET,
         );
-        $url = $github_login_cg['access_token_url'];
+        $url = GITHUB_ACCESS_TOKEN_URL;
         //$content====>'A=XXXXX&B=XXXX', github以路由参数返回结果
         $content = getHttpResponsePOST($url, $param);         //获取access_token
         Log::info($content);
@@ -42,7 +40,7 @@ class GitHubLogin extends Controller
             return responseToJson(0, '登录成功', $user);
         }
 
-        $info_url = $github_login_cg['get_user_url'] . $access_token;
+        $info_url = GITHUB_USER_INFO_URL . $access_token;
 
         $headers[] = 'Authorization: token '. $access_token;
         $headers[] = "User-Agent: 坏小哥博客";
@@ -62,8 +60,7 @@ class GitHubLogin extends Controller
         $user_info = $this->_dealFormatData($user_info);
         $add_user  = Users::addUserData($user_info, Users::GITHUB);
         if ($add_user) {
-            redirect()->to(FRONT_END_URL . session('frontend_path')); //跳转到当时前端登录页面
-            return true;
+            return redirect()->to(session('frontend_url')); //跳转到当时前端登录页面
         }
         deleteFile($download_head_portrait, HEAD_PORTRAIT_FOLDER_NAME);
         echo '保存信息失败,稍后重试';
@@ -84,7 +81,6 @@ class GitHubLogin extends Controller
             'third_party_id' => implode('_', array(Users::WEI_BO, $user_info['id'])),
             'sex'            => ($user_info['gender'] == 'm') ? 0 : 1,
             'register_way'   => Users::GITHUB,
-            'login_way'      => Users::LOGIN_WAY_THIRD_PARTY,
             'email'          => $user_info['email'],
             'access_token'   => $user_info['access_token']
         );

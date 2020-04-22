@@ -16,15 +16,14 @@ class WeiBoLogin extends Controller
             echo '没有获取到code';
             exit;
         }
-        $wei_bo_login_cg = config('wei_bo')['login'];
         $param = array(
-            'client_id'     => $wei_bo_login_cg['client_id'],
-            'client_secret' => $wei_bo_login_cg['client_secret'],
-            'grant_type'    => $wei_bo_login_cg['grant_type'],
-            'redirect_uri'  => $wei_bo_login_cg['oauth_redirect_uri'],
+            'client_id'     => WEI_BO_CLIENT_ID,
+            'client_secret' => WEI_BO_CLIENT_SECRET,
+            'grant_type'    => GRANT_TYPE,
+            'redirect_uri'  => WEI_BO_OAUTH_REDIRECT_URI,
             'code'          => $request->input('code')
         );
-        $get_token_url = $wei_bo_login_cg['access_token_url'] . http_build_query($param);
+        $get_token_url = WEI_BO_ACCESS_TOKEN_URL . http_build_query($param);
         $token_info = json_decode(getHttpResponsePOST($get_token_url) ,true);
         if (isset($token_info['error'])) {
             echo '获取token失败 error_code: ' . $token_info['error_code'] . 'error_description: ' . $token_info['error_description'];
@@ -47,7 +46,7 @@ class WeiBoLogin extends Controller
             'access_token' => $token_info['access_token'],
             'uid' => $token_info['uid']
         );
-        $get_user_info_url = $wei_bo_login_cg['user_info_url'] . http_build_query($get_user_info_param);
+        $get_user_info_url = WEI_BO_USER_INFO_URL . http_build_query($get_user_info_param);
         $user_info = (json_decode(getHttpResponseGET($get_user_info_url), true));
         if (empty($user_info)) {
             echo '获取信息为空！稍后重试';
@@ -63,8 +62,7 @@ class WeiBoLogin extends Controller
         $user_info = $this->_dealFormatData($user_info);
         $add_user  = Users::addUserData($user_info, Users::QQ);
         if ($add_user) {
-            redirect()->to(FRONT_END_URL . session('frontend_path')); //跳转到当时前端登录页面
-            return true;
+            return redirect()->to(session('frontend_url')); //跳转到当时前端登录页面
         }
         deleteFile($download_head_portrait, HEAD_PORTRAIT_FOLDER_NAME);
         echo '保存信息失败,稍后重试';
@@ -93,7 +91,6 @@ class WeiBoLogin extends Controller
             'third_party_id' => implode('_', array(Users::WEI_BO, $user_info['id'])),
             'sex'            => ($user_info['gender'] == 'm') ? 0 : 1,
             'register_way'   => Users::WEI_BO,
-            'login_way'      => Users::LOGIN_WAY_THIRD_PARTY,
             'introduce'      => empty($user_info['description']) ? '' : $user_info['description'],
             'access_token'    => $user_info['access_token']
         );

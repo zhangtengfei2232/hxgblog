@@ -22,7 +22,7 @@ class ArticleController extends Controller
     {
         $data['art_types'] = Type::selectAllTypeData();
         $art_id_data       = ArticleType::byTypeSelectArticleId($data['art_types'][0]->type_id, 0);
-        $data['articles']  = Article::byIdSelectArticleData($art_id_data);
+        $data['articles']  = dealFormatResourceURL(Article::byIdSelectArticleData($art_id_data), array(ARTICLE_COVER_FIELD_NAME));
         return responseToJson(0, 'success', $data );
     }
 
@@ -55,15 +55,15 @@ class ArticleController extends Controller
             Article::addArticleBrowseData($art_id[0]);
             session([$art_id[0] => $time]);           //再次存储文章当前访问时间
         }
-        $data['new_articles']          = Article::selectNewArticleData();            //最新文章
-        $data['browse_top']            = Article::selectBrowseTopData();             //浏览最多的文章
-        $data['comments']              = Comment::selectTopLevelMessage(config('select_field.comment'), '', $art_id[0]); //文章评论
+//        $data['new_articles']          = Article::selectNewArticleData();            //最新文章
+//        $data['browse_top']            = Article::selectBrowseTopData();             //浏览最多的文章
+        $data['comments']              = dealFormatResourceURL(Comment::selectTopLevelMessage(config('select_field.comment'), '', $art_id[0]), array(HEAD_PORTRAIT_FIELD_NAME)); //文章评论
         $data['article_data']          = Article::byIdSelectArticleData($art_id, 2);    //文章数据
         $data['praise_trample_status'] = PraiseTrample::selectArticlePraiseTrample($art_id[0]);
         $data['article_types']         = ArticleType::selectArticleTypeName($art_id[0]);
-        $data['music_path']            = Exhibit::selectPresentMusicFile(4);
+        $data['music_path']            = dealFormatResourceURL(Exhibit::selectPresentMusicFile(4), array(MUSIC_FIELD_NAME))[0]['exh_name'];
         $data['art_say']               = Exhibit::selectPresentExhibitData(2);
-        $music_lyric_path              = storage_path() . RESOURCE_ROUTE_DIR . 'music_lyric' . DIRECTORY_SEPARATOR . Exhibit::selectPresentExhibitData(4);
+        $music_lyric_path              = storage_path() . DIRECTORY_SEPARATOR . RESOURCE_ROUTE_DIR . MUSIC_LYRIC_FOLDER_NAME . DIRECTORY_SEPARATOR . Exhibit::selectPresentExhibitData(4);
         $data['music_lyric']           = file_get_contents($music_lyric_path);
         return responseToJson(0, 'success', $data);
     }

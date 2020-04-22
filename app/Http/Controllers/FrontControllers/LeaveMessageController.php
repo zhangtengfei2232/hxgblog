@@ -19,7 +19,7 @@ class LeaveMessageController extends Controller
      */
     public function selectLeaveMessage(Request $request)
     {
-        $data['leave_msg_data'] = BaseModel::timeResolution(LeaveMessage::selectTopLevelMessage(config('select_field.leave_message'), $request->input('page')), false);
+        $data['leave_msg_data'] = dealFormatLeaveMessage(BaseModel::timeResolution(LeaveMessage::selectTopLevelMessage(config('select_field.leave_message'), $request->input('page')), false));
         $data['leave_say_data'] = Exhibit::selectPresentExhibitData(3);
         return responseToJson(0, '查询成功', $data);
     }

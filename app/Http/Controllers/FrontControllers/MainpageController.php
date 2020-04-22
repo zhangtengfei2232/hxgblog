@@ -22,7 +22,7 @@ class MainPageController extends Controller
         $data['new_photo']     = dealFormatResourceURL(Photo::selectNewPhotoData(), array(ALBUM_PHOTO_FIELD_NAME));
         $data['exhibit_data']  = explode('+', Exhibit::selectPresentExhibitData(1));
         $data['leave_message'] = dealFormatResourceURL(LeaveMessage::selectAllLeaveMessage(config('select_field.leave_message')), array(HEAD_PORTRAIT_FIELD_NAME));
-        return responseToJson(0,"success", $data);
+        return responseToJson(0, "success", $data);
     }
 
 

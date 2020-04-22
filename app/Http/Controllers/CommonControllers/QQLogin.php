@@ -15,15 +15,14 @@ class QQLogin extends Controller
             echo '没有获取到code';
             exit;
         }
-        $qq_login_cg = config('qq');
         $param = array(
-            'grant_type'    => $qq_login_cg['grant_type'],
+            'grant_type'    => GRANT_TYPE,
             'code'          => $request->input('code'),
-            'client_id'     => $qq_login_cg['client_id'],
-            'client_secret' => $qq_login_cg['client_secret'],
-            'redirect_uri'  => $qq_login_cg['redirect_uri'],
+            'client_id'     => QQ_CLIENT_ID,
+            'client_secret' => QQ_CLIENT_SECRET,
+            'redirect_uri'  => QQ_REDIRECT_URI,
         );
-        $token_url = $qq_login_cg['access_token_url'] . http_build_query($param);
+        $token_url = QQ_ACCESS_TOKEN_URL . http_build_query($param);
         $response = file_get_contents($token_url);
         Log::info(json_encode($response));
         if (strpos($response, "callback") !== false)
@@ -39,7 +38,7 @@ class QQLogin extends Controller
             exit;
         }
         $access_token = $access_token_info['access_token'];
-        $get_openid_url = $qq_login_cg['openid_url'] . $access_token;
+        $get_openid_url = QQ_OPENID_URL . $access_token;
         $openid_data = getHttpResponseGET($get_openid_url);
         Log::info('openid' . json_encode($openid_data));
         if (strpos($openid_data, "callback") === false) {
@@ -67,7 +66,7 @@ class QQLogin extends Controller
             'oauth_consumer_key' => '101849190',
             'openid'             => $openid_data['openid']
         );
-        $url       = $qq_login_cg['user_info_url'] . http_build_query($get_info_param);
+        $url       = QQ_USER_INFO_URL . http_build_query($get_info_param);
         $user_info = json_decode(getHttpResponseGET($url), true);
         if (empty($user_info)) {
             echo '获取信息为空！稍后重试';
@@ -83,8 +82,7 @@ class QQLogin extends Controller
         $user_info = $this->_dealFormatData($user_info);
         $add_user  = Users::addUserData($user_info, Users::QQ);
         if ($add_user) {
-            redirect()->to(FRONT_END_URL . session('frontend_path')); //跳转到当时前端登录页面
-            return true;
+            return redirect()->to(session('frontend_url')); //跳转到当时前端登录页面
         }
         deleteFile($download_head_portrait, HEAD_PORTRAIT_FOLDER_NAME);
         echo '保存信息失败,稍后重试';
@@ -105,7 +103,6 @@ class QQLogin extends Controller
             'third_party_id' => implode('_', array(Users::QQ, Users::selectUserNum())),
             'sex'            => ($user_info['gender'] == '男') ? 0 : 1,
             'register_way'   => Users::QQ,
-            'login_way'      => Users::LOGIN_WAY_THIRD_PARTY,
             'access_token'   => $user_info['access_token']
         );
     }

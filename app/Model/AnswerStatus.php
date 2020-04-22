@@ -22,7 +22,7 @@ class AnswerStatus extends BaseModel
         foreach ($album_data as $data){
             $data['is_has_password'] = true;
             $data['is_has_photo'] = false;
-            $data['first_photo'] = " ";
+            $data['first_photo_path'] = " ";
             $is_answer = false;
             Log::info(session('user'));
             if (! empty($data['alb_question']) && ! empty(session('user'))) {  //如果相册有密保,且有用户登录
@@ -36,7 +36,7 @@ class AnswerStatus extends BaseModel
                 $data['is_has_password'] = false;
                 //相册照片不为空，查询第一张照片
                 if ($data['photo_num'] > 0) {
-                    $data['first_photo'] = Photo::selectAlbumFirstPhoto($data['alb_id']);
+                    $data['first_photo_path'] = Photo::selectAlbumFirstPhoto($data['alb_id']);
                     $data['is_has_photo'] = true;
                 }
             }

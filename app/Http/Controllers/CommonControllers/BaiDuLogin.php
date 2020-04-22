@@ -15,15 +15,14 @@ class BaiDuLogin extends Controller
             echo '没有获取到code';
             exit;
         }
-        $bai_du_login_cg = config('bai_du');
         $param = array(
-            'grant_type'    => $bai_du_login_cg['grant_type'],
+            'grant_type'    => GRANT_TYPE,
             'code'          => $request->input('code'),
-            'client_id'     => $bai_du_login_cg['client_id'],
-            'client_secret' => $bai_du_login_cg['client_secret'],
-            'redirect_uri'  => $bai_du_login_cg['redirect_uri'],
+            'client_id'     => BAI_DU_CLIENT_ID,
+            'client_secret' => BAI_DU_CLIENT_SECRET,
+            'redirect_uri'  => BAI_DU_REDIRECT_URI,
         );
-        $url = $bai_du_login_cg['access_token_url'];
+        $url = BAI_DU_ACCESS_TOKEN_URL;
         $token = json_decode(getHttpResponsePOST($url, $param), true);
         $access_token = $token['access_token'];
         Log::info('ccccc' . $access_token);
@@ -38,7 +37,7 @@ class BaiDuLogin extends Controller
             return responseToJson(0, '登录成功', $user);
         }
 
-        $url = $bai_du_login_cg['user_info_url'] . $access_token;
+        $url = BAI_DU_USER_INFO_URL . $access_token;
         $user_info = json_decode(getHttpResponseGET($url), true);
         if (empty($user_info)) {
             echo '获取信息为空！稍后重试';
@@ -56,8 +55,7 @@ class BaiDuLogin extends Controller
         $user_info = $this->_dealFormatData($user_info);
         $add_user  = Users::addUserData($user_info, Users::ALI_PAY);
         if ($add_user) {
-            redirect()->to(FRONT_END_URL . session('frontend_path')); //跳转到当时前端登录页面
-            return true;
+            return redirect()->to(session('frontend_url')); //跳转到当时前端登录页面
         }
         deleteFile($download_head_portrait, HEAD_PORTRAIT_FOLDER_NAME);
         echo '保存信息失败,稍后重试';
@@ -79,7 +77,6 @@ class BaiDuLogin extends Controller
             'third_party_id' => $user_info['userid'],
             'sex'            => 1,
             'register_way'   => Users::BAI_DU,
-            'login_way'      => Users::LOGIN_WAY_THIRD_PARTY,
             'access_token'   => $user_info['access_token']
         );
 

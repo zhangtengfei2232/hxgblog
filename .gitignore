@@ -1,11 +1,13 @@
 /node_modules
 /public/hot
-/storage/app/public/article/
+/storage/app/public/article_cover/
+/storage/app/public/article_photo/
 /storage/app/public/head_portrait/
 /storage/app/public/image/
 /storage/app/public/music/
 /storage/app/public/music_lyric/
-/storage/framework/
+/storage/framework/testing/
+/storage/framework/views/
 /storage/logs
 /vendor
 .env

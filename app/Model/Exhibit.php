@@ -113,7 +113,7 @@ class Exhibit extends BaseModel
      */
     public static function selectPresentMusicFile($dist)
     {
-        return Exhibit::select('exh_name')->where([['exh_distinguish', $dist], ['exh_status', 1]])->first()->exh_name;
+        return Exhibit::select('exh_name')->where([['exh_distinguish', $dist], ['exh_status', 1]])->get()->toArray();
     }
 
 

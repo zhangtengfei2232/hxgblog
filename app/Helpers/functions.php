@@ -362,12 +362,13 @@ function updateLoginAuth($is_admin = false, $login_way = Users::LOGIN_WAY_ACT_NU
     }
     $user->generateToken();                              //更新api_token
     Auth::login($user);                                  //改为用户实例认证
-    $login_obj->loginSuccess($user, $is_admin);          //登录信息存入session
-    $user = $user->toArray();
     //不是第三方登录，把密码去掉
     if ($login_way != Users::LOGIN_WAY_THIRD_PARTY) {
         unset($user['password']);
+        $user = dealFormatResourceURL(array($user), array(HEAD_PORTRAIT_FIELD_NAME))[0];
     }
+    $login_obj->loginSuccess($user, $is_admin);          //登录信息存入session
+    $user = $user->toArray();
     return $user;
 }
 
@@ -400,6 +401,7 @@ function downloadHeadPortrait($url, $save_prefix, $img_ext)
  * 格式化获取后端资源的URL
  * @param $data
  * @param $deal_type
+ * @return mixed
  */
 function dealFormatResourceURL($data, $deal_type)
 {
@@ -411,10 +413,10 @@ function dealFormatResourceURL($data, $deal_type)
                 case ARTICLE_COVER_FIELD_NAME:                          //文章封面
                     $value[$item] = ARTICLE_COVER_URL . $value[$item];
                     break;
-                case MUSIC_LYRIC_FIELD_NAME:                            //音乐
+                case MUSIC_FIELD_NAME:                                  //音乐
                     $value['exh_name'] = MUSIC_URL . $value[$item];
                     break;
-                case MUSIC_FIELD_NAME:                                  //音乐歌词
+                case MUSIC_LYRIC_FIELD_NAME:                            //音乐歌词
                     $value['exh_content'] = MUSIC_LYRIC_URL . $value[$item];
                     break;
                 case HEAD_PORTRAIT_FIELD_NAME:                          //头像
@@ -423,9 +425,28 @@ function dealFormatResourceURL($data, $deal_type)
                 case ALBUM_PHOTO_FIELD_NAME:                            //相册图片
                     $value[$item] = ALBUM_PHOTO_URL . $value[$item];
                     break;
+                case ALBUM_FIRST_PHOTO_FIELD_NAME:                      //相册第一张图片
+                    $value[$item] = ALBUM_PHOTO_URL . $value[$item];
+                    break;
             }
         }
     }
-
+    return $data;
 }
 
+
+/**
+ * 处理留言
+ * @param $data
+ * @return mixed
+ */
+function dealFormatLeaveMessage($data)
+{
+    foreach ($data as $key => &$value) {
+        $value = dealFormatResourceURL(array($value), array(HEAD_PORTRAIT_FIELD_NAME))[0];
+        if (isset($value['child_message'])) {
+            $value['child_message'] = dealFormatResourceURL($value['child_message'], array(HEAD_PORTRAIT_FIELD_NAME));
+        }
+    }
+    return $data;
+}

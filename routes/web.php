@@ -86,6 +86,9 @@ Route::namespace('CommonControllers')->group(function () {
     //前台用户登录
     Route::post('frontLogin', 'LoginController@frontLogin');
 
+    //获取第三方登录的URL
+    Route::get('getThirdPartyURL', 'LoginController@getThirdPartyURL');
+
     //GitHub登录
     //获取code和access_token的github回调地址
     Route::get('gitHub', 'GitHubLogin@gitHubCallBack');

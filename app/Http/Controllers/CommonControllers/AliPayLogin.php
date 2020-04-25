@@ -22,7 +22,7 @@ class AliPayLogin extends Controller
             'grant_type' => GRANT_TYPE,
             'charset'    => ALI_PAY_CHART_SET,
             'sign_type'  => ALI_PAY_SIGN_TYPE,
-            'version'    =>ALI_PAY_VERSION,
+            'version'    => ALI_PAY_VERSION,
         );
         $get_token_param = array_merge($base_param, array(
             'method'     => ALI_PAY_TOKEN_API,

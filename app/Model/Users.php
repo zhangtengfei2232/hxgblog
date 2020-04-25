@@ -11,8 +11,8 @@ class Users extends Authenticatable
     protected $table = 'users';                 //重写表名
     protected $primaryKey = 'user_id';          //重写表的主键ID
     protected $dateFormat = 'U';                //重写表的时间存储格式为时间戳
-    protected $fillable = ['nick_name', 'email', 'password',
-        'head_portrait', 'introduce', 'phone', 'role', 'sex'];
+    protected $fillable = ['nick_name', 'email', 'password', 'head_portrait', 'introduce',
+        'phone', 'role', 'sex', 'role', 'register_way', 'third_party_id', 'access_token'];
 
 
     /**
@@ -250,13 +250,15 @@ class Users extends Authenticatable
 
     /**
      * 根据 access_token 查询用户
-     * @param $access_token
+     * @param $data
+     * @param string $field
      * @return mixed
      */
-    public static function getThirdPartyUserData($access_token)
+    public static function getThirdPartyUserData($data, $field = 'access_token')
     {
-        return Users::where('access_token', $access_token)->get();
+        return Users::where($field, $data)->first();
     }
+
 
 
     /**

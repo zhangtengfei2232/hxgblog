@@ -340,9 +340,10 @@ function dealQQData($response)
  * @param bool $is_admin
  * @param int $login_way
  * @param string $data
+ * @param string $field
  * @return array array('user_id' => '1', 'phone' => '11111111111')
  */
-function updateLoginAuth($is_admin = false, $login_way = Users::LOGIN_WAY_ACT_NUM_PWD, $data = '')
+function updateLoginAuth($is_admin = false, $login_way = Users::LOGIN_WAY_ACT_NUM_PWD, $data = '', $field = 'access_token')
 {
     $login_obj = new LoginController();
     //获取用户实例
@@ -354,7 +355,7 @@ function updateLoginAuth($is_admin = false, $login_way = Users::LOGIN_WAY_ACT_NU
             $user = $login_obj->guard()->user();
             break;
         case Users::LOGIN_WAY_THIRD_PARTY:               //第三方登录
-            $user = $data;
+            $user = Users::getThirdPartyUserData($data, $field);
             break;
         default:
             $user = Users::getUserData($data);
@@ -362,13 +363,13 @@ function updateLoginAuth($is_admin = false, $login_way = Users::LOGIN_WAY_ACT_NU
     }
     $user->generateToken();                              //更新api_token
     Auth::login($user);                                  //改为用户实例认证
-    //不是第三方登录，把密码去掉
-    if ($login_way != Users::LOGIN_WAY_THIRD_PARTY) {
-        unset($user['password']);
-        $user = dealFormatResourceURL(array($user), array(HEAD_PORTRAIT_FIELD_NAME))[0];
-    }
-    $login_obj->loginSuccess($user, $is_admin);          //登录信息存入session
     $user = $user->toArray();
+    //不是第三方登录，把密码去掉
+    if ($login_way = Users::LOGIN_WAY_THIRD_PARTY) {
+        unset($user['password']);
+    }
+    $user = dealFormatResourceURL(array($user), array(HEAD_PORTRAIT_FIELD_NAME))[0];
+    $login_obj->loginSuccess($user, $is_admin);          //登录信息存入session
     return $user;
 }
 
@@ -381,7 +382,7 @@ function updateLoginAuth($is_admin = false, $login_way = Users::LOGIN_WAY_ACT_NU
  */
 function downloadHeadPortrait($url, $save_prefix, $img_ext)
 {
-    $path     = storage_path() . RESOURCE_ROUTE_DIR . HEAD_PORTRAIT_FOLDER_NAME . DIRECTORY_SEPARATOR;
+    $path     = storage_path() . DIRECTORY_SEPARATOR . RESOURCE_ROUTE_DIR . HEAD_PORTRAIT_FOLDER_NAME . DIRECTORY_SEPARATOR;
     $filename = implode('_', array($save_prefix, uniqid(), time())) . $img_ext;
     $address  = $path . $filename;
     try {

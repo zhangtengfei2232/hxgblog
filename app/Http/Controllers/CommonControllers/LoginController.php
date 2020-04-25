@@ -154,16 +154,11 @@ class LoginController extends Controller
      */
     public function checkLogin(Request $request)
     {
-        if (($request->input('status') == 1)) {
-            if (empty(session('user'))) {
-                return responseToJson(2, '你未登录');
-            }
-        } else {
-            if (empty(session('admin'))) {
-                return responseToJson(2, '你未登录');
-            }
+        $role_field_name = ($request->input('status') == 1) ? 'user' : 'admin';
+        if (empty(session($role_field_name))) {
+            return responseToJson(2, '你未登录');
         }
-        return responseToJson(0, '已登录');
+        return responseToJson(0, '已登录', session($role_field_name));
     }
 
 

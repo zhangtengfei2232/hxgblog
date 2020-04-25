@@ -30,19 +30,21 @@ class BaiDuLogin extends Controller
             echo '获取 access_token 失败！建议稍后重试！';
             exit;
         }
-        //通过 access_token 判断是否已经注册
-        $user = Users::getThirdPartyUserData($access_token);
-        if (! $user->isEmpty()) {
-            $user = updateLoginAuth(false, Users::LOGIN_WAY_SMS, $user);
-            return responseToJson(0, '登录成功', $user);
-        }
-
         $url = BAI_DU_USER_INFO_URL . $access_token;
         $user_info = json_decode(getHttpResponseGET($url), true);
         if (empty($user_info)) {
             echo '获取信息为空！稍后重试';
             exit;
         }
+
+        //判断是否已经注册过了
+        //通过userid判断是否已经注册
+        $user = Users::getThirdPartyUserData($user_info['userid'], 'third_party_id');
+        if (! empty($user)) {
+            updateLoginAuth(false, Users::LOGIN_WAY_THIRD_PARTY, $user->third_party_id, 'third_party_id');
+            return redirect()->to(session('frontend_url')); //跳转到当时前端登录页面
+        }
+
         //下载头像到本地
         $head_portrait_url = BAI_DU_HEAD_PORTRAIT_BASE_URL . $user_info['portrait'];
         $download_head_portrait = downloadHeadPortrait($head_portrait_url, Users::BAI_DU_FIELD, Users::BAI_DU_HD_PT_EXT_NAME);
@@ -53,8 +55,9 @@ class BaiDuLogin extends Controller
         $user_info['portrait'] = $download_head_portrait;
         $user_info['access_token'] = $access_token;
         $user_info = $this->_dealFormatData($user_info);
-        $add_user  = Users::addUserData($user_info, Users::ALI_PAY);
+        $add_user  = Users::addUserData($user_info, Users::BAI_DU);
         if ($add_user) {
+            updateLoginAuth(false, Users::LOGIN_WAY_THIRD_PARTY, $user_info['userid'], 'third_party_id');
             return redirect()->to(session('frontend_url')); //跳转到当时前端登录页面
         }
         deleteFile($download_head_portrait, HEAD_PORTRAIT_FOLDER_NAME);
@@ -77,7 +80,8 @@ class BaiDuLogin extends Controller
             'third_party_id' => $user_info['userid'],
             'sex'            => 1,
             'register_way'   => Users::BAI_DU,
-            'access_token'   => $user_info['access_token']
+            'access_token'   => $user_info['access_token'],
+            'role'           => 3
         );
 
     }

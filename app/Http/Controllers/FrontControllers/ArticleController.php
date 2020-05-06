@@ -37,7 +37,7 @@ class ArticleController extends Controller
     {
         $page             = ($request->has('page')) ? $request->input('page') : 0;
         $art_id_data      = ArticleType::byTypeSelectArticleId($request->input('type_id'), $page);
-        $data['articles'] = Article::byIdSelectArticleData($art_id_data);
+        $data['articles'] = dealFormatResourceURL(Article::byIdSelectArticleData($art_id_data), array(ARTICLE_COVER_FIELD_NAME));
         return responseToJson(0, 'success', $data);
     }
 
@@ -57,7 +57,7 @@ class ArticleController extends Controller
         }
 //        $data['new_articles']          = Article::selectNewArticleData();            //最新文章
 //        $data['browse_top']            = Article::selectBrowseTopData();             //浏览最多的文章
-        $data['comments']              = dealFormatResourceURL(Comment::selectTopLevelMessage(config('select_field.comment'), '', $art_id[0]), array(HEAD_PORTRAIT_FIELD_NAME)); //文章评论
+        $data['comments']              = dealFormatArticleComment(Comment::selectTopLevelMessage(config('select_field.comment'), '', $art_id[0])); //文章评论
         $data['article_data']          = Article::byIdSelectArticleData($art_id, 2);    //文章数据
         $data['praise_trample_status'] = PraiseTrample::selectArticlePraiseTrample($art_id[0]);
         $data['article_types']         = ArticleType::selectArticleTypeName($art_id[0]);

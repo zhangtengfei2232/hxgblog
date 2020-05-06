@@ -451,3 +451,19 @@ function dealFormatLeaveMessage($data)
     }
     return $data;
 }
+
+/**
+ * 处理文章评论
+ * @param $data
+ * @return mixed
+ */
+function dealFormatArticleComment($data)
+{
+    foreach ($data as $key => &$value) {
+        $value = dealFormatResourceURL(array($value), array(HEAD_PORTRAIT_FIELD_NAME))[0];
+        if (isset($value['child_comment'])) {
+            $value['child_comment'] = dealFormatResourceURL($value['child_comment'], array(HEAD_PORTRAIT_FIELD_NAME));
+        }
+    }
+    return $data;
+}

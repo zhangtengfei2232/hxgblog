@@ -8,6 +8,7 @@ use App\Model\AnswerStatus;
 use App\Model\Photo;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class MaAlbumController extends Controller
 {
@@ -44,7 +45,7 @@ class MaAlbumController extends Controller
             $del_photo = Photo::deleteAlbumImgData($alb_id);
             if ($del_album && $del_ans && $del_photo) {
                 Album::commit();
-                deleteMultipleFile($album_road_data, ALBUM_FOLDER_NAME);
+                deleteMultipleFile($album_road_data, ALBUM_PHOTO_FOLDER_NAME);
                 return responseToJson(0, '删除相册成功');
             }
         }catch (\Exception $e){
@@ -160,7 +161,7 @@ class MaAlbumController extends Controller
      */
     public function selectAlbumPhoto(Request $request)
     {
-        return responseToJson(0,'查询成功', Photo::byAlbumIdSelectPhotoData($request->alb_id, $request->page));
+        return responseToJson(0,'查询成功', dealFormatResourceURL(Photo::byAlbumIdSelectPhotoData($request->input('alb_id'), $request->input('page')), array(ALBUM_PHOTO_FIELD_NAME)));
     }
 
 
@@ -180,7 +181,10 @@ class MaAlbumController extends Controller
         try {
             $photo_road_data = [];
             foreach ($album_photo as $key => $photo){
-                $photo_road_data[$key] = uploadFile($photo, ALBUM_FOLDER_NAME)['data'];
+                $img_road = uploadFile($photo, ALBUM_PHOTO_FOLDER_NAME);
+                if ($img_road['code'] == 0) {
+                    $photo_road_data[$key] = $img_road['data'];
+                }
             }
             $album_id = $request->input('album_id');
             if (Photo::addAlbumPhotoData($photo_road_data, $album_id) &&
@@ -189,7 +193,7 @@ class MaAlbumController extends Controller
                 return responseToJson(0, '添加相册图片成功');
             }
         } catch (\Exception $e) {
-            deleteMultipleFile($photo_road_data, ALBUM_FOLDER_NAME);//数据库异常，删除上传成功的文件，回滚数据
+            deleteMultipleFile($photo_road_data, ALBUM_PHOTO_FOLDER_NAME);//数据库异常，删除上传成功的文件，回滚数据
             Album::rollBack();
             return responseToJson(1, '添加相册图片失败');
         }
@@ -213,7 +217,7 @@ class MaAlbumController extends Controller
             $delete_photo     = Photo::deleteMultiplePhotoData($del_photo_id_data);
             if ($update_photo_num && $delete_photo) {
                 Album::commit();
-                deleteMultipleFile($del_photo_road_data, config('upload.image'));
+                deleteMultipleFile($del_photo_road_data, ALBUM_PHOTO_FOLDER_NAME);
                 return responseToJson(0, '删除照片成功');
             }
         } catch (\Exception $e) {

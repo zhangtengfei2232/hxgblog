@@ -5,6 +5,7 @@ use App\Model\Users;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 /**
  * 后台返回给前台JSON数据
  * @param $code
@@ -92,12 +93,12 @@ function uploadFile($files, $disk, $is_music = false)
 {
     $file_name = $files->getClientOriginalName();
     ($is_music) ? $file_path = $file_name : $file_path = implode('_', array(uniqid(), time(), $file_name));
-    $files->storeAs('./',$file_path, $disk);
-    $exist_file = file_exists(storage_path() . RESOURCE_ROUTE_DIR . $disk . DIRECTORY_SEPARATOR.$file_path);
+    $files->storeAs('./', $file_path, $disk);
+    $exist_file = file_exists(storage_path() . DIRECTORY_SEPARATOR . RESOURCE_ROUTE_DIR . $disk . DIRECTORY_SEPARATOR . $file_path);
     if ($exist_file) {
-        return responseState(0,'上传成功',$file_path);
+        return responseState(0, '上传成功', $file_path);
     }
-    return responseState(1,'上传失败');
+    return responseState(1, '上传失败');
 }
 
 /**
@@ -109,7 +110,7 @@ function uploadFile($files, $disk, $is_music = false)
 function deleteFile($fileRoad, $disk)
 {
     Storage::disk($disk)->delete($fileRoad);
-    return !file_exists(storage_path().DIRECTORY_SEPARATOR.'app'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.$disk.DIRECTORY_SEPARATOR.$fileRoad);
+    return !file_exists(storage_path() . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $disk . DIRECTORY_SEPARATOR . $fileRoad);
 }
 
 /**
@@ -119,7 +120,7 @@ function deleteFile($fileRoad, $disk)
  */
 function deleteMultipleFile($file_road_data, $disk)
 {
-    foreach ($file_road_data as $file_road){
+    foreach ($file_road_data as $file_road) {
         deleteFile($file_road, $disk);
     }
 }

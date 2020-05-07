@@ -62,7 +62,7 @@ class LoginController extends Controller
             return responseToJson(1, '验证码不正确');
         }
         if ($this->attemptLogin($request)) {
-            $user = updateLoginAuth(true);
+            $user = updateLoginAuth(true, Users::LOGIN_WAY_ACT_NUM_PWD, $request->input('phone'));
             return responseToJson(0, '登录成功', $user);
         }
         return responseToJson(2, '账号或密码不正确');

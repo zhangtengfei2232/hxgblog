@@ -158,7 +158,7 @@ define('BAI_DU_USER_INFO_URL', 'https://openapi.baidu.com/rest/2.0/passport/user
 
 
 //百度第三方登录基础URL
-define('BAI_DU_BASE_LOGIN_URL', 'http://openapi.baidu.com/oauth/2.0/authorize?response_type=code&scope=' . BAI_DU_SCOPE . '&');
+define('BAI_DU_BASE_LOGIN_URL', 'http://openapi.baidu.com/oauth/2.0/authorize?response_type=code&scope=' . BAI_DU_SCOPE);
 
 //百度回调接口名
 define('BAI_UD_LOGIN_ROUTE_NAME', 'baiDu');
@@ -167,7 +167,7 @@ define('BAI_UD_LOGIN_ROUTE_NAME', 'baiDu');
 define('BAI_DU_REDIRECT_URI', BACKEND_URL . BAI_UD_LOGIN_ROUTE_NAME);
 
 //请求百度参数
-define('BAI_DU_PARAM', 'client_id=' . BAI_DU_CLIENT_ID . '&redirect_uri=' . BAI_DU_REDIRECT_URI);
+define('BAI_DU_PARAM', '&client_id=' . BAI_DU_CLIENT_ID . '&redirect_uri=' . BAI_DU_REDIRECT_URI);
 
 //百度账号登录URL
 define('BAI_DU_LOGIN_URL', BAI_DU_BASE_LOGIN_URL . BAI_DU_PARAM);
@@ -195,7 +195,7 @@ define('QQ_OPENID_URL', 'https://graph.qq.com/oauth2.0/me?access_token=');
 define('QQ_USER_INFO_URL', 'https://graph.qq.com/user/get_user_info?');
 
 //QQ第三方登录基础URL
-define('QQ_BASE_LOGIN_URL', 'https://graph.qq.com/oauth2.0/show?which=Login&display=pc&response_type=code&');
+define('QQ_BASE_LOGIN_URL', 'https://graph.qq.com/oauth2.0/show?which=Login&display=pc&response_type=code');
 
 //QQ回调接口名
 define('QQ_LOGIN_ROUTE_NAME', 'qq');
@@ -204,7 +204,7 @@ define('QQ_LOGIN_ROUTE_NAME', 'qq');
 define('QQ_REDIRECT_URI', BACKEND_URL . QQ_LOGIN_ROUTE_NAME);
 
 //请求QQ参数
-define('QQ_PARAM', 'client_id=' . QQ_CLIENT_ID . '&redirect_uri=' . QQ_REDIRECT_URI);
+define('QQ_PARAM', '&client_id=' . QQ_CLIENT_ID . '&redirect_uri=' . QQ_REDIRECT_URI);
 
 //QQ登录URL
 define('QQ_LOGIN_URL', QQ_BASE_LOGIN_URL . QQ_PARAM);
@@ -250,7 +250,7 @@ define('ALI_PAY_LOGIN_ROUTE_NAME', 'aliPayLoginCallBack');
 define('ALI_PAY_REDIRECT_URI', BACKEND_URL . ALI_PAY_LOGIN_ROUTE_NAME);
 
 //请求支付宝参数
-define('ALI_PAY_PARAM', 'client_id=' . ALI_PAY_CLIENT_ID . '&redirect_uri=' . ALI_PAY_REDIRECT_URI);
+define('ALI_PAY_PARAM', '&client_id=' . ALI_PAY_CLIENT_ID . '&redirect_uri=' . ALI_PAY_REDIRECT_URI);
 
 //支付宝登录URL
 define('ALI_PAY_LOGIN_URL', ALI_PAY_BASE_LOGIN_URL . ALI_PAY_PARAM);
@@ -269,7 +269,7 @@ define('WEI_BO_CLIENT_SECRET', '1e3777f531d0447eed3d6419a934c7f9');
 define('WEI_BO_ACCESS_TOKEN_URL', 'https://api.weibo.com/oauth2/access_token?');
 
 //微博第三方登录基础URL
-define('WEI_BO_BASE_LOGIN_URL', 'https://api.weibo.com/oauth2/authorize?response_type=code&');
+define('WEI_BO_BASE_LOGIN_URL', 'https://api.weibo.com/oauth2/authorize?response_type=code');
 
 //获取信息地址
 define('WEI_BO_USER_INFO_URL', 'https://api.weibo.com/2/users/show.json?');
@@ -284,7 +284,7 @@ define('WEI_BO_CANCEL_OAUTH_ROUTE_NAME', 'weiBoCancelOAuth');
 define('WEI_BO_OAUTH_REDIRECT_URI', BACKEND_URL . WEI_BO_LOGIN_ROUTE_NAME);
 
 //请求微博参数
-define('WEI_BO_PARAM', 'client_id=' . WEI_BO_CLIENT_ID . '&redirect_uri=' . WEI_BO_OAUTH_REDIRECT_URI);
+define('WEI_BO_PARAM', '&client_id=' . WEI_BO_CLIENT_ID . '&redirect_uri=' . WEI_BO_OAUTH_REDIRECT_URI);
 
 //微博登录URL
 define('WEI_BO_LOGIN_URL', WEI_BO_BASE_LOGIN_URL . WEI_BO_PARAM);
@@ -315,7 +315,7 @@ define('GITHUB_LOGIN_ROUTE_NAME', 'gitHub');
 define('GITHUB_REDIRECT_URI', BACKEND_URL . GITHUB_LOGIN_ROUTE_NAME);
 
 //请求QQ参数
-define('GITHUB_PARAM', 'client_id=' . GITHUB_CLIENT_ID . '&redirect_uri=' . GITHUB_REDIRECT_URI);
+define('GITHUB_PARAM', '&client_id=' . GITHUB_CLIENT_ID . '&redirect_uri=' . GITHUB_REDIRECT_URI);
 
 //QQ登录URL
 define('GITHUB_LOGIN_URL', GITHUB_BASE_LOGIN_URL . GITHUB_PARAM);

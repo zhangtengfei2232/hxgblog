@@ -80,7 +80,7 @@ class MaArticleController extends Controller
             }
         } catch (\Exception $e) {
             Article::rollBack();
-            return responseToJson(1, "删除文章失败");
+            return responseToJson(1, '删除文章失败');
         }
         deleteMultipleFile($art_cover_road, ARTICLE_COVER_FOLDER_NAME);  //删除文章的封面
         return responseToJson(0, '删除文章成功');

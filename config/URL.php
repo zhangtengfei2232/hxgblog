@@ -1,7 +1,7 @@
 <?php
 
 //线上，线下开关
-define('IS_ONLINE', false);
+define('IS_ONLINE', true);
 /**
  * 请求后端资源的接口=======>URL常量配置
  */

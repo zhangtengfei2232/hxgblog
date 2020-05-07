@@ -203,7 +203,7 @@ class MaArticleController extends Controller
     {
         $art_type_id_data = array();
         $art_id = $request->input('art_id');
-        $art_data['Article']       = Article::selectAloneArticleData($art_id);
+        $art_data['article']       = dealFormatResourceURL(Article::selectAloneArticleData($art_id), array(ARTICLE_COVER_FIELD_NAME));
         $art_data['art_type']      = ArticleType::selectArticleTypeId($art_id);
         foreach ($art_data['art_type'] as $type) {
             array_push($art_type_id_data, $type->type_id);

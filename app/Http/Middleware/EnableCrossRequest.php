@@ -17,8 +17,7 @@ class EnableCrossRequest
         $response = $next($request);
         $origin  = $request->server('HTTP_ORIGIN') ? $request->server('HTTP_ORIGIN') : '';
         $allow_origin = [
-            ONLINE_BACKEND_URL,
-            DEV_BACKEND_URL,
+            BACKEND_URL,
             FRONTEND_URL,
         ];
         if (in_array($origin, $allow_origin)) {

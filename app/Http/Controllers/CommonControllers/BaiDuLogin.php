@@ -57,7 +57,7 @@ class BaiDuLogin extends Controller
         $user_info = $this->_dealFormatData($user_info);
         $add_user  = Users::addUserData($user_info, Users::BAI_DU);
         if ($add_user) {
-            updateLoginAuth(false, Users::LOGIN_WAY_THIRD_PARTY, $user_info['userid'], 'third_party_id');
+            updateLoginAuth(false, Users::LOGIN_WAY_THIRD_PARTY, $user_info['third_party_id'], 'third_party_id');
             return redirect()->to(session('frontend_url')); //跳转到当时前端登录页面
         }
         deleteFile($download_head_portrait, HEAD_PORTRAIT_FOLDER_NAME);

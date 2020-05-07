@@ -250,7 +250,7 @@ define('ALI_PAY_LOGIN_ROUTE_NAME', 'aliPayLoginCallBack');
 define('ALI_PAY_REDIRECT_URI', BACKEND_URL . ALI_PAY_LOGIN_ROUTE_NAME);
 
 //请求支付宝参数
-define('ALI_PAY_PARAM', '&client_id=' . ALI_PAY_CLIENT_ID . '&redirect_uri=' . ALI_PAY_REDIRECT_URI);
+define('ALI_PAY_PARAM', '&app_id=' . ALI_PAY_CLIENT_ID . '&redirect_uri=' . ALI_PAY_REDIRECT_URI);
 
 //支付宝登录URL
 define('ALI_PAY_LOGIN_URL', ALI_PAY_BASE_LOGIN_URL . ALI_PAY_PARAM);

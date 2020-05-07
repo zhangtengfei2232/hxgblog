@@ -48,9 +48,9 @@ class AliPayLogin extends Controller
 
         //通过 access_token 判断是否已经注册
         $user = Users::getThirdPartyUserData($access_token);
-        if (! $user->isEmpty()) {
-            $user = updateLoginAuth(false, Users::LOGIN_WAY_SMS, $user);
-            return responseToJson(0, '登录成功', $user);
+        if (! empty($user)) {
+            updateLoginAuth(false, Users::LOGIN_WAY_THIRD_PARTY, $access_token);
+            return redirect()->to(session('frontend_url')); //跳转到当时前端登录页面
         }
 
         //请求用户信息
@@ -68,10 +68,11 @@ class AliPayLogin extends Controller
         $user_info = mb_convert_encoding($user_info, 'utf-8', 'gbk');
         Log::info('info' . $user_info);
         $user_info = json_decode($user_info, true);
-        if (! empty($user_info['alipay_user_info_share_response'])) {
+        if (empty($user_info['alipay_user_info_share_response'])) {
             echo '获取信息为空！稍后重试';
             exit;
         }
+        $user_info = $user_info['alipay_user_info_share_response'];
         //下载头像到本地
         $download_head_portrait = downloadHeadPortrait($user_info['avatar'], Users::ALI_PAY_FIELD, Users::ALI_PAY_HD_PT_EXT_NAME);
         if ($download_head_portrait === false) {
@@ -80,9 +81,10 @@ class AliPayLogin extends Controller
         }
         $user_info['avatar'] = $download_head_portrait;
         $user_info['access_token'] = $access_token;
-        $user_info = $this->_dealFormatData($user_info['alipay_user_info_share_response']);
+        $user_info = $this->_dealFormatData($user_info);
         $add_user  = Users::addUserData($user_info, Users::ALI_PAY);
         if ($add_user) {
+            updateLoginAuth(false, Users::LOGIN_WAY_THIRD_PARTY, $user_info['third_party_id'], 'third_party_id');
             return redirect()->to(session('frontend_url')); //跳转到当时前端登录页面
         }
         deleteFile($download_head_portrait, HEAD_PORTRAIT_FOLDER_NAME);
@@ -99,7 +101,7 @@ class AliPayLogin extends Controller
     private function _dealFormatData($user_info)
     {
         return array(
-            'nick_name'      => $user_info['nickname'],
+            'nick_name'      => $user_info['nick_name'],
             'head_portrait'  => $user_info['avatar'],
             'third_party_id' => $user_info['user_id'],
             'sex'            => ($user_info['gender'] == 'm') ? 0 : 1,

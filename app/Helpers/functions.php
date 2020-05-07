@@ -369,7 +369,7 @@ function updateLoginAuth($is_admin = false, $login_way = Users::LOGIN_WAY_ACT_NU
     if ($login_way = Users::LOGIN_WAY_THIRD_PARTY) {
         unset($user['password']);
     }
-    $user = dealFormatResourceURL(array($user), array(HEAD_PORTRAIT_FIELD_NAME))[0];
+    $user = dealUserNickNameLength(dealFormatResourceURL(array($user), array(HEAD_PORTRAIT_FIELD_NAME))[0]);
     $login_obj->loginSuccess($user, $is_admin);          //登录信息存入session
     return $user;
 }
@@ -467,4 +467,17 @@ function dealFormatArticleComment($data)
         }
     }
     return $data;
+}
+
+/**
+ * 处理返回的昵称名字长度
+ * @param $user_info
+ * @return mixed
+ */
+function dealUserNickNameLength($user_info)
+{
+    if (mb_strlen($user_info['nick_name'], 'utf-8') > 5) {
+        $user_info['nick_name'] = mb_substr($user_info['nick_name'], 0, 5, 'utf-8');
+    }
+    return $user_info;
 }

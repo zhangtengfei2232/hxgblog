@@ -92,7 +92,7 @@ function isTimeGreater($time, $interval = 10)
 function uploadFile($files, $disk, $is_music = false)
 {
     $file_name = $files->getClientOriginalName();
-    ($is_music) ? $file_path = $file_name : $file_path = implode('_', array(uniqid(), time(), $file_name));
+    $file_path = ($is_music) ? $file_name : implode('_', array(uniqid(), time(), $file_name));
     $files->storeAs('./', $file_path, $disk);
     $exist_file = file_exists(storage_path() . DIRECTORY_SEPARATOR . RESOURCE_ROUTE_DIR . $disk . DIRECTORY_SEPARATOR . $file_path);
     if ($exist_file) {
@@ -426,6 +426,9 @@ function dealFormatResourceURL($data, $deal_type)
                     break;
                 case ALBUM_PHOTO_FIELD_NAME:                            //相册图片
                     $value[$item] = ALBUM_PHOTO_URL . $value[$item];
+                    break;
+                case ARTICLE_PHOTO_FIELD_NAME:
+                    $value = ARTICLE_PHOTO_URL . $value;
                     break;
                 case ALBUM_FIRST_PHOTO_FIELD_NAME:                      //相册第一张图片
                     $value[$item] = ALBUM_PHOTO_URL . $value[$item];

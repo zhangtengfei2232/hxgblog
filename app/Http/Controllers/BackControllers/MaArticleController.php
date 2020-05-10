@@ -221,16 +221,20 @@ class MaArticleController extends Controller
      */
     public function uploadArticlePhoto(Request $request)
     {
-        if (! $request->hasFile('article_photo')) {
-            return responseToJson(1, '请你上传文章图片');
-        }
-        $art_cover = $request->file('article_photo');
-        $validate_article_photo = judgeReceiveFiles($art_cover);
+        $article_photo = $request->file();
+        $photo_road_data = array();
+        $validate_article_photo = judgeMultipleFile($article_photo);
         if ($validate_article_photo['code'] == 1) {
             return responseToJson(1, $validate_article_photo['msg']);
         }
-        $result = uploadFile($validate_article_photo, ARTICLE_PHOTO_FOLDER_NAME);
-        return responseToJson($result['code'], $result['msg'], $result['data']);
+        foreach ($article_photo as $key => $photo){
+            $img_road = uploadFile($photo, ARTICLE_PHOTO_FOLDER_NAME, true);
+            if ($img_road['code'] == 0) {
+                $photo_road_data[$key] = $img_road['data'];
+            }
+        }
+        $photo_road_data = dealFormatResourceURL($photo_road_data, array(ARTICLE_PHOTO_FIELD_NAME));
+        return responseToJson(0, '上传成功', $photo_road_data);
     }
 
 
@@ -241,7 +245,7 @@ class MaArticleController extends Controller
      */
     public function deleteArticlePhoto(Request $request)
     {
-        $result = deleteFile(ARTICLE_PHOTO_FOLDER_NAME, $request->input('article_photo_road'));
+        $result = deleteFile($request->input('article_photo_road'), ARTICLE_PHOTO_FOLDER_NAME);
         return ($result) ? responseToJson(0, '删除成功') : responseToJson(1, '删除失败');
     }
 }

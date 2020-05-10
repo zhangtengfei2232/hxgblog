@@ -142,7 +142,7 @@ Route::namespace('BackControllers')->group(function (){
         Route::post('deleteArticle', 'MaArticleController@deleteArticle');                 //删除文章
         Route::post('updateArticle', 'MaArticleController@updateArticle');                 //修改文章信息
         Route::post('uploadArticlePhoto', 'MaArticleController@uploadArticlePhoto');       //上传文章内容图片
-        Route::post('deleteArticlePhoto', 'MaArticleController@deleteArticlePhoto');       //删除文章内容图片
+        Route::get('deleteArticlePhoto', 'MaArticleController@deleteArticlePhoto');       //删除文章内容图片
 
         Route::get('getAlbumInfo', 'MaAlbumController@getAlbumInfo');                           //获取相册信息
         Route::post('addAlbum', 'MaAlbumController@addAlbum');                                  //添加相册信息

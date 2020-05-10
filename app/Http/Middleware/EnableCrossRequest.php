@@ -19,6 +19,7 @@ class EnableCrossRequest
         $allow_origin = [
             chop(BACKEND_URL, '/'),
             chop(FRONTEND_URL, '/'),
+            'http://localhost:8080',
         ];
         if (in_array($origin, $allow_origin)) {
             $response->headers->add(['Access-Control-Allow-Origin'      => $origin]);
